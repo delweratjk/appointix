@@ -1,0 +1,1280 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Appointix Plugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-11 15:28+0600\n"
+"PO-Revision-Date: 2026-01-11 16:01+0600\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Domain: appointix\n"
+
+#: admin/class-appointix-admin.php:90 admin/class-appointix-admin.php:91
+msgid "Dashboard"
+msgstr ""
+
+#: admin/class-appointix-admin.php:99 admin/class-appointix-admin.php:100
+#: admin/partials/appointix-admin-bookings-display.php:315
+msgid "Bookings"
+msgstr ""
+
+#: admin/class-appointix-admin.php:108 admin/class-appointix-admin.php:109
+#: admin/partials/appointix-admin-settings-display.php:10
+msgid "Settings"
+msgstr ""
+
+#: admin/class-appointix-admin.php:118 admin/class-appointix-admin.php:119
+#: admin/partials/appointix-admin-display.php:38
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "Manage Apartments"
+msgstr "Доступные апартаменты"
+
+#: admin/class-appointix-admin.php:151
+#: admin/partials/appointix-admin-display.php:14
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "Add New Apartment"
+msgstr "Доступные апартаменты"
+
+#: admin/class-appointix-admin.php:152
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "New Apartment"
+msgstr "Доступные апартаменты"
+
+#: admin/class-appointix-admin.php:153
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "Edit Apartment"
+msgstr "Доступные апартаменты"
+
+#: admin/class-appointix-admin.php:154
+#: includes/elementor/widgets/class-appointix-apartments-grid-widget.php:79
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "View Apartment"
+msgstr "Доступные апартаменты"
+
+#: admin/class-appointix-admin.php:155
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "All Apartments"
+msgstr "Доступные апартаменты"
+
+#: admin/class-appointix-admin.php:156
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "Search Apartments"
+msgstr "Доступные апартаменты"
+
+#: admin/class-appointix-admin.php:157
+#: admin/partials/appointix-admin-display.php:74
+#: includes/elementor/widgets/class-appointix-apartments-grid-widget.php:56
+#: public/partials/appointix-apartments-list.php:544
+#, fuzzy
+#| msgid "No apartments available."
+msgid "No apartments found."
+msgstr "Нет доступных апартаментов."
+
+#: admin/class-appointix-admin.php:158
+#, fuzzy
+#| msgid "No apartments available."
+msgid "No apartments found in Trash."
+msgstr "Нет доступных апартаментов."
+
+#: admin/class-appointix-admin.php:191
+#: public/partials/appointix-apartments-list.php:568
+#, fuzzy
+#| msgid "View Details"
+msgid "Apartment Details"
+msgstr "Подробнее"
+
+#: admin/class-appointix-admin.php:200
+#, fuzzy
+#| msgid "No apartments available."
+msgid "Apartment Gallery"
+msgstr "Нет доступных апартаментов."
+
+#: admin/class-appointix-admin.php:209
+msgid "iCal Sync"
+msgstr ""
+
+#: admin/class-appointix-admin.php:234
+#: admin/partials/appointix-admin-bookings-list.php:34
+#: public/partials/appointix-apartments-list.php:11
+#: public/partials/appointix-public-display.php:14
+#: public/partials/single-appointix_apartment.php:58
+msgid "Sea View"
+msgstr "Вид на море"
+
+#: admin/class-appointix-admin.php:235
+#: admin/partials/appointix-admin-bookings-list.php:35
+#: public/partials/appointix-apartments-list.php:12
+#: public/partials/appointix-public-display.php:15
+#: public/partials/single-appointix_apartment.php:59
+msgid "Mountain View"
+msgstr "Вид на горы"
+
+#: admin/class-appointix-admin.php:236
+#: admin/partials/appointix-admin-bookings-list.php:36
+#: public/partials/appointix-apartments-list.php:13
+#: public/partials/appointix-public-display.php:16
+#: public/partials/single-appointix_apartment.php:60
+msgid "City View"
+msgstr "Вид на город"
+
+#: admin/class-appointix-admin.php:237
+#: admin/partials/appointix-admin-bookings-list.php:37
+#: public/partials/appointix-apartments-list.php:14
+#: public/partials/appointix-public-display.php:17
+#: public/partials/single-appointix_apartment.php:61
+msgid "Garden View"
+msgstr "Вид на сад"
+
+#: admin/class-appointix-admin.php:238
+#: admin/partials/appointix-admin-bookings-list.php:38
+#: public/partials/appointix-apartments-list.php:15
+#: public/partials/appointix-public-display.php:18
+#: public/partials/single-appointix_apartment.php:62
+msgid "Pool View"
+msgstr "Вид на бассейн"
+
+#: admin/class-appointix-admin.php:239
+#: admin/partials/appointix-admin-bookings-list.php:39
+#: public/partials/appointix-apartments-list.php:16
+#: public/partials/appointix-public-display.php:19
+#: public/partials/single-appointix_apartment.php:63
+msgid "Standard"
+msgstr "Стандарт"
+
+#: admin/class-appointix-admin.php:275
+#, fuzzy
+#| msgid "Apartment Not Found"
+msgid "Apartment Type"
+msgstr "Апартаменты не найдены"
+
+#: admin/class-appointix-admin.php:285
+msgid "Price Per Night ($)"
+msgstr ""
+
+#: admin/class-appointix-admin.php:290
+msgid "Location"
+msgstr ""
+
+#: admin/class-appointix-admin.php:293
+msgid "e.g., Miami Beach, FL"
+msgstr ""
+
+#: admin/class-appointix-admin.php:298
+#: public/partials/appointix-apartments-list.php:664
+#: public/partials/single-appointix_apartment.php:684
+msgid "Bedrooms"
+msgstr "Спальни"
+
+#: admin/class-appointix-admin.php:303
+#: public/partials/appointix-apartments-list.php:668
+#: public/partials/single-appointix_apartment.php:699
+msgid "Bathrooms"
+msgstr "Ванные комнаты"
+
+#: admin/class-appointix-admin.php:308
+#: public/partials/single-appointix_apartment.php:712
+msgid "Max Guests"
+msgstr "Макс. гостей"
+
+#: admin/class-appointix-admin.php:315
+#, fuzzy
+#| msgid "About This Property"
+msgid "About This Property (Short Description)"
+msgstr "Об объекте"
+
+#: admin/class-appointix-admin.php:317
+msgid "Brief description shown in listings and modals..."
+msgstr ""
+
+#: admin/class-appointix-admin.php:320
+msgid "Amenities (comma-separated)"
+msgstr ""
+
+#: admin/class-appointix-admin.php:322
+msgid "e.g., WiFi, Air Conditioning, Kitchen, Pool, Parking"
+msgstr ""
+
+#: admin/class-appointix-admin.php:350
+msgid "Add Gallery Images"
+msgstr ""
+
+#: admin/class-appointix-admin.php:360
+#, fuzzy
+#| msgid "Select dates"
+msgid "Select Gallery Images"
+msgstr "Выбрать даты"
+
+#: admin/class-appointix-admin.php:427
+msgid "Airbnb iCal URL"
+msgstr ""
+
+#: admin/class-appointix-admin.php:432
+msgid "Booking.com iCal URL"
+msgstr ""
+
+#: admin/class-appointix-admin.php:438
+msgid "Export URL (share with other platforms)"
+msgstr ""
+
+#: admin/class-appointix-admin.php:518 admin/class-appointix-admin.php:541
+#: admin/class-appointix-admin.php:562 admin/class-appointix-admin.php:598
+msgid "Permission denied"
+msgstr ""
+
+#: admin/class-appointix-admin.php:527
+msgid "Status updated successfully!"
+msgstr ""
+
+#: admin/class-appointix-admin.php:529
+msgid "Failed to update status"
+msgstr ""
+
+#: admin/class-appointix-admin.php:548
+msgid "Calendar synced successfully!"
+msgstr ""
+
+#: admin/class-appointix-admin.php:550
+msgid "Failed to sync calendar. Check the URL."
+msgstr ""
+
+#: admin/class-appointix-admin.php:569
+msgid "Booking deleted successfully!"
+msgstr ""
+
+#: admin/class-appointix-admin.php:571
+msgid "Failed to delete booking"
+msgstr ""
+
+#: admin/class-appointix-admin.php:604
+msgid "Settings saved successfully!"
+msgstr ""
+
+#: admin/class-appointix-admin.php:632
+msgid "Are you sure you want to delete this?"
+msgstr ""
+
+#: admin/class-appointix-admin.php:653
+msgid "Seasonal price added!"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:322
+#: admin/partials/appointix-admin-display.php:24
+msgid "Total Bookings"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:326
+#: admin/partials/appointix-admin-bookings-list.php:83
+msgid "Pending"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:330
+#: admin/partials/appointix-admin-bookings-list.php:86
+msgid "Confirmed"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:334
+#: admin/partials/appointix-admin-bookings-list.php:90
+msgid "Completed"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:341
+msgid "All Bookings"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:346
+msgid "ID"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:347
+msgid "Customer"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:348
+#, fuzzy
+#| msgid "Apartment Not Found"
+msgid "Apartment"
+msgstr "Апартаменты не найдены"
+
+#: admin/partials/appointix-admin-bookings-display.php:349
+msgid "Dates"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:350
+#: public/partials/appointix-apartments-list.php:590
+#: public/partials/single-appointix_apartment.php:873
+msgid "Total"
+msgstr "Итого"
+
+#: admin/partials/appointix-admin-bookings-display.php:351
+msgid "Status"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-display.php:352
+msgid "Actions"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-list.php:30
+#: includes/models/class-appointix-bookings-model.php:44
+#: includes/models/class-appointix-bookings-model.php:76
+msgid "Unknown"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-list.php:51
+msgid "Check-in:"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-list.php:57
+#, fuzzy
+#| msgid "Check-in / Check-out"
+msgid "Check-out:"
+msgstr "Заезд / Выезд"
+
+#: admin/partials/appointix-admin-bookings-list.php:62
+#: public/partials/appointix-apartments-list.php:586
+#: public/partials/single-appointix_apartment.php:869
+#, fuzzy
+#| msgid "night"
+msgid "nights"
+msgstr "ночь"
+
+#: admin/partials/appointix-admin-bookings-list.php:62
+#: public/partials/apartment-details-query.php:91
+#: public/partials/appointix-apartments-list.php:476
+#: public/partials/appointix-public-display.php:131
+#: public/partials/single-appointix_apartment.php:844
+msgid "night"
+msgstr "ночь"
+
+#: admin/partials/appointix-admin-bookings-list.php:66
+msgid "Time:"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-list.php:88
+msgid "Cancelled"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-list.php:96
+msgid "Delete"
+msgstr ""
+
+#: admin/partials/appointix-admin-bookings-list.php:112
+msgid "No bookings found."
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:12
+msgid "Dashboard Overview"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:20
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "Active Apartments"
+msgstr "Доступные апартаменты"
+
+#: admin/partials/appointix-admin-display.php:28
+msgid "Pending Bookings"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:33
+msgid "Quick Start"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:34
+msgid "Use the shortcode <code>[appointix_apartments]</code> on any page to display your apartment catalog."
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:40
+msgid "View All Bookings"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:42
+msgid "Configure Settings"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:49
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "Recent Apartments"
+msgstr "Доступные апартаменты"
+
+#: admin/partials/appointix-admin-display.php:56
+#: includes/emails/admin-new-booking.php:109
+msgid "Name"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:57
+msgid "Price"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:79
+msgid "Need Help?"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:80
+msgid "If you have any questions or need assistance setting up your booking system, please refer to our documentation or contact support."
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:83
+msgid "Plugin Documentation"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:84
+msgid "Video Tutorials"
+msgstr ""
+
+#: admin/partials/appointix-admin-display.php:85
+msgid "Support Forum"
+msgstr ""
+
+#: admin/partials/appointix-admin-settings-display.php:14
+msgid "General Settings"
+msgstr ""
+
+#: admin/partials/appointix-admin-settings-display.php:17
+msgid "Currency Symbol"
+msgstr ""
+
+#: admin/partials/appointix-admin-settings-display.php:21
+msgid "The symbol to display before prices (e.g. $, €, £)."
+msgstr ""
+
+#: admin/partials/appointix-admin-settings-display.php:26
+msgid "Notification Email"
+msgstr ""
+
+#: admin/partials/appointix-admin-settings-display.php:30
+msgid "Email address to receive new booking notifications."
+msgstr ""
+
+#: admin/partials/appointix-admin-settings-display.php:35
+msgid "Save Settings"
+msgstr ""
+
+#: includes/class-appointix-emails.php:43
+msgid "Other Service"
+msgstr ""
+
+#: includes/class-appointix-emails.php:55
+#, php-format
+msgid "New Booking Received: #%d"
+msgstr ""
+
+#: includes/class-appointix-emails.php:72
+#, php-format
+msgid "Booking Confirmation: #%d"
+msgstr ""
+
+#: includes/elementor/class-appointix-elementor-widgets.php:30
+msgid "Appointix Widgets"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:13
+msgid "XIO Amenities"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:28
+msgid "Amenities"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:38
+msgid "Text"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:40
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:68
+msgid "Free private parking"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:47
+msgid "Icon"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:59
+msgid "Amenities List"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:64
+#: public/partials/single-appointix_apartment.php:850
+msgid "Verified by Booking.com"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:72
+#: public/partials/single-appointix_apartment.php:760
+#: public/partials/single-appointix_apartment.php:775
+msgid "Free WiFi"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-amenities-widget.php:76
+#: public/partials/single-appointix_apartment.php:763
+msgid "Family-friendly"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-apartments-grid-widget.php:13
+msgid "XIO Apartment Grid"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-apartments-grid-widget.php:28
+#: includes/elementor/widgets/class-appointix-booking-widget.php:29
+#: includes/elementor/widgets/class-appointix-hero-widget.php:29
+#: includes/elementor/widgets/class-appointix-info-widget.php:28
+#: includes/elementor/widgets/class-appointix-info-widget.php:56
+msgid "Content"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-apartments-grid-widget.php:36
+msgid "Posts Per Page"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:13
+msgid "XIO Booking"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:37
+msgid "Heading"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:40
+msgid "Enter the heading for the booking form."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:47
+msgid "Subheading"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:50
+msgid "Enter the subheading for the booking form."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:57
+#: includes/emails/admin-new-booking.php:135
+#: includes/emails/customer-booking-confirmation.php:140
+msgid "Check-in"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:60
+msgid "Enter the check-in text for the booking form."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:67
+#: includes/emails/admin-new-booking.php:140
+#: includes/emails/customer-booking-confirmation.php:145
+#, fuzzy
+#| msgid "Check-in / Check-out"
+msgid "Check-out"
+msgstr "Заезд / Выезд"
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:70
+msgid "Enter the check-out text for the booking form."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:77
+#, fuzzy
+#| msgid "Select dates"
+msgid "Select Dates"
+msgstr "Выбрать даты"
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:80
+msgid "Enter the select dates text for the booking form."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:87
+#: public/partials/appointix-apartments-list.php:616
+#: public/partials/appointix-public-display.php:52
+#: public/partials/single-appointix_apartment.php:898
+msgid "Adults"
+msgstr "Взрослые"
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:90
+msgid "Enter the adults text for the booking form."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:97
+#: public/partials/appointix-apartments-list.php:624
+#: public/partials/appointix-public-display.php:61
+#: public/partials/single-appointix_apartment.php:906
+msgid "Children"
+msgstr "Дети"
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:100
+msgid "Enter the children text for the booking form."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:107
+#: public/partials/appointix-public-display.php:70
+msgid "Check Availability"
+msgstr "Проверить наличие"
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:110
+msgid "Enter the check availability text for the booking form."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:117
+#, fuzzy
+#| msgid "Apartment Not Found"
+msgid "Apartment Name"
+msgstr "Апартаменты не найдены"
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:120
+msgid "Enter the apartment name (optional)."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:127
+msgid "Specific Apartment (optional)"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:129
+msgid "Enter the ID of a specific apartment to pre-select."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:138
+#: includes/elementor/widgets/class-appointix-hero-widget.php:92
+msgid "Style"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-booking-widget.php:146
+msgid "Form Background"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:13
+msgid "XIO FAQ Accordion"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:28
+msgid "FAQ Items"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:36
+msgid "Section Title"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:38
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:48
+msgid "Question"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:50
+#, fuzzy
+#| msgid "Check-in / Check-out"
+msgid "What time is check-in and check-out?"
+msgstr "Заезд / Выезд"
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:58
+msgid "Answer"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:60
+msgid "Check-in is from 15:00 to 19:00, and check-out is until 10:00."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:67
+msgid "FAQ List"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:71
+#: public/partials/appointix-apartments-list.php:576
+#: public/partials/single-appointix_apartment.php:858
+msgid "Check-in / Check-out"
+msgstr "Заезд / Выезд"
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:71
+msgid "15:00–19:00 / 10:00. Late check-in upon request."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:72
+msgid "Beach?"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:72
+msgid "It is a 2-minute walk away."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:73
+#, fuzzy
+#| msgid "Reserve Now"
+msgid "Reservation?"
+msgstr "Резервировать"
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:73
+msgid "You can reserve via our website, WhatsApp, or email."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:74
+msgid "Parking?"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:74
+msgid "Free private parking is available on-site."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:75
+msgid "Family-friendly?"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:75
+msgid "Yes, we are family-friendly."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:76
+#, fuzzy
+#| msgid "Bedrooms"
+msgid "Bedrooms?"
+msgstr "Спальни"
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:76
+msgid "All apartments have two bedrooms."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:77
+msgid "Kitchen?"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:77
+msgid "All apartments have a fully equipped kitchen."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:78
+msgid "WiFi?"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:78
+msgid "Yes, free WiFi is available."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:79
+msgid "Reception?"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:79
+msgid "No, there is no 24/7 reception. Please announce your arrival."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:80
+msgid "Airport transfer?"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:80
+#, fuzzy
+#| msgid "Available Apartments"
+msgid "Available upon request."
+msgstr "Доступные апартаменты"
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:81
+msgid "Smoking?"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-faq-widget.php:81
+msgid "Smoking is not allowed inside the apartments."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:13
+msgid "XIO Hero"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:37
+#: includes/elementor/widgets/class-appointix-info-widget.php:47
+msgid "Title"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:39
+#: includes/elementor/widgets/class-appointix-hero-widget.php:40
+msgid "Beachfront Two-Bedroom Apartments in Bar"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:48
+msgid "Description"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:50
+msgid "Enjoy a relaxing seaside stay at XIO Apartments, located directly on the beach in Bar, Montenegro. Spacious two-bedroom apartments, stunning sea views, and a calm, family-friendly atmosphere — ideal for couples and families."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:51
+msgid "Enjoy a relaxing seaside stay..."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:58
+msgid "Background Image"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:69
+msgid "CTA 1 Text"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:71
+#: public/partials/appointix-public-display.php:39
+msgid "Book Your Stay"
+msgstr "Забронировать проживание"
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:79
+msgid "CTA 1 Link"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:101
+msgid "Title Typography"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-hero-widget.php:109
+msgid "Title Color"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-info-widget.php:13
+msgid "XIO Info Box"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-info-widget.php:36
+msgid "Image"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-info-widget.php:49
+msgid "About XIO"
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-info-widget.php:58
+msgid "Located directly on the seafront in Bar, XIO Apartments offer comfort, privacy, and Adriatic views.<br><br>Susanjska Beach is a <strong>2-minute walk</strong> away.<br>Podgorica Airport: <strong>41 km</strong> | Tivat Airport: <strong>57 km</strong><br><br>Free private parking is available on-site."
+msgstr ""
+
+#: includes/elementor/widgets/class-appointix-info-widget.php:84
+#: public/partials/appointix-apartments-list.php:531
+#: public/partials/appointix-apartments-list.php:566
+#: public/partials/appointix-public-display.php:133
+msgid "Book Now"
+msgstr "Забронировать"
+
+#: includes/emails/admin-new-booking.php:100
+msgid "New Booking Received!"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:103
+msgid "Hello Admin,"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:104
+msgid "A new booking has been placed on your website. Here are the details:"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:106
+msgid "Customer Information"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:113
+#: public/partials/appointix-apartments-list.php:603
+#: public/partials/single-appointix_apartment.php:885
+msgid "Email"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:117
+#: public/partials/appointix-apartments-list.php:608
+#: public/partials/single-appointix_apartment.php:891
+msgid "Phone"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:122
+#, fuzzy
+#| msgid "View Details"
+msgid "Booking Details"
+msgstr "Подробнее"
+
+#: includes/emails/admin-new-booking.php:125
+#: includes/emails/customer-booking-confirmation.php:130
+msgid "Booking ID"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:129
+#: includes/emails/customer-booking-confirmation.php:134
+msgid "Property"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:146
+#: includes/emails/customer-booking-confirmation.php:160
+msgid "Date"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:152
+#: includes/emails/customer-booking-confirmation.php:166
+msgid "Time"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:160
+#: includes/emails/customer-booking-confirmation.php:174
+msgid "Total Amount"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:168
+msgid "Manage Bookings"
+msgstr ""
+
+#: includes/emails/admin-new-booking.php:172
+#: includes/emails/customer-booking-confirmation.php:188
+msgid "All rights reserved."
+msgstr ""
+
+#: includes/emails/customer-booking-confirmation.php:122
+msgid "Booking Confirmed!"
+msgstr ""
+
+#: includes/emails/customer-booking-confirmation.php:125
+#, php-format
+msgid "Hi %s,"
+msgstr ""
+
+#: includes/emails/customer-booking-confirmation.php:126
+msgid "Great news! Your booking has been received. We're getting everything ready for your stay."
+msgstr ""
+
+#: includes/emails/customer-booking-confirmation.php:155
+#, fuzzy
+#| msgid "night"
+msgid "Nights"
+msgstr "ночь"
+
+#: includes/emails/customer-booking-confirmation.php:155
+#, fuzzy
+#| msgid "night"
+msgid "Night"
+msgstr "ночь"
+
+#: includes/emails/customer-booking-confirmation.php:181
+msgid "If you have any questions or need to make changes to your booking, please don't hesitate to reach out to us."
+msgstr ""
+
+#: includes/emails/customer-booking-confirmation.php:184
+msgid "Visit Website"
+msgstr ""
+
+#: includes/emails/customer-booking-confirmation.php:189
+msgid "This is an automated message, please do not reply directly to this email."
+msgstr ""
+
+#: public/class-appointix-public.php:271
+msgid "Sorry, this slot is no longer available. Please choose another date or time."
+msgstr ""
+
+#: public/class-appointix-public.php:283
+msgid "Thank you! Your booking has been received."
+msgstr ""
+
+#: public/class-appointix-public.php:285
+msgid "Failed to process booking. Please try again."
+msgstr ""
+
+#: public/class-appointix-public.php:381
+msgid "You have already rated this property."
+msgstr ""
+
+#: public/class-appointix-public.php:405
+msgid "Thank you for your rating!"
+msgstr ""
+
+#: public/partials/apartment-details-query.php:99
+#, fuzzy
+#| msgid "About This Property"
+msgid "About This Apartment"
+msgstr "Об объекте"
+
+#: public/partials/apartment-details-query.php:106
+#, fuzzy
+#| msgid "View Details"
+msgid "Details"
+msgstr "Подробнее"
+
+#: public/partials/apartment-details-query.php:109
+msgid "Type:"
+msgstr ""
+
+#: public/partials/apartment-details-query.php:111
+#, fuzzy
+#| msgid "Bedrooms"
+msgid "Bedrooms:"
+msgstr "Спальни"
+
+#: public/partials/apartment-details-query.php:113
+#, fuzzy
+#| msgid "Bathrooms"
+msgid "Bathrooms:"
+msgstr "Ванные комнаты"
+
+#: public/partials/apartment-details-query.php:115
+#, fuzzy
+#| msgid "Max Guests"
+msgid "Max Guests:"
+msgstr "Макс. гостей"
+
+#: public/partials/apartment-details-query.php:117
+msgid "Location:"
+msgstr ""
+
+#: public/partials/apartment-details-query.php:126
+msgid "Book This Apartment"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:414
+msgid "Explore by Apartment Type"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:417
+msgid "All"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:501
+msgid "Beds"
+msgstr "Кровати"
+
+#: public/partials/appointix-apartments-list.php:512
+msgid "Baths"
+msgstr "Ванные"
+
+#: public/partials/appointix-apartments-list.php:522
+#: public/partials/appointix-apartments-list.php:672
+msgid "Guests"
+msgstr "Гости"
+
+#: public/partials/appointix-apartments-list.php:528
+msgid "View Details"
+msgstr "Подробнее"
+
+#: public/partials/appointix-apartments-list.php:577
+#: public/partials/appointix-public-display.php:46
+#: public/partials/single-appointix_apartment.php:860
+msgid "Select dates"
+msgstr "Выбрать даты"
+
+#: public/partials/appointix-apartments-list.php:596
+#, fuzzy
+#| msgid "Full name"
+msgid "Full Name"
+msgstr "Полное имя"
+
+#: public/partials/appointix-apartments-list.php:598
+#, fuzzy
+#| msgid "Full name"
+msgid "Your name"
+msgstr "Полное имя"
+
+#: public/partials/appointix-apartments-list.php:605
+msgid "you@email.com"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:610
+msgid "+1 234 567 890"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:637
+#: public/partials/appointix-apartments-list.php:966
+#: public/partials/appointix-apartments-list.php:974
+msgid "Confirm Booking"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:677
+msgid "Property Summary"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:688
+msgid "Full Description"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:699
+#, fuzzy
+#| msgid "Loading design..."
+msgid "Loading content..."
+msgstr "Загрузка дизайна..."
+
+#: public/partials/appointix-apartments-list.php:788
+msgid "Loading design..."
+msgstr "Загрузка дизайна..."
+
+#: public/partials/appointix-apartments-list.php:941
+msgid "Processing..."
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:960
+msgid "Booking confirmed!"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:964
+msgid "An error occurred"
+msgstr ""
+
+#: public/partials/appointix-apartments-list.php:972
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: public/partials/appointix-public-display.php:40
+msgid "Select your dates to check availability."
+msgstr "Выберите даты, чтобы проверить наличие свободных мест."
+
+#: public/partials/appointix-public-display.php:45
+#, fuzzy
+msgid "Arrival / Departure"
+msgstr "Заезд / Выезд"
+
+#: public/partials/appointix-public-display.php:107
+msgid "Available Apartments"
+msgstr "Доступные апартаменты"
+
+#: public/partials/appointix-public-display.php:109
+msgid "Use Different Dates"
+msgstr "Использовать другие даты"
+
+#: public/partials/appointix-public-display.php:140
+msgid "No apartments available."
+msgstr "Нет доступных апартаментов."
+
+#: public/partials/appointix-public-display.php:141
+msgid "Try changing your dates."
+msgstr "Попробуйте изменить даты."
+
+#: public/partials/appointix-public-display.php:142
+msgid "Searching Again"
+msgstr "Повторный поиск"
+
+#: public/partials/single-appointix_apartment.php:49
+msgid "Apartment Not Found"
+msgstr "Апартаменты не найдены"
+
+#: public/partials/single-appointix_apartment.php:49
+msgid "The apartment you are looking for does not exist."
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:49
+msgid "Back to Home"
+msgstr "На главную"
+
+#: public/partials/single-appointix_apartment.php:616
+#, fuzzy
+#| msgid "No apartments available."
+msgid "No images available"
+msgstr "Нет доступных апартаментов."
+
+#: public/partials/single-appointix_apartment.php:667
+msgid "ratings"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:725
+msgid "View Type"
+msgstr "Тип вида"
+
+#: public/partials/single-appointix_apartment.php:737
+msgid "About This Property"
+msgstr "Об объекте"
+
+#: public/partials/single-appointix_apartment.php:748
+msgid "Key Features"
+msgstr "Ключевые особенности"
+
+#: public/partials/single-appointix_apartment.php:754
+#: public/partials/single-appointix_apartment.php:768
+msgid "50 m²"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:755
+#: public/partials/single-appointix_apartment.php:769
+#, fuzzy
+#| msgid "Bedrooms"
+msgid "Two bedrooms"
+msgstr "Спальни"
+
+#: public/partials/single-appointix_apartment.php:756
+#, fuzzy
+#| msgid "Mountain View"
+msgid "Sea & mountain views"
+msgstr "Вид на горы"
+
+#: public/partials/single-appointix_apartment.php:757
+#: public/partials/single-appointix_apartment.php:772
+msgid "Balcony & terrace"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:758
+#: public/partials/single-appointix_apartment.php:773
+msgid "Fully equipped kitchen"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:759
+#: public/partials/single-appointix_apartment.php:774
+msgid "Air conditioning"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:761
+#: public/partials/single-appointix_apartment.php:776
+#, fuzzy
+#| msgid "Searching Again"
+msgid "Washing machine"
+msgstr "Повторный поиск"
+
+#: public/partials/single-appointix_apartment.php:762
+#: public/partials/single-appointix_apartment.php:777
+msgid "Non-smoking"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:770
+#, fuzzy
+#| msgid "Bathrooms"
+msgid "Two bathrooms"
+msgstr "Ванные комнаты"
+
+#: public/partials/single-appointix_apartment.php:771
+msgid "Mountain & partial sea views"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:821
+msgid "What This Place Offers"
+msgstr "Что предлагает это место"
+
+#: public/partials/single-appointix_apartment.php:879
+msgid "Your Name"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:881
+msgid "Full name"
+msgstr "Полное имя"
+
+#: public/partials/single-appointix_apartment.php:887
+msgid "your@email.com"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:893
+msgid "+1 234 567 8900"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:929
+msgid "Send Booking Request"
+msgstr "Pošalji upit za rezervaciju"
+
+#: public/partials/single-appointix_apartment.php:942
+msgid "You won't be charged yet"
+msgstr "Оплата не будет списана сейчас"
+
+#: public/partials/single-appointix_apartment.php:1190
+msgid "Rate your experience"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:1191
+msgid "How would you rate this apartment?"
+msgstr ""
+
+#: public/partials/single-appointix_apartment.php:1197
+msgid "Submit Rating"
+msgstr ""
+
+#, fuzzy
+#~| msgid "Check-in / Check-out"
+
+#~ msgid "Arrival / Departure"
+#~ msgstr "Заезд / Выезд"
+
+#~ msgid "Register Now"
+#~ msgstr "Зарегистрироваться"
