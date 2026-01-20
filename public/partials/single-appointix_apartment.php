@@ -78,15 +78,21 @@ $rating_count = get_post_meta($apartment_id, '_appointix_rating_count', true) ?:
 
 // Gallery images
 $gallery_images = array();
-if (!empty($apartment->gallery)) {
-    $gallery_ids = explode(',', $apartment->gallery);
-    foreach ($gallery_ids as $img_id) {
-        $img_url = wp_get_attachment_image_url(intval($img_id), 'large');
-        $thumb_url = wp_get_attachment_image_url(intval($img_id), 'medium');
-        if ($img_url) {
-            $gallery_images[] = array('full' => $img_url, 'thumb' => $thumb_url);
-        }
-    }
+if ( ! empty( $apartment->gallery ) ) {
+	$gallery_ids = explode( ',', $apartment->gallery );
+	foreach ( $gallery_ids as $img_id ) {
+		$img_data = wp_get_attachment_image_src( intval( $img_id ), 'full' );
+		$thumb_url = wp_get_attachment_image_url( intval( $img_id ), 'medium' );
+		
+		if ( $img_data ) {
+			$gallery_images[] = array(
+				'full'   => $img_data[0],
+				'thumb'  => $thumb_url,
+				'width'  => $img_data[1],
+				'height' => $img_data[2],
+			);
+		}
+	}
 }
 
 
@@ -599,9 +605,11 @@ if (!empty($apartment->gallery)) {
     <div class="apt-slider-container <?php echo empty($gallery_images) ? 'apt-no-gallery' : ''; ?>">
         <div class="apt-slider-wrapper">
             <?php if (!empty($gallery_images)): ?>
-                <?php foreach ($gallery_images as $index => $image): ?>
-                    <div class="apt-slide <?php echo $index === 0 ? 'active' : ''; ?>">
-                        <img src="<?php echo esc_url($image['full']); ?>" alt="">
+                <?php foreach ( $gallery_images as $index => $image ) : ?>
+                    <div class="apt-slide <?php echo $index === 0 ? 'active' : ''; ?>" 
+                         data-width="<?php echo esc_attr( $image['width'] ); ?>" 
+                         data-height="<?php echo esc_attr( $image['height'] ); ?>">
+                        <img src="<?php echo esc_url( $image['full'] ); ?>" alt="">
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -1040,22 +1048,151 @@ if (!empty($apartment->gallery)) {
             });
         })();
 
-        // 2. Slider Logic
+        // 2. Slider Logic (Dynamic Image Grouping)
         (function () {
             var container = document.querySelector('.apt-slider-container');
             var wrapper = document.querySelector('.apt-slider-wrapper');
-            var dots = document.querySelectorAll('.apt-slider-dot');
-            var slides = document.querySelectorAll('.apt-slide');
-            if (!wrapper || slides.length <= 1) return;
+            var dotsContainer = document.querySelector('.apt-slider-dots');
+            var originalSlides = Array.from(document.querySelectorAll('.apt-slide'));
+            
+            if (!container || !wrapper || originalSlides.length === 0) return;
 
             var currentIndex = 0;
             var slideInterval;
+            var groupedSlides = [];
+
+            function groupImages() {
+                var containerWidth = container.offsetWidth || window.innerWidth;
+                if (containerWidth < 100) {
+                    setTimeout(groupImages, 100);
+                    return;
+                }
+
+                var currentGroup = [];
+                groupedSlides = [];
+                var currentWidthSum = 0;
+                var spacing = 1;
+                var padding = 0;
+                var availableWidth = containerWidth - padding;
+                var sliderHeight = 700;
+
+                originalSlides.forEach(function (slide) {
+                    var w = parseInt(slide.getAttribute('data-width')) || 0;
+                    var h = parseInt(slide.getAttribute('data-height')) || 0;
+                    
+                    if (w === 0 || h === 0) {
+                        var img = slide.querySelector('img');
+                        if (img && img.naturalWidth) {
+                            w = img.naturalWidth;
+                            h = img.naturalHeight;
+                        } else {
+                            w = availableWidth / 2;
+                            h = sliderHeight;
+                        }
+                    }
+
+                    var ratio = w / h;
+                    var normW = ratio * sliderHeight;
+
+                    // If a single image is extremely wide, it's a slide
+                    if (normW >= availableWidth) {
+                        if (currentGroup.length > 0) {
+                            groupedSlides.push(currentGroup);
+                            currentGroup = [];
+                            currentWidthSum = 0;
+                        }
+                        groupedSlides.push([{ el: slide, ratio: ratio }]);
+                        return;
+                    }
+
+                    // Greedy grouping: add until we fill the width
+                    currentGroup.push({ el: slide, ratio: ratio });
+                    currentWidthSum += normW + spacing;
+
+                    // Check if we reached the goal (filled width) OR limit (say 4 for logic safety)
+                    if (currentWidthSum >= availableWidth || currentGroup.length >= 4) {
+                        groupedSlides.push(currentGroup);
+                        currentGroup = [];
+                        currentWidthSum = 0;
+                    }
+                });
+
+                if (currentGroup.length > 0) {
+                    groupedSlides.push(currentGroup);
+                }
+
+                renderSlides();
+            }
+
+            function renderSlides() {
+                wrapper.innerHTML = '';
+                groupedSlides.forEach(function (group) {
+                    var slideDiv = document.createElement('div');
+                    slideDiv.className = 'apt-slide group-' + group.length;
+                    
+                    group.forEach(function (item) {
+                        var clone = item.el.cloneNode(true);
+                        clone.className = 'apt-slide-item';
+                        // Use aspect ratio for flex-grow to preserve proportions while filling width
+                        clone.style.flex = item.ratio + ' 1 0%';
+                        slideDiv.appendChild(clone);
+                    });
+                    wrapper.appendChild(slideDiv);
+                });
+
+                renderDots();
+                currentIndex = 0;
+                updateSliderPosition(false);
+            }
+
+            function renderDots() {
+                if (!dotsContainer) return;
+                dotsContainer.innerHTML = '';
+                if (groupedSlides.length <= 1) {
+                    dotsContainer.style.display = 'none';
+                    return;
+                }
+                dotsContainer.style.display = 'flex';
+
+                groupedSlides.forEach(function (_, index) {
+                    var dot = document.createElement('div');
+                    dot.className = 'apt-slider-dot' + (index === 0 ? ' active' : '');
+                    dot.setAttribute('data-index', index);
+                    dot.addEventListener('click', function () {
+                        currentIndex = index;
+                        updateSliderPosition();
+                        startAutoSlide();
+                    });
+                    dotsContainer.appendChild(dot);
+                });
+            }
+
+            function updateSliderPosition(animate) {
+                if (animate === false) {
+                    wrapper.style.transition = 'none';
+                } else {
+                    wrapper.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                }
+
+                wrapper.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+                
+                var dots = document.querySelectorAll('.apt-slider-dot');
+                dots.forEach(function (d, i) {
+                    d.classList.toggle('active', i === currentIndex);
+                });
+
+                if (animate === false) {
+                    // Force reflow
+                    wrapper.offsetHeight;
+                }
+            }
 
             function startAutoSlide() {
                 stopAutoSlide();
+                if (groupedSlides.length <= 1) return;
                 slideInterval = setInterval(function () {
-                    currentIndex = (currentIndex + 1) % slides.length;
-                    goToSlide(currentIndex);
+                    currentIndex = (currentIndex + 1) % groupedSlides.length;
+                    updateSliderPosition();
                 }, 5000);
             }
 
@@ -1063,26 +1200,11 @@ if (!empty($apartment->gallery)) {
                 if (slideInterval) clearInterval(slideInterval);
             }
 
-            function goToSlide(index) {
-                currentIndex = index;
-                slides.forEach(function (s) { s.classList.remove('active'); });
-                if (slides[index]) slides[index].classList.add('active');
-
-                dots.forEach(function (d) { d.classList.remove('active'); });
-                if (dots[index]) dots[index].classList.add('active');
-            }
-
-            dots.forEach(function (dot) {
-                dot.addEventListener('click', function () {
-                    var index = parseInt(this.getAttribute('data-index'));
-                    goToSlide(index);
-                    startAutoSlide(); // Reset interval
-                });
-            });
-
+            window.addEventListener('resize', groupImages);
             container.addEventListener('mouseenter', stopAutoSlide);
             container.addEventListener('mouseleave', startAutoSlide);
 
+            groupImages(); // Initial run
             startAutoSlide();
         })();
 
