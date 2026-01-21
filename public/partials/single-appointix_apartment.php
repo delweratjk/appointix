@@ -749,34 +749,42 @@ if ( ! empty( $apartment->gallery ) ) {
                     </h3>
                     <ul class="apt-key-features">
                         <?php 
-						if ( $apartment->apartment_type === 'sea_view' ) {
-							$features = array(
-								__( '50 m²', 'appointix' ),
-								__( 'Two bedrooms', 'appointix' ),
-								__( 'Sea & mountain views', 'appointix' ),
-								__( 'Balcony & terrace', 'appointix' ),
-								__( 'Fully equipped kitchen', 'appointix' ),
-								__( 'Air conditioning', 'appointix' ),
-								__( 'Free WiFi', 'appointix' ),
-								__( 'Washing machine', 'appointix' ),
-								__( 'Non-smoking', 'appointix' ),
-								__( 'Family-friendly', 'appointix' )
-							);
-						} else {
-							// Mountain View / Default
-							$features = array(
-								__( '50 m²', 'appointix' ),
-								__( 'Two bedrooms', 'appointix' ),
-								__( 'Two bathrooms', 'appointix' ),
-								__( 'Mountain & partial sea views', 'appointix' ),
-								__( 'Balcony & terrace', 'appointix' ),
-								__( 'Fully equipped kitchen', 'appointix' ),
-								__( 'Air conditioning', 'appointix' ),
-								__( 'Free WiFi', 'appointix' ),
-								__( 'Washing machine', 'appointix' ),
-								__( 'Non-smoking', 'appointix' )
-							);
-						}
+                        $key_features_meta = get_post_meta( get_the_ID(), '_appointix_key_features', true );
+                        
+                        if ( ! empty( $key_features_meta ) ) {
+                            // Use dynamic features from meta
+                            $features = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', $key_features_meta ) ) );
+                        } else {
+                            // Fallback to hardcoded logic if meta is empty
+                            if ( $apartment->apartment_type === 'sea_view' ) {
+                                $features = array(
+                                    __( '50 m²', 'appointix' ),
+                                    __( 'Two bedrooms', 'appointix' ),
+                                    __( 'Sea & mountain views', 'appointix' ),
+                                    __( 'Balcony & terrace', 'appointix' ),
+                                    __( 'Fully equipped kitchen', 'appointix' ),
+                                    __( 'Air conditioning', 'appointix' ),
+                                    __( 'Free WiFi', 'appointix' ),
+                                    __( 'Washing machine', 'appointix' ),
+                                    __( 'Non-smoking', 'appointix' ),
+                                    __( 'Family-friendly', 'appointix' )
+                                );
+                            } else {
+                                // Mountain View / Default
+                                $features = array(
+                                    __( '50 m²', 'appointix' ),
+                                    __( 'Two bedrooms', 'appointix' ),
+                                    __( 'Two bathrooms', 'appointix' ),
+                                    __( 'Mountain & partial sea views', 'appointix' ),
+                                    __( 'Balcony & terrace', 'appointix' ),
+                                    __( 'Fully equipped kitchen', 'appointix' ),
+                                    __( 'Air conditioning', 'appointix' ),
+                                    __( 'Free WiFi', 'appointix' ),
+                                    __( 'Washing machine', 'appointix' ),
+                                    __( 'Non-smoking', 'appointix' )
+                                );
+                            }
+                        }
                         
                         foreach ( $features as $feature ) : ?>
                             <li>
@@ -846,10 +854,8 @@ if ( ! empty( $apartment->gallery ) ) {
             <!-- Right: Booking Card -->
             <div class="apt-booking-sidebar">
                 <div class="apt-booking-card">
-                    <div class="apt-price-header">
-                        <span
-                            class="apt-price-amount"><?php echo esc_html($currency . number_format($apartment->price_per_night, 0)); ?></span>
-                        <span class="apt-price-period">/ <?php _e('night', 'appointix'); ?></span>
+                    <div class="apt-price-header" style="justify-content: center; padding: 10px 0;">
+                        <span class="apt-price-period" style="font-size: 1.1rem; font-weight: 700; color: #1e293b;"><?php _e('Select dates for best price', 'appointix'); ?></span>
                     </div>
 
                     <div class="apt-trust-signal" style="margin-bottom: 20px; text-align: center;">
@@ -871,16 +877,11 @@ if ( ! empty( $apartment->gallery ) ) {
                         </div>
 
                         <div class="apt-booking-summary" id="apt-summary" style="display: none;">
-                            <div class="apt-summary-row">
-                                <span><?php echo esc_html($currency); ?><span
-                                        id="apt-ppn"><?php echo number_format($apartment->price_per_night, 0); ?></span>
-                                    × <span id="apt-nights">0</span> <?php _e('nights', 'appointix'); ?></span>
-                                <span><?php echo esc_html($currency); ?><span id="apt-subtotal">0</span></span>
-                            </div>
                             <div class="apt-summary-row total">
-                                <span><?php _e('Total', 'appointix'); ?></span>
+                                <span><?php _e('Total Amount', 'appointix'); ?></span>
                                 <span><?php echo esc_html($currency); ?><span id="apt-total">0</span></span>
                             </div>
+                            <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px; text-align: right;"><?php _e('Includes all taxes and fees', 'appointix'); ?></p>
                         </div>
 
                         <div class="form-group">
@@ -972,6 +973,7 @@ if ( ! empty( $apartment->gallery ) ) {
             if (!form || !dateInput) return;
 
             var pricePerNight = parseFloat(form.dataset.price) || 0;
+            var apartmentId = form.dataset.apartmentId;
             var currency = '<?php echo esc_js($currency); ?>';
 
             if (typeof flatpickr !== 'undefined') {
@@ -989,14 +991,42 @@ if ( ! empty( $apartment->gallery ) ) {
                             checkOutInput.value = flatpickr.formatDate(checkOut, 'Y-m-d');
 
                             var nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+                            // Allow same-day (0 nights diff) as 1 day/unit
+                            if (nights === 0) nights = 1;
+
                             if (nights > 0) {
-                                var total = nights * pricePerNight;
-                                document.getElementById('apt-nights').textContent = nights;
-                                document.getElementById('apt-subtotal').textContent = total.toLocaleString();
-                                document.getElementById('apt-total').textContent = total.toLocaleString();
-                                document.getElementById('apt-total-hidden').value = total.toFixed(2);
-                                summaryDiv.style.display = 'block';
-                                submitBtn.disabled = false;
+                                // Fetch dynamic price via AJAX
+                                fetch(appointix_public.ajax_url, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                    body: new URLSearchParams({
+                                        action: 'appointix_calculate_price',
+                                        post_id: apartmentId,
+                                        start_date: checkInInput.value,
+                                        end_date: checkOutInput.value,
+                                        nonce: appointix_public.nonce
+                                    })
+                                })
+                                .then(function(r) { return r.json(); })
+                                .then(function(data) {
+                                    if (data.success) {
+                                        // Check if price is valid (available)
+                                        var rawTotal = parseFloat(data.data.total.replace(/,/g, ''));
+                                        if (rawTotal <= 0) {
+                                            messageDiv.className = 'apt-booking-message error';
+                                            messageDiv.innerHTML = '<?php _e('Dates unavailable or no price set.', 'appointix'); ?>';
+                                            messageDiv.style.display = 'flex';
+                                            summaryDiv.style.display = 'none';
+                                            submitBtn.disabled = true;
+                                        } else {
+                                            messageDiv.style.display = 'none';
+                                            document.getElementById('apt-total').textContent = data.data.total;
+                                            document.getElementById('apt-total-hidden').value = rawTotal;
+                                            summaryDiv.style.display = 'block';
+                                            submitBtn.disabled = false;
+                                        }
+                                    }
+                                });
                             }
                         } else {
                             summaryDiv.style.display = 'none';

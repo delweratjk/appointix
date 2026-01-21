@@ -46,23 +46,29 @@ class Appointix_Admin
     /**
      * Check and update database schema if needed.
      */
-    private function check_database_updates()
-    {
+    private function check_database_updates() {
         global $wpdb;
 
-        // Create Seasonal Pricing Table if not exists
         $table_seasonal = $wpdb->prefix . 'appointix_seasonal_pricing';
+
+        // Manual column rename if old one exists
+        $column_exists = $wpdb->get_results( $wpdb->prepare( "SHOW COLUMNS FROM $table_seasonal LIKE %s", 'service_id' ) );
+        if ( ! empty( $column_exists ) ) {
+            $wpdb->query( "ALTER TABLE $table_seasonal CHANGE service_id post_id mediumint(9) NOT NULL" );
+        }
+
+        // Create/Update Seasonal Pricing Table
         $sql_seasonal = "CREATE TABLE IF NOT EXISTS $table_seasonal (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            service_id mediumint(9) NOT NULL,
+            post_id mediumint(9) NOT NULL,
             price decimal(10,2) NOT NULL,
             start_date date NOT NULL,
             end_date date NOT NULL,
             PRIMARY KEY  (id)
         ) " . $wpdb->get_charset_collate() . ";";
 
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql_seasonal);
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql_seasonal );
     }
 
     /**
@@ -222,13 +228,17 @@ class Appointix_Admin
         wp_nonce_field('appointix_apartment_meta', 'appointix_apartment_nonce');
 
         $apartment_type = get_post_meta($post->ID, '_appointix_apartment_type', true);
+        $apartment_type = get_post_meta($post->ID, '_appointix_apartment_type', true);
+        $pricing_mode = get_post_meta($post->ID, '_appointix_pricing_mode', true) ? get_post_meta($post->ID, '_appointix_pricing_mode', true) : 'static';
         $price_per_night = get_post_meta($post->ID, '_appointix_price_per_night', true);
+        $bedrooms = get_post_meta($post->ID, '_appointix_bedrooms', true);
         $bedrooms = get_post_meta($post->ID, '_appointix_bedrooms', true);
         $bathrooms = get_post_meta($post->ID, '_appointix_bathrooms', true);
         $max_guests = get_post_meta($post->ID, '_appointix_max_guests', true);
         $amenities = get_post_meta($post->ID, '_appointix_amenities', true);
         $location = get_post_meta($post->ID, '_appointix_location', true);
         $property_summary = get_post_meta($post->ID, '_appointix_property_summary', true);
+        $key_features = get_post_meta($post->ID, '_appointix_key_features', true);
 
         $apartment_types = array(
             'sea_view' => __('Sea View', 'appointix'),
@@ -282,6 +292,13 @@ class Appointix_Admin
                     </select>
                 </div>
                 <div class="appointix-meta-row">
+                    <label for="appointix_pricing_mode"><?php _e('Pricing Mode', 'appointix'); ?></label>
+                    <select name="appointix_pricing_mode" id="appointix_pricing_mode">
+                        <option value="static" <?php selected($pricing_mode, 'static'); ?>><?php _e('Static Price (Per Night)', 'appointix'); ?></option>
+                        <option value="dynamic" <?php selected($pricing_mode, 'dynamic'); ?>><?php _e('Dynamic Calendar Pricing', 'appointix'); ?></option>
+                    </select>
+                </div>
+                <div class="appointix-meta-row" id="static-pricing-row">
                     <label for="appointix_price_per_night"><?php _e('Price Per Night ($)', 'appointix'); ?></label>
                     <input type="number" name="appointix_price_per_night" id="appointix_price_per_night"
                         value="<?php echo esc_attr($price_per_night); ?>" step="0.01" min="0">
@@ -321,6 +338,57 @@ class Appointix_Admin
             <textarea name="appointix_amenities" id="appointix_amenities" rows="3"
                 placeholder="<?php _e('e.g., WiFi, Air Conditioning, Kitchen, Pool, Parking', 'appointix'); ?>"><?php echo esc_textarea($amenities); ?></textarea>
         </div>
+        <div class="appointix-meta-row">
+            <label for="appointix_key_features"><?php _e('Key Features (one per line)', 'appointix'); ?></label>
+            <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:5px;">
+                <textarea name="appointix_key_features" id="appointix_key_features" rows="6" style="flex:1;"
+                    placeholder="<?php _e("e.g.\n50 m²\nTwo bedrooms\nSea View", "appointix"); ?>"><?php echo esc_textarea($key_features); ?></textarea>
+                <button type="button" id="appointix-load-features-default" class="button">
+                    <?php _e('Load Defaults', 'appointix'); ?>
+                </button>
+            </div>
+            <p class="description"><?php _e('These features appear as a checklist on the single apartment page. If empty, defaults for the selected type will be used.', 'appointix'); ?></p>
+        </div>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ddd;">
+
+        <h3><?php _e('Dynamic Calendar Pricing', 'appointix'); ?></h3>
+        <p class="description"><?php _e('Set special rates for specific date ranges. These will override the base price per night.', 'appointix'); ?></p>
+        
+        <div id="seasonal-pricing-container" style="margin-top: 15px;">
+            <input type="hidden" id="appointix_post_id" value="<?php echo $post->ID; ?>">
+            <div class="seasonal-controls" style="display: flex; gap: 10px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <div style="flex: 1;">
+                    <label style="display:block; margin-bottom:5px; font-weight:600;"><?php _e('Start Date', 'appointix'); ?></label>
+                    <input type="text" id="seasonal_start" class="appointix-datepicker" placeholder="YYYY-MM-DD">
+                </div>
+                <div style="flex: 1;">
+                    <label style="display:block; margin-bottom:5px; font-weight:600;"><?php _e('End Date', 'appointix'); ?></label>
+                    <input type="text" id="seasonal_end" class="appointix-datepicker" placeholder="YYYY-MM-DD">
+                </div>
+                <div style="flex: 1;">
+                    <label style="display:block; margin-bottom:5px; font-weight:600;"><?php _e('Price ($)', 'appointix'); ?></label>
+                    <input type="number" id="seasonal_price" step="0.01" min="0" placeholder="0.00">
+                </div>
+                <div style="display: flex; align-items: flex-end;">
+                    <button type="button" id="add-seasonal-price-btn" class="button button-primary" style="height: 40px;"><?php _e('Add Rate', 'appointix'); ?></button>
+                </div>
+            </div>
+
+            <div id="seasonal-rates-list">
+                <!-- Loaded via JS -->
+            </div>
+        </div>
+        <script>
+            jQuery(document).ready(function($) {
+                if ($('.appointix-datepicker').length > 0) {
+                    $('.appointix-datepicker').datepicker({
+                        dateFormat: 'yy-mm-dd',
+                        minDate: 0
+                    });
+                }
+            });
+        </script>
         <?php
     }
 
@@ -465,6 +533,7 @@ class Appointix_Admin
 
         $fields = array(
             'appointix_apartment_type' => '_appointix_apartment_type',
+            'appointix_pricing_mode' => '_appointix_pricing_mode',
             'appointix_price_per_night' => '_appointix_price_per_night',
             'appointix_bedrooms' => '_appointix_bedrooms',
             'appointix_bathrooms' => '_appointix_bathrooms',
@@ -473,6 +542,7 @@ class Appointix_Admin
             'appointix_amenities' => '_appointix_amenities',
             'appointix_location' => '_appointix_location',
             'appointix_gallery' => '_appointix_gallery',
+            'appointix_key_features' => '_appointix_key_features',
             'appointix_ical_airbnb' => '_appointix_ical_airbnb',
             'appointix_ical_booking' => '_appointix_ical_booking'
         );
@@ -485,8 +555,10 @@ class Appointix_Admin
                     $value = floatval($_POST[$post_key]);
                 } elseif (in_array($meta_key, array('_appointix_bedrooms', '_appointix_bathrooms', '_appointix_max_guests'))) {
                     $value = intval($_POST[$post_key]);
+                } elseif ( in_array( $meta_key, array( '_appointix_property_summary', '_appointix_amenities', '_appointix_key_features' ) ) ) {
+                    $value = sanitize_textarea_field( $_POST[$post_key] );
                 } else {
-                    $value = sanitize_text_field($_POST[$post_key]);
+                    $value = sanitize_text_field( $_POST[$post_key] );
                 }
                 update_post_meta($post_id, $meta_key, $value);
             }
@@ -587,6 +659,26 @@ class Appointix_Admin
         wp_send_json_success(array('html' => $html));
     }
 
+    public function ajax_delete_seasonal_price()
+    {
+        check_ajax_referer('appointix_admin_nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'appointix')));
+        }
+
+        $id = intval($_POST['id']);
+        global $wpdb;
+        $table_seasonal = $wpdb->prefix . 'appointix_seasonal_pricing';
+        $result = $wpdb->delete($table_seasonal, array('id' => $id), array('%d'));
+
+        if ($result !== false) {
+            wp_send_json_success(array('message' => __('Rate deleted successfully!', 'appointix')));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to delete rate', 'appointix')));
+        }
+    }
+
     /**
      * AJAX handler to save settings.
      */
@@ -611,9 +703,8 @@ class Appointix_Admin
      */
     public function enqueue_styles()
     {
-
         wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/appointix-admin.css', array(), $this->version, 'all');
-
+        wp_enqueue_style('jquery-ui-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css');
     }
 
     /**
@@ -623,8 +714,7 @@ class Appointix_Admin
      */
     public function enqueue_scripts()
     {
-
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/appointix-admin.js', array('jquery'), $this->version, false);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/appointix-admin.js', array('jquery', 'jquery-ui-datepicker'), $this->version, false);
 
         wp_localize_script($this->plugin_name, 'appointix_admin', array(
             'ajax_url' => admin_url('admin-ajax.php'),
@@ -644,7 +734,7 @@ class Appointix_Admin
         $table_seasonal = $wpdb->prefix . 'appointix_seasonal_pricing';
 
         $wpdb->insert($table_seasonal, array(
-            'service_id' => intval($_POST['service_id']),
+            'post_id' => intval($_POST['post_id']),
             'start_date' => sanitize_text_field($_POST['start']),
             'end_date' => sanitize_text_field($_POST['end']),
             'price' => floatval($_POST['price'])
@@ -658,9 +748,9 @@ class Appointix_Admin
         check_ajax_referer('appointix_admin_nonce', 'nonce');
         global $wpdb;
         $table_seasonal = $wpdb->prefix . 'appointix_seasonal_pricing';
-        $service_id = intval($_POST['service_id']);
+        $post_id = intval($_POST['post_id']);
 
-        $prices = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_seasonal WHERE service_id = %d ORDER BY start_date ASC", $service_id));
+        $prices = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_seasonal WHERE post_id = %d ORDER BY start_date ASC", $post_id));
         wp_send_json_success($prices);
     }
 }

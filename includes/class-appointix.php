@@ -186,6 +186,7 @@ class Appointix {
 
 		$this->loader->add_action( 'wp_ajax_appointix_add_seasonal_price', $plugin_admin, 'ajax_add_seasonal_price' );
 		$this->loader->add_action( 'wp_ajax_appointix_get_seasonal_prices', $plugin_admin, 'ajax_get_seasonal_prices' );
+		$this->loader->add_action( 'wp_ajax_appointix_delete_seasonal_price', $plugin_admin, 'ajax_delete_seasonal_price' );
 
 		// Enable Elementor for apartments CPT
 		$this->loader->add_filter( 'elementor/cpt_support', $this, 'add_elementor_cpt_support' );

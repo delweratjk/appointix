@@ -42,7 +42,21 @@ class Appointix_Availability_Model
             $check_start
         ));
 
-        return intval($count) === 0;
+        if (intval($count) > 0) {
+            return false;
+        }
+
+        // Check Dynamic Pricing Rules Coverage
+        $pricing_mode = get_post_meta($post_id, '_appointix_pricing_mode', true);
+        if ($pricing_mode === 'dynamic') {
+            // We use calculate_total to validate coverage. It returns 0 if gap exists.
+            $price_check = Appointix_Seasonal_Pricing_Model::calculate_total($post_id, $date, $end_date);
+            if ($price_check <= 0) {
+                return false; // Unavailable due to missing price rules
+            }
+        }
+
+        return true;
     }
 
     /**

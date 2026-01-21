@@ -112,6 +112,17 @@ class Appointix_Booking_Widget extends \Elementor\Widget_Base {
 		);
 
 		$this->add_control(
+			'booking_form_apartment_label',
+			array(
+				'label'       => __( 'Apartment Label', 'appointix' ),
+				'type'        => \Elementor\Controls_Manager::TEXT,
+				'dynamic'     => array( 'active' => true ),
+				'description' => __( 'Enter the apartment label for the booking form.', 'appointix' ),
+				'default'     => __( 'Select Apartment', 'appointix' ),
+			)
+		);
+
+		$this->add_control(
 			'apartment_name',
 			array(
 				'label'       => __( 'Apartment Name', 'appointix' ),
@@ -230,8 +241,9 @@ class Appointix_Booking_Widget extends \Elementor\Widget_Base {
 		$booking_form_adults = ! empty( $settings['booking_form_adults'] ) ? $settings['booking_form_adults'] : '';
 		$booking_form_children = ! empty( $settings['booking_form_children'] ) ? $settings['booking_form_children'] : '';
 		$booking_form_check_availability = ! empty( $settings['booking_form_check_availability'] ) ? $settings['booking_form_check_availability'] : '';
+		$booking_form_apartment_label = ! empty( $settings['booking_form_apartment_label'] ) ? $settings['booking_form_apartment_label'] : '';
 		$show_apartment_dropdown = 'yes';
-		$apartment_label = __( 'Select Apartment', 'appointix' );
+		$apartment_label = ! empty( $booking_form_apartment_label ) ? $booking_form_apartment_label : __( 'Select Apartment', 'appointix' );
 
 		echo do_shortcode( sprintf(
 			'[appointix_booking apartment_id="%s" apartment_name="%s" booking_form_heading="%s" booking_form_subheading="%s" booking_form_check_in="%s" booking_form_check_out="%s" booking_form_select_dates="%s" booking_form_adults="%s" booking_form_children="%s" booking_form_check_availability="%s" show_apartment_dropdown="%s" apartment_label="%s"]',

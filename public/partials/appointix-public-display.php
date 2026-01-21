@@ -127,8 +127,7 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
                                         <h2 class="apt-name"><?php echo esc_html($selected_apartment->name); ?></h2>
                                     </div>
                                     <div class="apt-price-tag">
-                                        <span class="apt-price-val"><?php echo esc_html($currency . number_format($selected_apartment->price_per_night, 0)); ?></span>
-                                        <span class="apt-price-unit"><?php _e('/ night', 'appointix'); ?></span>
+                                        <!-- Price shown in summary below -->
                                     </div>
                                 </div>
                                 <div class="apt-card-desc">
@@ -183,7 +182,7 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
                                         $check_in_dt = new DateTime($search_check_in);
                                         $check_out_dt = new DateTime($search_check_out);
                                         $nights = $check_in_dt->diff($check_out_dt)->days;
-                                        $total_price = $nights * $selected_apartment->price_per_night;
+                                        $total_price = Appointix_Seasonal_Pricing_Model::calculate_total($selected_apartment->id, $search_check_in, $search_check_out);
                                     ?>
                                     <div class="summary-item">
                                         <label><?php _e('Length of Stay', 'appointix'); ?></label>
@@ -244,7 +243,7 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
                                             <h3><a href="<?php echo esc_url($booking_link); ?>"><?php echo esc_html($apartment->name); ?></a></h3>
                                             <div class="apt-card-footer">
                                                 <div class="apt-price">
-                                                    <strong><?php echo esc_html($currency . number_format($apartment->price_per_night, 0)); ?></strong> / <?php _e('night', 'appointix'); ?>
+                                                    <!-- Select dates for price -->
                                                 </div>
                                                 <a href="<?php echo esc_url($booking_link); ?>" class="appointix-btn-book"><?php _e('Book Now', 'appointix'); ?></a>
                                             </div>
@@ -277,7 +276,7 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
                                 </div>
                                 <div class="apt-card-footer">
                                     <div class="apt-price">
-                                        <strong><?php echo esc_html($currency . number_format($apartment->price_per_night, 0)); ?></strong> / <?php _e('night', 'appointix'); ?>
+                                        <!-- Select dates for price -->
                                     </div>
                                     <?php 
                                     $booking_link = add_query_arg(array(

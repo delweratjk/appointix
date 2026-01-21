@@ -471,10 +471,7 @@ $current_filter = isset($_GET['apt_type']) ? sanitize_text_field($_GET['apt_type
                             </div>
                         <?php endif; ?>
                         <div class="appointix-catalog-badge"><?php echo esc_html($type_label); ?></div>
-                        <div class="appointix-catalog-price">
-                            <?php echo esc_html($currency . number_format($apartment->price_per_night, 0)); ?>
-                            <span>/<?php _e('night', 'appointix'); ?></span>
-                        </div>
+                        <!-- Price removed per user request -->
                     </div>
                     <div class="appointix-catalog-content">
                         <h3 class="appointix-catalog-name"><?php echo esc_html($apartment->name); ?></h3>
@@ -581,15 +578,11 @@ $current_filter = isset($_GET['apt_type']) ? sanitize_text_field($_GET['apt_type
                     </div>
 
                     <div class="aptx-price-summary" id="aptx-modal-price-summary" style="display: none;">
-                        <div class="aptx-price-row">
-                            <span><?php echo esc_html($currency); ?><span id="aptx-modal-ppn">0</span> × <span
-                                    id="aptx-modal-nights">0</span> <?php _e('nights', 'appointix'); ?></span>
-                            <span><?php echo esc_html($currency); ?><span id="aptx-modal-subtotal">0</span></span>
-                        </div>
                         <div class="aptx-price-row total">
-                            <span><?php _e('Total', 'appointix'); ?></span>
+                            <span><?php _e('Total Amount', 'appointix'); ?></span>
                             <span><?php echo esc_html($currency); ?><span id="aptx-modal-total">0</span></span>
                         </div>
+                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px; text-align: right;"><?php _e('Includes all taxes and fees', 'appointix'); ?></p>
                     </div>
 
                     <div class="form-group">
@@ -761,7 +754,6 @@ $current_filter = isset($_GET['apt_type']) ? sanitize_text_field($_GET['apt_type
                     // Populate modal
                     document.getElementById('aptx-modal-apartment-name').textContent = currentApartment.name;
                     document.getElementById('aptx-modal-apartment-id').value = currentApartment.id;
-                    document.getElementById('aptx-modal-ppn').textContent = currentApartment.price.toLocaleString();
 
                     // Details tab
                     document.getElementById('aptx-details-name').textContent = currentApartment.name;
@@ -870,18 +862,45 @@ $current_filter = isset($_GET['apt_type']) ? sanitize_text_field($_GET['apt_type
                                     var checkIn = dates[0];
                                     var checkOut = dates[1];
                                     var nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+                                    // Allow same-day (0 nights diff) as 1 day/unit
+                                    if (nights === 0) nights = 1;
 
                                     document.getElementById('aptx-modal-check-in').value = flatpickr.formatDate(checkIn, 'Y-m-d');
                                     document.getElementById('aptx-modal-check-out').value = flatpickr.formatDate(checkOut, 'Y-m-d');
 
                                     if (nights > 0) {
-                                        var total = nights * currentApartment.price;
-                                        document.getElementById('aptx-modal-nights').textContent = nights;
-                                        document.getElementById('aptx-modal-subtotal').textContent = total.toLocaleString();
-                                        document.getElementById('aptx-modal-total').textContent = total.toLocaleString();
-                                        document.getElementById('aptx-modal-total-price').value = total.toFixed(2);
-                                        document.getElementById('aptx-modal-price-summary').style.display = 'block';
-                                        document.getElementById('aptx-modal-submit').disabled = false;
+                                        // Fetch dynamic price via AJAX
+                                        fetch(ajaxUrl, {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                            body: new URLSearchParams({
+                                                action: 'appointix_calculate_price',
+                                                post_id: currentApartment.id,
+                                                start_date: document.getElementById('aptx-modal-check-in').value,
+                                                end_date: document.getElementById('aptx-modal-check-out').value,
+                                                nonce: nonce
+                                            })
+                                        })
+                                        .then(function(r) { return r.json(); })
+                                        .then(function(data) {
+                                            if (data.success) {
+                                                var rawTotal = parseFloat(data.data.total.replace(/,/g, ''));
+                                                if (rawTotal <= 0) {
+                                                    document.getElementById('aptx-modal-price-summary').style.display = 'none';
+                                                    document.getElementById('aptx-modal-submit').disabled = true;
+                                                    // Optional: Show unavailable message
+                                                    document.getElementById('aptx-modal-message').className = 'aptx-modal-message error';
+                                                    document.getElementById('aptx-modal-message').textContent = 'Dates unavailable.';
+                                                    document.getElementById('aptx-modal-message').style.display = 'block';
+                                                } else {
+                                                    document.getElementById('aptx-modal-message').style.display = 'none';
+                                                    document.getElementById('aptx-modal-total').textContent = data.data.total;
+                                                    document.getElementById('aptx-modal-total-price').value = rawTotal;
+                                                    document.getElementById('aptx-modal-price-summary').style.display = 'block';
+                                                    document.getElementById('aptx-modal-submit').disabled = false;
+                                                }
+                                            }
+                                        });
                                     }
                                 } else {
                                     document.getElementById('aptx-modal-price-summary').style.display = 'none';

@@ -96,9 +96,14 @@
                 success: function (response) {
                     if (response.success && response.data.length > 0) {
                         let html = '<table class="wp-list-table widefat fixed striped" style="font-size:11px;">';
-                        html += '<thead><tr><th>Start</th><th>End</th><th>Price</th></tr></thead><tbody>';
+                        html += '<thead><tr><th>Start</th><th>End</th><th>Price</th><th>Action</th></tr></thead><tbody>';
                         response.data.forEach(function (rate) {
-                            html += `<tr><td>${rate.start_date}</td><td>${rate.end_date}</td><td>$${rate.price}</td></tr>`;
+                            html += `<tr>
+                                <td>${rate.start_date}</td>
+                                <td>${rate.end_date}</td>
+                                <td>$${rate.price}</td>
+                                <td><a href="#" class="delete-seasonal-rate" data-id="${rate.id}" style="color:#ef4444;">Delete</a></td>
+                            </tr>`;
                         });
                         html += '</tbody></table>';
                         $list.html(html);
@@ -110,7 +115,7 @@
         }
 
         $(document).on('click', '#add-seasonal-price-btn', function () {
-            const post_id = $('#post_id').val();
+            const post_id = $('#appointix_post_id').val();
             if (!post_id) {
                 alert('Please save the apartment first before adding seasonal prices.');
                 return;
@@ -205,6 +210,82 @@
             });
         });
 
+
+        // Key Features Defaults Logic
+        const featureDefaults = {
+            'sea_view': "50 m²\nTwo bedrooms\nSea & mountain views\nBalcony & terrace\nFully equipped kitchen\nAir conditioning\nFree WiFi\nWashing machine\nNon-smoking\nFamily-friendly",
+            'mountain_view': "50 m²\nTwo bedrooms\nTwo bathrooms\nMountain & partial sea views\nBalcony & terrace\nFully equipped kitchen\nAir conditioning\nFree WiFi\nWashing machine\nNon-smoking"
+        };
+
+        function populateFeatureDefaults(force = false) {
+            const $textarea = $('#appointix_key_features');
+            const type = $('#appointix_apartment_type').val();
+
+            if (force || !$textarea.val().trim()) {
+                const defaults = featureDefaults[type] || featureDefaults['mountain_view'];
+                $textarea.val(defaults);
+            }
+        }
+
+        $(document).on('change', '#appointix_apartment_type', function () {
+            populateFeatureDefaults(false); // Only if empty
+        });
+
+        $(document).on('click', '#appointix-load-features-default', function (e) {
+            e.preventDefault();
+            if (confirm('This will replace your current features with defaults for this apartment type. Proceed?')) {
+                populateFeatureDefaults(true);
+            }
+        });
+
+        $(document).on('click', '.delete-seasonal-rate', function (e) {
+            e.preventDefault();
+            if (!confirm('Are you sure you want to delete this rate?')) return;
+            const $btn = $(this);
+            const id = $btn.data('id');
+            const post_id = $('#appointix_post_id').val();
+
+            $.ajax({
+                url: appointix_admin.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'appointix_delete_seasonal_price',
+                    id: id,
+                    nonce: appointix_admin.nonce
+                },
+                success: function (response) {
+                    if (response.success) {
+                        refreshSeasonalPrices(post_id);
+                    } else {
+                        alert('Failed to delete rate.');
+                    }
+                }
+            });
+        });
+
+        // Initialize seasonal prices if we are on an apartment page
+        const initial_post_id = $('#appointix_post_id').val();
+        if (initial_post_id) {
+            refreshSeasonalPrices(initial_post_id);
+        }
+
+        // Pricing Mode Toggle
+        function togglePricingMode() {
+            const mode = $('#appointix_pricing_mode').val();
+            if (mode === 'static') {
+                $('#static-pricing-row').show();
+                $('#seasonal-pricing-container').hide();
+            } else {
+                $('#static-pricing-row').hide();
+                $('#seasonal-pricing-container').show();
+            }
+        }
+
+        $(document).on('change', '#appointix_pricing_mode', togglePricingMode);
+        togglePricingMode();
+
+        // Make refreshSeasonalPrices globally accessible for the inline script
+        window.refreshSeasonalPrices = refreshSeasonalPrices;
 
     });
 
