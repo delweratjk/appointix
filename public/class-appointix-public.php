@@ -529,7 +529,7 @@ class Appointix_Public {
 				width: 60px;
 				height: 60px;
 				bottom: 20px;
-				left: 20px;
+				right: 20px;
 				background-color: #25D366;
 				color: #FFF;
 				border-radius: 50px;

@@ -601,7 +601,64 @@ if ( ! empty( $apartment->gallery ) ) {
     /*.appointix-reviews-widget-wrap svg g, .appointix-reviews-widget-wrap svg {*/
     /*    fill: red;*/
     /*}*/
+    .apt-slider-container {
+        position: relative !important;
+        overflow: hidden !important;
+        width: 100%;
+        background: #000;
+    }
+
+    /* Slider Arrows */
+    .apt-slider-prev,
+    .apt-slider-next {
+        position: absolute;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 48px !important;
+        height: 48px !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: none !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        z-index: 100 !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        color: #1e293b !important;
+    }
+
+    .apt-slider-prev:hover,
+    .apt-slider-next:hover {
+        background: #fff !important;
+        transform: translateY(-50%) scale(1.1) !important;
+        color: #b8a36c !important;
+    }
+
+    .apt-slider-prev {
+        left: 20px !important;
+    }
+
+    .apt-slider-next {
+        right: 20px !important;
+    }
+
+    @media (max-width: 768px) {
+        .apt-slider-prev,
+        .apt-slider-next {
+            width: 40px !important;
+            height: 40px !important;
+        }
+        .apt-slider-prev {
+            left: 10px !important;
+        }
+        .apt-slider-next {
+            right: 10px !important;
+        }
+    }
 </style>
+
 
 <div class="apt-single">
 
@@ -631,6 +688,12 @@ if ( ! empty( $apartment->gallery ) ) {
             <?php endif; ?>
         </div>
         <?php if (count($gallery_images) > 1): ?>
+            <button class="apt-slider-prev" aria-label="Previous slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button class="apt-slider-next" aria-label="Next slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
             <div class="apt-slider-dots">
                 <?php for ($i = 0; $i < count($gallery_images); $i++): ?>
                     <div class="apt-slider-dot <?php echo $i === 0 ? 'active' : ''; ?>" data-index="<?php echo $i; ?>"></div>
@@ -1232,6 +1295,56 @@ if ( ! empty( $apartment->gallery ) ) {
 
             function stopAutoSlide() {
                 if (slideInterval) clearInterval(slideInterval);
+            }
+
+            // Arrow controls
+            var prevBtn = document.querySelector('.apt-slider-prev');
+            var nextBtn = document.querySelector('.apt-slider-next');
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex - 1 + groupedSlides.length) % groupedSlides.length;
+                    updateSliderPosition();
+                    startAutoSlide();
+                });
+            }
+
+            if (nextBtn) {
+                nextBtn.addEventListener('click', function() {
+                    currentIndex = (currentIndex + 1) % groupedSlides.length;
+                    updateSliderPosition();
+                    startAutoSlide();
+                });
+            }
+
+            // Swipe functionality
+            var touchStartX = 0;
+            var touchEndX = 0;
+            
+            container.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].clientX;
+            }, { passive: true });
+
+            container.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].clientX;
+                handleSwipe();
+            }, { passive: true });
+
+            function handleSwipe() {
+                var threshold = 30; // Lower threshold for easier swiping
+                var diff = touchStartX - touchEndX;
+                
+                if (Math.abs(diff) > threshold) {
+                    if (diff > 0) {
+                        // Swiped left -> Next
+                        currentIndex = (currentIndex + 1) % groupedSlides.length;
+                    } else {
+                        // Swiped right -> Previous
+                        currentIndex = (currentIndex - 1 + groupedSlides.length) % groupedSlides.length;
+                    }
+                    updateSliderPosition();
+                    startAutoSlide();
+                }
             }
 
             window.addEventListener('resize', groupImages);
