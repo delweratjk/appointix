@@ -60,7 +60,7 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
 				<?php endif; ?>
 				
 				<div class="appointix-form-group">
-					<label><?php echo ! empty( $booking_form_check_in ) ? esc_html( $booking_form_check_in ) : __( 'Arrival / Departure', 'appointix' ); ?></label>
+					<label><?php echo esc_html( $booking_form_check_in ); ?></label>
 					<input type="text" id="booking_date_range" class="appointix-input" placeholder="<?php echo ! empty( $booking_form_select_dates ) ? esc_attr( $booking_form_select_dates ) : __( 'Select dates', 'appointix' ); ?>" readonly required>
 					<input type="hidden" id="booking_date" name="check_in">
 					<input type="hidden" id="booking_end_date" name="check_out">
@@ -70,7 +70,7 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
 					<label><?php echo ! empty( $booking_form_adults ) ? esc_html( $booking_form_adults ) : __( 'Adults', 'appointix' ); ?></label>
 					<div class="appointix-select-wrapper">
 						<select name="adults" id="search_adults" class="appointix-input">
-							<?php for ( $i = 1; $i <= 10; $i++ ) : ?>
+							<?php for ( $i = 1; $i <= 5; $i++ ) : ?>
 								<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 							<?php endfor; ?>
 						</select>
@@ -224,28 +224,40 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
                         <?php if ( ! empty($apartments) ) : ?>
                             <div class="suggestions-section" style="margin-top: 60px;">
                                 <h3 class="suggestions-heading"><?php _e('Recommended for You:', 'appointix'); ?></h3>
-                                <div class="appointix-results-grid">
+                                <div class="apartments-grid">
                                     <?php foreach ( $apartments as $apartment ) : 
                                         if ($apartment->id === $selected_apartment->id) continue;
                                         $thumb = $apartment->thumbnail_medium ? $apartment->thumbnail_medium : plugin_dir_url( __DIR__ . '/../../' ) . 'assets/images/placeholder.jpg';
-                                        
-                                        $booking_link = add_query_arg(array(
-                                            'check_in'  => $search_check_in,
-                                            'check_out' => $search_check_out,
-                                        ), get_permalink($apartment->id));
+                                        $type_label = isset($type_labels[$apartment->apartment_type]) ? $type_labels[$apartment->apartment_type] : ucfirst(str_replace('_', ' ', $apartment->apartment_type));
+                                        $link = add_query_arg('apartment_id', $apartment->id, home_url('/'));
                                     ?>
-                                    <div class="appointix-result-card">
-                                        <div class="apt-card-image">
-                                            <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($apartment->name); ?>">
-                                        </div>
-                                        <div class="apt-card-content">
-                                            <span class="apt-type-badge"><?php echo ucfirst(str_replace('_', ' ', $apartment->apartment_type)); ?></span>
-                                            <h3><a href="<?php echo esc_url($booking_link); ?>"><?php echo esc_html($apartment->name); ?></a></h3>
-                                            <div class="apt-card-footer">
-                                                <div class="apt-price">
-                                                    <!-- Select dates for price -->
+                                    <div class="apartment-card-wrap">
+                                        <div class="apartment-card">
+                                            <div class="card-image">
+                                                <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($apartment->name); ?>">
+                                                <div class="card-badge">
+                                                    <?php echo esc_html($type_label); ?>
                                                 </div>
-                                                <a href="<?php echo esc_url($booking_link); ?>" class="appointix-btn-book"><?php _e('Book Now', 'appointix'); ?></a>
+                                            </div>
+                                            <div class="card-body">
+                                                <h3 class="card-title"><?php echo esc_html($apartment->name); ?></h3>
+                                                <?php if ( ! empty($apartment->location) ) : ?>
+                                                <p class="card-location">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                                        <circle cx="12" cy="10" r="3" />
+                                                    </svg>
+                                                    <?php echo esc_html($apartment->location); ?>
+                                                </p>
+                                                <?php endif; ?>
+                                                <div class="card-features">
+                                                    <span><i class="fa fa-bed"></i> <?php echo esc_html($apartment->bedrooms); ?> <?php _e('Beds', 'appointix'); ?></span>
+                                                    <span><i class="fa fa-bath"></i> <?php echo esc_html($apartment->bathrooms); ?> <?php _e('Baths', 'appointix'); ?></span>
+                                                    <span><i class="fa fa-users"></i> <?php echo esc_html($apartment->max_guests); ?> <?php _e('Guests', 'appointix'); ?></span>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <a href="<?php echo esc_url($link); ?>" class="btn-details"><?php _e('View Details', 'appointix'); ?></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -259,32 +271,39 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
             <?php else : ?>
                 <!-- STATE: General Search Results -->
                 <?php if ( ! empty($apartments) ) : ?>
-                    <div class="appointix-results-grid">
+                    <div class="apartments-grid">
                         <?php foreach ( $apartments as $apartment ) : 
                              $thumb = $apartment->thumbnail_medium ? $apartment->thumbnail_medium : plugin_dir_url( __DIR__ . '/../../' ) . 'assets/images/placeholder.jpg';
-                             $link = get_permalink($apartment->id); 
+                             $link = add_query_arg('apartment_id', $apartment->id, home_url('/'));
+                             $type_label = isset($type_labels[$apartment->apartment_type]) ? $type_labels[$apartment->apartment_type] : ucfirst(str_replace('_', ' ', $apartment->apartment_type));
                         ?>
-                        <div class="appointix-result-card">
-                            <div class="apt-card-image">
-                                <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($apartment->name); ?>">
-                            </div>
-                            <div class="apt-card-content">
-                                <span class="apt-type-badge"><?php echo ucfirst(str_replace('_', ' ', $apartment->apartment_type)); ?></span>
-                                <h3><a href="<?php echo esc_url($link); ?>"><?php echo esc_html($apartment->name); ?></a></h3>
-                                <div class="apt-short-info">
-                                    <?php echo wp_trim_words($apartment->description, 15); ?>
-                                </div>
-                                <div class="apt-card-footer">
-                                    <div class="apt-price">
-                                        <!-- Select dates for price -->
+                        <div class="apartment-card-wrap">
+                            <div class="apartment-card">
+                                <div class="card-image">
+                                    <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($apartment->name); ?>">
+                                    <div class="card-badge">
+                                        <?php echo esc_html($type_label); ?>
                                     </div>
-                                    <?php 
-                                    $booking_link = add_query_arg(array(
-                                        'check_in'  => $search_check_in,
-                                        'check_out' => $search_check_out,
-                                    ), $link);
-                                    ?>
-                                    <a href="<?php echo esc_url($booking_link); ?>" class="appointix-btn-book"><?php _e('Book Now', 'appointix'); ?></a>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title"><?php echo esc_html($apartment->name); ?></h3>
+                                    <?php if ( ! empty($apartment->location) ) : ?>
+                                    <p class="card-location">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                            <circle cx="12" cy="10" r="3" />
+                                        </svg>
+                                        <?php echo esc_html($apartment->location); ?>
+                                    </p>
+                                    <?php endif; ?>
+                                    <div class="card-features">
+                                        <span><i class="fa fa-bed"></i> <?php echo esc_html($apartment->bedrooms); ?> <?php _e('Beds', 'appointix'); ?></span>
+                                        <span><i class="fa fa-bath"></i> <?php echo esc_html($apartment->bathrooms); ?> <?php _e('Baths', 'appointix'); ?></span>
+                                        <span><i class="fa fa-users"></i> <?php echo esc_html($apartment->max_guests); ?> <?php _e('Guests', 'appointix'); ?></span>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="<?php echo esc_url($link); ?>" class="btn-details"><?php _e('View Details', 'appointix'); ?></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -728,75 +747,116 @@ body.modal-open {
 }
 
 /* SEARCH RESULTS GRID & CARDS */
-.appointix-results-grid {
+.apartments-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
 }
-.appointix-result-card {
-    display: flex;
-    flex-direction: column;
+.apartment-card {
     background: #fff;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    border: 1px solid #f1f5f9;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid gainsboro;
 }
-.appointix-result-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+.apartment-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
-.apt-card-image {
-    width: 100%;
+.card-image {
+    position: relative;
     height: 240px;
+    overflow: hidden;
 }
-.apt-card-image img {
+.card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
 }
-.apt-card-content {
+.apartment-card:hover .card-image img {
+    transform: scale(1.1);
+}
+.card-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #b8a36c;
+    text-transform: uppercase;
+    z-index: 2;
+}
+.card-body {
     padding: 25px;
-    flex: 1;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
-.apt-type-badge {
-    display: inline-block;
-    background: rgba(206, 169, 89, 0.1);
-    color: #cea959;
-    padding: 6px 14px;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    width: fit-content;
-}
-.apt-card-content h3 {
-    margin: 0 0 12px;
+.card-title {
     font-size: 1.4rem;
     font-weight: 700;
-    text-align: left;
+    margin-bottom: 10px;
+    color: #1a1a1a;
 }
-.apt-card-content h3 a {
-    color: #1e293b;
-    text-decoration: none;
-}
-.apt-short-info {
+.card-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     color: #64748b;
+    font-size: 0.9rem;
     margin-bottom: 20px;
-    font-size: 0.95rem;
-    line-height: 1.6;
 }
-.apt-card-footer {
-    margin-top: auto;
+.card-location svg {
+    color: #b8a36c;
+}
+.card-features {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding-top: 15px;
     border-top: 1px solid #f1f5f9;
+    margin-bottom: 20px;
+    margin-top: auto;
+}
+.card-features span {
+    font-size: 0.85rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.card-features i {
+    color: #b8a36c;
+}
+.btn-details {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    background: #f8fafc;
+    color: #1a1a1a;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s;
+    border: 1px solid gainsboro;
+    text-decoration: none;
+}
+.btn-details:hover {
+    background: #b8a36c;
+    color: #fff;
+    border-color: #b8a36c;
+}
+
+@media (max-width: 900px) {
+    .apartments-grid { grid-template-columns: 1fr; }
 }
 .apt-price {
     font-size: 1.1rem;
@@ -820,6 +880,25 @@ body.modal-open {
 .appointix-btn-book:hover {
     background: #cea959;
     transform: translateY(-2px);
+}
+.appointix-btn-view-apt {
+	display: inline-block;
+	text-align: center;
+	padding: 10px 24px;
+	background: #f8f9fa;
+	color: #333;
+	text-decoration: none;
+	font-weight: 600;
+	border-radius: 10px;
+	transition: all 0.3s ease;
+	border: 1px solid gainsboro;
+	font-size: 0.9rem;
+}
+.appointix-btn-view-apt:hover {
+	background: #b8a36c;
+	border-color: #e3c000;
+	color: #fff;
+	transform: translateY(-2px);
 }
 
 /* Unavailable Notice */

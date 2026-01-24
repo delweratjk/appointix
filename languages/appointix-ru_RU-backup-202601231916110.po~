@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Appointix Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-22 00:07+0600\n"
-"PO-Revision-Date: 2026-01-23 19:16+0000\n"
+"PO-Revision-Date: 2026-01-23 19:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -91,7 +91,7 @@ msgstr "Взрослые"
 #: public/partials/single-appointix_apartment.php:766
 #: public/partials/single-appointix_apartment.php:781
 msgid "Air conditioning"
-msgstr "Кондиционер"
+msgstr ""
 
 #: admin/class-appointix-admin.php:495
 msgid "Airbnb iCal URL"
@@ -694,7 +694,7 @@ msgstr ""
 #: public/partials/single-appointix_apartment.php:767
 #: public/partials/single-appointix_apartment.php:782
 msgid "Free WiFi"
-msgstr "Бесплатный Wi-Fi"
+msgstr ""
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:38
 msgid "Frequently Asked Questions"
@@ -717,7 +717,7 @@ msgstr "Полное имя"
 #: public/partials/single-appointix_apartment.php:765
 #: public/partials/single-appointix_apartment.php:780
 msgid "Fully equipped kitchen"
-msgstr "Полностью оборудованная кухня"
+msgstr ""
 
 #: admin/class-appointix-admin.php:247
 #: admin/partials/appointix-admin-bookings-list.php:37
@@ -964,7 +964,7 @@ msgstr ""
 #: public/partials/single-appointix_apartment.php:769
 #: public/partials/single-appointix_apartment.php:784
 msgid "Non-smoking"
-msgstr "Для некурящих"
+msgstr ""
 
 #: admin/partials/appointix-admin-settings-display.php:26
 msgid "Notification Email"
@@ -1262,7 +1262,7 @@ msgstr "Выберите апартаменты…"
 
 #: public/class-appointix-public.php:332
 msgid "Thank you! Your booking has been received."
-msgstr "Спасибо! Ваше бронирование принято."
+msgstr ""
 
 #: public/partials/single-appointix_apartment.php:49
 msgid "The apartment you are looking for does not exist."
@@ -1315,7 +1315,7 @@ msgstr "Итого"
 #: public/partials/appointix-public-display.php:192
 #: public/partials/single-appointix_apartment.php:881
 msgid "Total Amount"
-msgstr "Общая сумма"
+msgstr ""
 
 #: admin/partials/appointix-admin-bookings-display.php:322
 #: admin/partials/appointix-admin-display.php:24

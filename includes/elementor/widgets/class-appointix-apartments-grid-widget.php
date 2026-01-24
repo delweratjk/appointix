@@ -64,16 +64,13 @@ class Appointix_Apartments_Grid_Widget extends \Elementor\Widget_Base {
 						<?php if ( $apartment->thumbnail ) : ?>
 							<img src="<?php echo esc_url( $apartment->thumbnail ); ?>" alt="<?php echo esc_attr( $apartment->name ); ?>">
 						<?php endif; ?>
-						<div class="xio-apt-price">
-							<?php echo esc_html( $currency . $apartment->price_per_night ); ?><span> / night</span>
-						</div>
 					</div>
 					<div class="xio-apt-info">
 						<h3><?php echo esc_html( $apartment->name ); ?></h3>
 						<p class="xio-apt-desc"><?php echo esc_html( $apartment->property_summary ); ?></p>
 						<div class="xio-apt-meta">
-							<span><i class="fas fa-bed"></i> <?php echo esc_html( $apartment->bedrooms ); ?> Bedrooms</span>
-							<span><i class="fas fa-users"></i> <?php echo esc_html( $apartment->max_guests ); ?> Guests</span>
+							<span><i class="fas fa-bed"></i> <?php echo esc_html( $apartment->bedrooms ); ?> <?php echo esc_html__( 'Bedrooms', 'appointix' ); ?></span>
+							<span><i class="fas fa-users"></i> <?php echo esc_html( $apartment->max_guests ); ?> <?php echo esc_html__( 'Guests', 'appointix' ); ?></span>
 						</div>
 						<a href="<?php echo esc_url( $apartment->permalink ); ?>" class="xio-apt-link">
 							<?php _e( 'View Apartment', 'appointix' ); ?>
@@ -107,19 +104,6 @@ class Appointix_Apartments_Grid_Widget extends \Elementor\Widget_Base {
 			}
 			.xio-apt-thumb img {
 				width: 100%; height: 100%; object-fit: cover;
-			}
-			.xio-apt-price {
-				position: absolute;
-				bottom: 20px; right: 20px;
-				background: #fff;
-				padding: 8px 15px;
-				border-radius: 50px;
-				font-weight: 700;
-				box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-				color: #b8a36c;
-			}
-			.xio-apt-price span {
-				font-size: 0.8rem; font-weight: 400; color: #666;
 			}
 			.xio-apt-info {
 				padding: 25px;

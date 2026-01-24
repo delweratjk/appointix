@@ -215,7 +215,7 @@ if ( ! empty( $apartment->gallery ) ) {
         align-items: center;
         gap: 6px;
         padding: 8px 16px;
-        background: linear-gradient(135deg, #6366f1 0%, #0ea5e9 100%);
+        background: linear-gradient(135deg, #b8a36c 0%, #b8a36c 100%);
         color: #fff;
         border-radius: 25px;
         font-size: 0.8rem;
@@ -242,7 +242,7 @@ if ( ! empty( $apartment->gallery ) ) {
     }
 
     .apt-location svg {
-        color: #6366f1;
+        color: #b8a36c;
     }
 
     .apt-rating {
@@ -292,7 +292,7 @@ if ( ! empty( $apartment->gallery ) ) {
     .apt-feature-icon {
         width: 48px;
         height: 48px;
-        background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+        background: linear-gradient(135deg, #b8a36c 0%, #b8a36c 100%);
         border-radius: 12px;
         display: flex;
         align-items: center;
@@ -332,7 +332,7 @@ if ( ! empty( $apartment->gallery ) ) {
     }
 
     .apt-section-title svg {
-        color: #6366f1;
+        color: #b8a36c;
     }
 
     .apt-description {
@@ -365,14 +365,14 @@ if ( ! empty( $apartment->gallery ) ) {
 
     .apt-amenity:hover {
         background: #fff;
-        border-color: #6366f1;
+        border-color: #b8a36c;
         transform: translateY(-3px);
         box-shadow: 0 10px 20px rgba(99, 102, 241, 0.1);
         color: #4f46e5;
     }
 
     .apt-amenity svg {
-        color: #10b981;
+        color: #b8a36c;
         flex-shrink: 0;
         width: 20px;
         height: 20px;
@@ -401,7 +401,7 @@ if ( ! empty( $apartment->gallery ) ) {
     .apt-price-amount {
         font-size: 2.5rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        background: linear-gradient(135deg, #b8a36c, #4f46e5);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -440,7 +440,7 @@ if ( ! empty( $apartment->gallery ) ) {
     .apt-booking-form input:focus,
     .apt-booking-form select:focus {
         outline: none;
-        border-color: #6366f1;
+        border-color: #b8a36c;
         box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
     }
 
@@ -476,7 +476,7 @@ if ( ! empty( $apartment->gallery ) ) {
     }
 
     .apt-summary-row.total span:last-child {
-        color: #6366f1;
+        color: #b8a36c;
         font-size: 1.3rem;
     }
 
@@ -484,7 +484,7 @@ if ( ! empty( $apartment->gallery ) ) {
     .apt-book-btn {
         width: 100%;
         padding: 18px;
-        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        background: linear-gradient(135deg, #b8a36c 0%, #b8a36c 100%);
         color: #fff;
         font-family: inherit;
         font-size: 1.1rem;
@@ -552,7 +552,7 @@ if ( ! empty( $apartment->gallery ) ) {
     }
 
     .apt-guarantee svg {
-        color: #10b981;
+        color: #b8a36c;
     }
 
     /* Responsive */
@@ -597,6 +597,10 @@ if ( ! empty( $apartment->gallery ) ) {
             font-size: 1.8rem;
         }
     }
+    
+    /*.appointix-reviews-widget-wrap svg g, .appointix-reviews-widget-wrap svg {*/
+    /*    fill: red;*/
+    /*}*/
 </style>
 
 <div class="apt-single">
@@ -812,7 +816,7 @@ if ( ! empty( $apartment->gallery ) ) {
                         font-size: 1rem;
                     }
                     .apt-key-features li svg {
-                        color: #10b981;
+                        color: #b8a36c;
                         flex-shrink: 0;
                     }
                 </style>
@@ -844,7 +848,7 @@ if ( ! empty( $apartment->gallery ) ) {
 
 						<!-- Elfsight Booking.com Reviews | Untitled Booking.com Reviews -->
 <script src="https://elfsightcdn.com/platform.js" async></script>
-<div class="elfsight-app-b0776f2c-ec72-469a-8c95-31ce7316eb02" data-elfsight-app-lazy></div>
+<div  class="elfsight-app-b0776f2c-ec72-469a-8c95-31ce7316eb02 appointix-reviews-widget-wrap" data-elfsight-app-lazy></div>
 						
 						
                     </div>
@@ -859,7 +863,7 @@ if ( ! empty( $apartment->gallery ) ) {
                     </div>
 
                     <div class="apt-trust-signal" style="margin-bottom: 20px; text-align: center;">
-                         <span style="display: inline-flex; align-items: center; gap: 6px; background: #e6f7ff; color: #003580; padding: 8px 12px; border-radius: 6px; font-weight: 600; font-size: 0.9rem; border: 1px solid #bae7ff;">
+                         <span style="display: inline-flex;align-items: center;gap: 6px;background: #b8a36c29;color: #000000;padding: 8px 12px;border-radius: 6px;font-weight: 600;font-size: 0.9rem;border: 1px solid #b8a36c29;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                             <?php _e( 'Verified by Booking.com', 'appointix' ); ?>
                         </span>

@@ -1,20 +1,23 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2026-01-22 21:43+0600\n"
-"PO-Revision-Date: 2026-01-10 07:53+0600\n"
+"POT-Creation-Date: 2026-01-22 22:09+0600\n"
+"PO-Revision-Date: 2026-01-24 03:18+0000\n"
 "Last-Translator: \n"
-"Language-Team: \n"
-"Language: en\n"
+"Language-Team: Polish\n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Loco https://localise.biz/\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;esc_html__;esc_html_e;esc_attr__;esc_attr_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: assets\n"
+"Report-Msgid-Bugs-To: \n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
+"&&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"X-Loco-Version: 2.8.1; wp-6.9; php-8.1.33"
 
 #: admin/class-appointix-admin.php:96 admin/class-appointix-admin.php:97
 msgid "Dashboard"
@@ -51,7 +54,7 @@ msgstr ""
 #: admin/class-appointix-admin.php:160
 #: includes/elementor/widgets/class-appointix-apartments-grid-widget.php:76
 msgid "View Apartment"
-msgstr ""
+msgstr "Zobacz szczegóły"
 
 #: admin/class-appointix-admin.php:161
 msgid "All Apartments"
@@ -91,7 +94,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:14
 #: public/partials/single-appointix_apartment.php:58
 msgid "Sea View"
-msgstr ""
+msgstr "Widok na morze"
 
 #: admin/class-appointix-admin.php:245
 #: admin/partials/appointix-admin-bookings-list.php:35
@@ -165,22 +168,22 @@ msgstr ""
 #: public/partials/appointix-apartments-list.php:657
 #: public/partials/single-appointix_apartment.php:684
 msgid "Bedrooms"
-msgstr ""
+msgstr "sypialnie"
 
 #: admin/class-appointix-admin.php:320
 #: public/partials/appointix-apartments-list.php:661
 #: public/partials/single-appointix_apartment.php:699
 msgid "Bathrooms"
-msgstr ""
+msgstr "Łazienki"
 
 #: admin/class-appointix-admin.php:325
 #: public/partials/single-appointix_apartment.php:712
 msgid "Max Guests"
-msgstr ""
+msgstr "Maks. gości"
 
 #: admin/class-appointix-admin.php:332
 msgid "About This Property (Short Description)"
-msgstr ""
+msgstr "O tej nieruchomości (krótki opis)"
 
 #: admin/class-appointix-admin.php:334
 msgid "Brief description shown in listings and modals..."
@@ -519,7 +522,7 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:40
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:68
 msgid "Free private parking"
-msgstr ""
+msgstr "Bezpłatny parking prywatny"
 
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:47
 msgid "Icon"
@@ -532,13 +535,13 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:64
 #: public/partials/single-appointix_apartment.php:864
 msgid "Verified by Booking.com"
-msgstr ""
+msgstr "Zweryfikowane przez Booking.com"
 
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:72
 #: public/partials/single-appointix_apartment.php:767
 #: public/partials/single-appointix_apartment.php:782
 msgid "Free WiFi"
-msgstr ""
+msgstr "Bezpłatne WiFi"
 
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:76
 #: public/partials/single-appointix_apartment.php:770
@@ -603,7 +606,7 @@ msgstr ""
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:77
 msgid "Select Dates"
-msgstr ""
+msgstr "Wybierz Daty"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:80
 msgid "Enter the select dates text for the booking form."
@@ -614,7 +617,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:70
 #: public/partials/single-appointix_apartment.php:907
 msgid "Adults"
-msgstr ""
+msgstr "Dorośli"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:90
 msgid "Enter the adults text for the booking form."
@@ -625,7 +628,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:81
 #: public/partials/single-appointix_apartment.php:915
 msgid "Children"
-msgstr ""
+msgstr "Dzieci"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:100
 msgid "Enter the children text for the booking form."
@@ -634,7 +637,7 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-booking-widget.php:107
 #: public/partials/appointix-public-display.php:92
 msgid "Check Availability"
-msgstr ""
+msgstr "Sprawdź stawki i dostępność"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:110
 msgid "Enter the check availability text for the booking form."
@@ -652,7 +655,7 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-booking-widget.php:246
 #: public/partials/appointix-public-display.php:46
 msgid "Select Apartment"
-msgstr ""
+msgstr "Wybierz apartament"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:128
 msgid "Apartment Name"
@@ -741,7 +744,7 @@ msgstr ""
 #: public/partials/appointix-apartments-list.php:573
 #: public/partials/single-appointix_apartment.php:872
 msgid "Check-in / Check-out"
-msgstr ""
+msgstr "Zameldowanie / Wymeldowanie"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:71
 msgid "15:00–19:00 / 10:00. Late check-in upon request."
@@ -773,7 +776,7 @@ msgstr ""
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:75
 msgid "Family-friendly?"
-msgstr ""
+msgstr "Przyjazne rodzinom"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:75
 msgid "Yes, we are family-friendly."
@@ -869,7 +872,7 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-hero-widget.php:71
 #: public/partials/appointix-public-display.php:39
 msgid "Book Your Stay"
-msgstr ""
+msgstr "Zarezerwuj swój pobyt"
 
 #: includes/elementor/widgets/class-appointix-hero-widget.php:79
 msgid "CTA 1 Link"
@@ -939,13 +942,13 @@ msgstr ""
 #: public/partials/appointix-apartments-list.php:596
 #: public/partials/single-appointix_apartment.php:894
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: includes/emails/admin-new-booking.php:117
 #: public/partials/appointix-apartments-list.php:601
 #: public/partials/single-appointix_apartment.php:900
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: includes/emails/admin-new-booking.php:122
 msgid "Booking Details"
@@ -977,7 +980,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:192
 #: public/partials/single-appointix_apartment.php:881
 msgid "Total Amount"
-msgstr ""
+msgstr "Całkowita kwota"
 
 #: includes/emails/admin-new-booking.php:168
 msgid "Manage Bookings"
@@ -1043,7 +1046,7 @@ msgstr ""
 
 #: public/class-appointix-public.php:332
 msgid "Thank you! Your booking has been received."
-msgstr ""
+msgstr "Dziękujemy! Twoja rezerwacja została odebrana."
 
 #: public/class-appointix-public.php:334
 msgid "Failed to process booking. Please try again."
@@ -1086,7 +1089,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:256
 #: public/partials/appointix-public-display.php:302
 msgid "Guests"
-msgstr ""
+msgstr "gości"
 
 #: public/partials/appointix-apartments-list.php:525
 #: public/partials/appointix-public-display.php:138
@@ -1099,20 +1102,20 @@ msgstr ""
 #: public/partials/appointix-public-display.php:64
 #: public/partials/single-appointix_apartment.php:874
 msgid "Select dates"
-msgstr ""
+msgstr "Wybierz daty"
 
 #: public/partials/appointix-apartments-list.php:585
 #: public/partials/single-appointix_apartment.php:884
 msgid "Includes all taxes and fees"
-msgstr ""
+msgstr "Zawiera wszystkie podatki i opłaty"
 
 #: public/partials/appointix-apartments-list.php:589
 msgid "Full Name"
-msgstr ""
+msgstr "Pełne imię i nazwisko"
 
 #: public/partials/appointix-apartments-list.php:591
 msgid "Your name"
-msgstr ""
+msgstr "Twoje imię"
 
 #: public/partials/appointix-apartments-list.php:598
 msgid "you@email.com"
@@ -1163,10 +1166,12 @@ msgstr ""
 #: public/partials/appointix-public-display.php:40
 msgid "Select your dates to check availability."
 msgstr ""
+"Wybierz daty, aby sprawdzić \n"
+"dostępność i cenę."
 
 #: public/partials/appointix-public-display.php:49
 msgid "Choose your apartment..."
-msgstr ""
+msgstr "Wybierz apartament..."
 
 #: public/partials/appointix-public-display.php:103
 msgid "Search Results"
@@ -1182,15 +1187,15 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:154
 msgid "Bedrooms:"
-msgstr ""
+msgstr "sypialnie "
 
 #: public/partials/appointix-public-display.php:155
 msgid "Bathrooms:"
-msgstr ""
+msgstr "Łazienki"
 
 #: public/partials/appointix-public-display.php:156
 msgid "Max Guests:"
-msgstr ""
+msgstr "Maks. gości"
 
 #: public/partials/appointix-public-display.php:172
 msgid "Complete Your Booking"
@@ -1210,11 +1215,11 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:200
 msgid "Your Full Name"
-msgstr ""
+msgstr "Twoje pełne imię i nazwisko"
 
 #: public/partials/appointix-public-display.php:203
 msgid "Email Address"
-msgstr ""
+msgstr "Adres e-mail"
 
 #: public/partials/appointix-public-display.php:207
 msgid "Confirm"
@@ -1264,15 +1269,15 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:725
 msgid "View Type"
-msgstr ""
+msgstr "Typ widoku"
 
 #: public/partials/single-appointix_apartment.php:737
 msgid "About This Property"
-msgstr ""
+msgstr "O tej nieruchomości"
 
 #: public/partials/single-appointix_apartment.php:748
 msgid "Key Features"
-msgstr ""
+msgstr "Najważniejsze udogodnienia"
 
 #: public/partials/single-appointix_apartment.php:761
 #: public/partials/single-appointix_apartment.php:775
@@ -1282,26 +1287,26 @@ msgstr ""
 #: public/partials/single-appointix_apartment.php:762
 #: public/partials/single-appointix_apartment.php:776
 msgid "Two bedrooms"
-msgstr ""
+msgstr "Dwie sypialnie"
 
 #: public/partials/single-appointix_apartment.php:763
 msgid "Sea & mountain views"
-msgstr ""
+msgstr "Widoki na morze i góry"
 
 #: public/partials/single-appointix_apartment.php:764
 #: public/partials/single-appointix_apartment.php:779
 msgid "Balcony & terrace"
-msgstr ""
+msgstr "Balkon i taras"
 
 #: public/partials/single-appointix_apartment.php:765
 #: public/partials/single-appointix_apartment.php:780
 msgid "Fully equipped kitchen"
-msgstr ""
+msgstr "W pełni wyposażona kuchnia"
 
 #: public/partials/single-appointix_apartment.php:766
 #: public/partials/single-appointix_apartment.php:781
 msgid "Air conditioning"
-msgstr ""
+msgstr "Klimatyzacja"
 
 #: public/partials/single-appointix_apartment.php:768
 #: public/partials/single-appointix_apartment.php:783
@@ -1315,7 +1320,7 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:777
 msgid "Two bathrooms"
-msgstr ""
+msgstr "Dwie łazienki"
 
 #: public/partials/single-appointix_apartment.php:778
 msgid "Mountain & partial sea views"
@@ -1323,23 +1328,23 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:829
 msgid "What This Place Offers"
-msgstr ""
+msgstr "Co to miejsce oferuje"
 
 #: public/partials/single-appointix_apartment.php:858
 msgid "Select dates for best price"
-msgstr ""
+msgstr "Wybierz daty, aby uzyskać najlepszą cenę"
 
 #: public/partials/single-appointix_apartment.php:888
 msgid "Your Name"
-msgstr ""
+msgstr "Twoje imię"
 
 #: public/partials/single-appointix_apartment.php:890
 msgid "Full name"
-msgstr ""
+msgstr "Pełne imię i nazwisko"
 
 #: public/partials/single-appointix_apartment.php:896
 msgid "your@email.com"
-msgstr ""
+msgstr "twój@email.com"
 
 #: public/partials/single-appointix_apartment.php:902
 msgid "+1 234 567 8900"
@@ -1347,11 +1352,11 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:938
 msgid "Send Booking Request"
-msgstr ""
+msgstr "Wyślij prośbę o rezerwację"
 
 #: public/partials/single-appointix_apartment.php:951
 msgid "You won't be charged yet"
-msgstr ""
+msgstr "Jeszcze nie zostaniesz obciążony opłatą"
 
 #: public/partials/single-appointix_apartment.php:1017
 msgid "Dates unavailable or no price set."
