@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Appointix Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-22 00:07+0600\n"
-"PO-Revision-Date: 2026-01-24 03:37+0000\n"
+"PO-Revision-Date: 2026-01-24 20:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: Croatian (Croatia)\n"
 "Language: hr_HR\n"
@@ -14,7 +14,7 @@ msgstr ""
 "n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2;\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: appointix\n"
-"X-Loco-Version: 2.8.1; wp-6.9; php-8.1.33"
+"X-Loco-Version: 2.8.1; wp-6.9; php-8.3.28"
 
 #: public/partials/appointix-public-display.php:219
 #, php-format
@@ -206,17 +206,17 @@ msgstr "Balkon i terasa"
 #: public/partials/appointix-apartments-list.php:661
 #: public/partials/single-appointix_apartment.php:699
 msgid "Bathrooms"
-msgstr "Kupaonice"
+msgstr "kupatila"
 
 #: public/partials/appointix-public-display.php:155
 msgid "Bathrooms:"
-msgstr ""
+msgstr "kupatila"
 
 #: public/partials/appointix-apartments-list.php:509
 #: public/partials/appointix-public-display.php:255
 #: public/partials/appointix-public-display.php:301
 msgid "Baths"
-msgstr "Kupaonice"
+msgstr "kupatila"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:72
 msgid "Beach?"
@@ -231,7 +231,7 @@ msgstr ""
 #: public/partials/appointix-apartments-list.php:657
 #: public/partials/single-appointix_apartment.php:684
 msgid "Bedrooms"
-msgstr "Spavaće sobe"
+msgstr "spavaće sobe"
 
 #: public/partials/appointix-public-display.php:154
 msgid "Bedrooms:"
@@ -247,18 +247,18 @@ msgstr "Spavaće sobe"
 #: public/partials/appointix-public-display.php:254
 #: public/partials/appointix-public-display.php:300
 msgid "Beds"
-msgstr "Kreveti"
+msgstr "kreveta"
 
 #: includes/elementor/widgets/class-appointix-info-widget.php:84
 #: public/partials/appointix-apartments-list.php:528
 #: public/partials/appointix-apartments-list.php:563
 #: public/partials/appointix-public-display.php:144
 msgid "Book Now"
-msgstr "Rezerviraj odmah"
+msgstr "rezerviši odmah"
 
 #: public/partials/apartment-details-query.php:83
 msgid "Book This Apartment"
-msgstr ""
+msgstr "Rezerviši ovaj apartman"
 
 #: includes/elementor/widgets/class-appointix-hero-widget.php:71
 #: public/partials/appointix-public-display.php:39
@@ -394,7 +394,7 @@ msgstr "Pogled na grad"
 
 #: public/partials/appointix-public-display.php:172
 msgid "Complete Your Booking"
-msgstr ""
+msgstr "Dovršite svoju rezervaciju"
 
 #: admin/partials/appointix-admin-bookings-display.php:334
 #: admin/partials/appointix-admin-bookings-list.php:90
@@ -407,7 +407,7 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:207
 msgid "Confirm"
-msgstr ""
+msgstr "potvrditi"
 
 #: public/partials/appointix-apartments-list.php:630
 #: public/partials/appointix-apartments-list.php:985
@@ -463,7 +463,7 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:120
 msgid "Date is Available"
-msgstr ""
+msgstr "Datum je dostupan"
 
 #: admin/partials/appointix-admin-bookings-display.php:349
 msgid "Dates"
@@ -529,7 +529,7 @@ msgstr "E-mail"
 
 #: public/partials/appointix-public-display.php:203
 msgid "Email Address"
-msgstr ""
+msgstr "e-mail adresa"
 
 #: admin/partials/appointix-admin-settings-display.php:30
 msgid "Email address to receive new booking notifications."
@@ -703,7 +703,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:256
 #: public/partials/appointix-public-display.php:302
 msgid "Guests"
-msgstr "Gosti"
+msgstr "gostiju"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:37
 msgid "Heading"
@@ -761,7 +761,7 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:748
 msgid "Key Features"
-msgstr "Ključne značajke"
+msgstr "Glavne pogodnosti"
 
 #: admin/class-appointix-admin.php:342
 msgid "Key Features (one per line)"
@@ -773,7 +773,7 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:188
 msgid "Length of Stay"
-msgstr ""
+msgstr "Duljina boravka"
 
 #: admin/class-appointix-admin.php:347
 msgid "Load Defaults"
@@ -820,7 +820,7 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:778
 msgid "Mountain & partial sea views"
-msgstr "Pogled na planinu i djelimičan pogled na more"
+msgstr "pogled na planinu/more"
 
 #: admin/class-appointix-admin.php:245
 #: admin/partials/appointix-admin-bookings-list.php:35
@@ -828,7 +828,7 @@ msgstr "Pogled na planinu i djelimičan pogled na more"
 #: public/partials/appointix-public-display.php:15
 #: public/partials/single-appointix_apartment.php:59
 msgid "Mountain View"
-msgstr "Pogled na planinu"
+msgstr "planinu"
 
 #: admin/partials/appointix-admin-display.php:56
 #: includes/emails/admin-new-booking.php:109
@@ -977,7 +977,7 @@ msgstr ""
 
 #: public/partials/appointix-apartments-list.php:960
 msgid "Processing..."
-msgstr ""
+msgstr "Obrada..."
 
 #: includes/emails/admin-new-booking.php:129
 #: includes/emails/customer-booking-confirmation.php:134
@@ -1023,10 +1023,9 @@ msgid "Save Settings"
 msgstr ""
 
 #: public/partials/single-appointix_apartment.php:763
-#, fuzzy
 #| msgid "Mountain View"
 msgid "Sea & mountain views"
-msgstr "Pogled na planinu"
+msgstr "pogled na more/planinu"
 
 #: admin/class-appointix-admin.php:244
 #: admin/partials/appointix-admin-bookings-list.php:34
@@ -1058,7 +1057,7 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:173
 msgid "Secure your stay at"
-msgstr ""
+msgstr "Osigurajte svoj boravak u"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:121
 #: includes/elementor/widgets/class-appointix-booking-widget.php:246

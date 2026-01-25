@@ -123,7 +123,7 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
                             <div class="apt-card-body">
                                 <div class="apt-card-header">
                                     <div class="apt-info-meta">
-                                        <span class="apt-tag"><?php echo esc_html(ucfirst($selected_apartment->apartment_type)); ?></span>
+                                        <span class="apt-tag"><?php echo esc_html( isset( $type_labels[ $selected_apartment->apartment_type ] ) ? $type_labels[ $selected_apartment->apartment_type ] : ucfirst( str_replace( '_', ' ', $selected_apartment->apartment_type ) ) ); ?></span>
                                         <h2 class="apt-name"><?php echo esc_html($selected_apartment->name); ?></h2>
                                     </div>
                                     <div class="apt-price-tag">
@@ -998,8 +998,24 @@ jQuery(document).ready(function($) {
             return;
         }
 
-        // Redirect to search results page
-        const baseUrl = '<?php echo home_url('/search-results/'); ?>';
+        // Redirect to search results page (localized)
+        <?php 
+            $results_page = get_page_by_path('search-results');
+            $results_url = home_url('/search-results/');
+            
+            if ($results_page) {
+                $page_id = $results_page->ID;
+                // Polylang support
+                if (function_exists('pll_get_post')) {
+                    $translated_id = pll_get_post($page_id);
+                    if ($translated_id) {
+                        $page_id = $translated_id;
+                    }
+                }
+                $results_url = get_permalink($page_id);
+            }
+        ?>
+        const baseUrl = '<?php echo esc_js($results_url); ?>';
         const url = new URL(baseUrl);
         url.searchParams.set('check_in', checkIn);
         url.searchParams.set('check_out', checkOut);
@@ -1065,12 +1081,13 @@ jQuery(document).ready(function($) {
                 email: guestEmail,
                 adults: adults,
                 children: children,
-                time: '14:00' // Default check-in time
+                time: '14:00', // Default check-in time
+                lang: appointix_public.lang
             },
             success: function(response) {
                 if (response.success) {
-                    // Redirect to homepage with success parameter
-                    window.location.href = '<?php echo home_url('/'); ?>?booking_success=1';
+                    // Redirect to homepage with success parameter (localized)
+                    window.location.href = '<?php echo esc_js( function_exists('pll_home_url') ? pll_home_url() : home_url('/') ); ?>?booking_success=1';
                 } else {
                     alert(response.data.message || 'An error occurred.');
                     $btn.prop('disabled', false).text('Confirm');

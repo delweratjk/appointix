@@ -208,6 +208,7 @@ class Appointix_Public {
 	 */
 	public function ajax_get_booked_dates() {
 		check_ajax_referer( 'appointix_public_nonce', 'nonce' );
+		$this->switch_locale_if_needed();
 
 		$post_id = intval( $_POST['post_id'] );
 
@@ -235,6 +236,7 @@ class Appointix_Public {
 	 */
 	public function ajax_get_available_slots() {
 		check_ajax_referer( 'appointix_public_nonce', 'nonce' );
+		$this->switch_locale_if_needed();
 
 		$post_id = intval( $_POST['post_id'] );
 		$date    = sanitize_text_field( $_POST['date'] );
@@ -271,6 +273,7 @@ class Appointix_Public {
 	 */
 	public function ajax_calculate_price() {
 		check_ajax_referer( 'appointix_public_nonce', 'nonce' );
+		$this->switch_locale_if_needed();
 
 		$post_id    = intval( $_POST['post_id'] );
 		$start_date = sanitize_text_field( $_POST['start_date'] );
@@ -286,6 +289,7 @@ class Appointix_Public {
 	 */
 	public function ajax_submit_booking() {
 		check_ajax_referer( 'appointix_public_nonce', 'nonce' );
+		$this->switch_locale_if_needed();
 
 		$data = array(
 			'post_id'        => intval( $_POST['post_id'] ),
@@ -340,6 +344,7 @@ class Appointix_Public {
 	 */
 	public function ajax_get_apartment_content() {
 		check_ajax_referer( 'appointix_public_nonce', 'nonce' );
+		$this->switch_locale_if_needed();
 
 		if ( ! isset( $_POST['post_id'] ) ) {
 			wp_send_json_error( array( 'message' => 'Post ID missing.' ) );
@@ -420,6 +425,7 @@ class Appointix_Public {
 	 */
 	public function ajax_submit_rating() {
 		check_ajax_referer( 'appointix_public_nonce', 'nonce' );
+		$this->switch_locale_if_needed();
 
 		$post_id = intval( $_POST['post_id'] );
 		$rating  = intval( $_POST['rating'] );
@@ -506,6 +512,11 @@ class Appointix_Public {
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 				'nonce'    => wp_create_nonce( 'appointix_public_nonce' ),
+				'lang'     => function_exists( 'pll_current_language' ) ? pll_current_language() : '',
+				'msg_another'    => __( 'Make Another Booking', 'appointix' ),
+				'msg_processing' => __( 'Processing...', 'appointix' ),
+				'msg_error'      => __( 'An error occurred. Please try again.', 'appointix' ),
+				'msg_confirm'    => __( 'Confirm Booking', 'appointix' ),
 			)
 		);
 	}
@@ -559,6 +570,31 @@ class Appointix_Public {
 			}
 		</style>
 		<?php
+	}
+
+	/**
+	 * Switch the locale for AJAX requests based on the 'lang' parameter.
+	 * Helps Polylang/Loco Translate load correct translations for AJAX responses.
+	 */
+	private function switch_locale_if_needed() {
+		if ( isset( $_REQUEST['lang'] ) && ! empty( $_REQUEST['lang'] ) ) {
+			$lang = sanitize_text_field( $_REQUEST['lang'] );
+			if ( function_exists( 'pll_current_language' ) && function_exists( 'pll_languages_list' ) ) {
+				$available_languages = pll_languages_list( array( 'fields' => 'slug' ) );
+				if ( in_array( $lang, $available_languages ) ) {
+					global $polylang;
+					if ( isset( $polylang ) ) {
+						$mo_lang = $polylang->model->get_language( $lang );
+						if ( $mo_lang ) {
+							switch_to_locale( $mo_lang->locale );
+							// Reload plugin textdomain for the new locale
+							$plugin_i18n = new Appointix_i18n();
+							$plugin_i18n->load_plugin_textdomain();
+						}
+					}
+				}
+			}
+		}
 	}
 
 }

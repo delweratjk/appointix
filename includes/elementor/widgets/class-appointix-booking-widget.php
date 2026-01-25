@@ -260,5 +260,21 @@ class Appointix_Booking_Widget extends \Elementor\Widget_Base {
 			esc_attr( $show_apartment_dropdown ),
 			esc_attr( $apartment_label )
 		) );
+		
+		?>
+		<style>
+		    @media screen and ( max-width: 450px ) {
+		        .appointix-booking-header h2 {
+                    font-size: 20px;
+                }
+                .appointix-booking-header {
+                    padding: 20px 15px;
+                }
+                .appointix-btn-search {
+                    height: auto;
+                }
+		    }
+		</style>
+		<?php
 	}
 }

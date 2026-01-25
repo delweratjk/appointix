@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Appointix Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-22 00:07+0600\n"
-"PO-Revision-Date: 2026-01-23 19:15+0000\n"
+"PO-Revision-Date: 2026-01-24 16:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -432,7 +432,7 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:207
 msgid "Confirm"
-msgstr ""
+msgstr "Подтверждать"
 
 #: public/partials/appointix-apartments-list.php:630
 #: public/partials/appointix-apartments-list.php:985
@@ -561,7 +561,7 @@ msgstr "Электронная почта"
 
 #: public/partials/appointix-public-display.php:203
 msgid "Email Address"
-msgstr ""
+msgstr "Адрес электронной почты"
 
 #: admin/partials/appointix-admin-settings-display.php:30
 msgid "Email address to receive new booking notifications."
@@ -1041,7 +1041,7 @@ msgstr ""
 
 #: public/partials/appointix-apartments-list.php:960
 msgid "Processing..."
-msgstr ""
+msgstr "Обработка..."
 
 #: includes/emails/admin-new-booking.php:129
 #: includes/emails/customer-booking-confirmation.php:134
@@ -1199,6 +1199,8 @@ msgstr ""
 msgid ""
 "Sorry, this slot is no longer available. Please choose another date or time."
 msgstr ""
+"К сожалению, это время больше недоступно. Пожалуйста, выберите другую дату "
+"или время."
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:138
 #, fuzzy
@@ -1262,7 +1264,7 @@ msgstr "Выберите апартаменты…"
 
 #: public/class-appointix-public.php:332
 msgid "Thank you! Your booking has been received."
-msgstr ""
+msgstr "Спасибо! Ваше бронирование принято."
 
 #: public/partials/single-appointix_apartment.php:49
 msgid "The apartment you are looking for does not exist."

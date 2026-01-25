@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2026-01-22 22:09+0600\n"
-"PO-Revision-Date: 2026-01-24 03:17+0000\n"
+"PO-Revision-Date: 2026-01-24 03:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -102,7 +102,7 @@ msgstr "Widok na morze"
 #: public/partials/appointix-public-display.php:15
 #: public/partials/single-appointix_apartment.php:59
 msgid "Mountain View"
-msgstr ""
+msgstr "Widok na góry"
 
 #: admin/class-appointix-admin.php:246
 #: admin/partials/appointix-admin-bookings-list.php:36
@@ -546,7 +546,7 @@ msgstr "Bezpłatne WiFi"
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:76
 #: public/partials/single-appointix_apartment.php:770
 msgid "Family-friendly"
-msgstr ""
+msgstr "Przyjazne rodzinom"
 
 #: includes/elementor/widgets/class-appointix-apartments-grid-widget.php:13
 msgid "XIO Apartment Grid"
@@ -1296,27 +1296,27 @@ msgstr "Widoki na morze i góry"
 #: public/partials/single-appointix_apartment.php:764
 #: public/partials/single-appointix_apartment.php:779
 msgid "Balcony & terrace"
-msgstr ""
+msgstr "Balkon i taras"
 
 #: public/partials/single-appointix_apartment.php:765
 #: public/partials/single-appointix_apartment.php:780
 msgid "Fully equipped kitchen"
-msgstr ""
+msgstr "W pełni wyposażona kuchnia"
 
 #: public/partials/single-appointix_apartment.php:766
 #: public/partials/single-appointix_apartment.php:781
 msgid "Air conditioning"
-msgstr ""
+msgstr "Klimatyzacja"
 
 #: public/partials/single-appointix_apartment.php:768
 #: public/partials/single-appointix_apartment.php:783
 msgid "Washing machine"
-msgstr ""
+msgstr "Pralka"
 
 #: public/partials/single-appointix_apartment.php:769
 #: public/partials/single-appointix_apartment.php:784
 msgid "Non-smoking"
-msgstr ""
+msgstr "Dla niepalących"
 
 #: public/partials/single-appointix_apartment.php:777
 msgid "Two bathrooms"

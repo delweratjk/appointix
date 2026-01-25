@@ -1,22 +1,19 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: 2026-01-22 22:09+0600\n"
-"PO-Revision-Date: 2026-01-24 21:24+0000\n"
+"Project-Id-Version: Appointix Plugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-22 00:07+0600\n"
+"PO-Revision-Date: 2026-01-24 19:57+0000\n"
 "Last-Translator: \n"
-"Language-Team: Polish\n"
-"Language: pl_PL\n"
+"Language-Team: Croatian (Croatia)\n"
+"Language: hr_HR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
+"n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2;\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-KeywordsList: __;_e;esc_html__;esc_html_e;esc_attr__;esc_attr_e\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: assets\n"
-"Report-Msgid-Bugs-To: \n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
-"&&(n%100<10||n%100 >= 20)? 1 : 2);\n"
+"X-Domain: appointix\n"
 "X-Loco-Version: 2.8.1; wp-6.9; php-8.3.28"
 
 #: public/partials/appointix-public-display.php:219
@@ -47,11 +44,11 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:737
 msgid "About This Property"
-msgstr "O tej nieruchomości"
+msgstr "O ovom objektu"
 
 #: admin/class-appointix-admin.php:332
 msgid "About This Property (Short Description)"
-msgstr "O tej nieruchomości (krótki opis)"
+msgstr ""
 
 #: includes/elementor/widgets/class-appointix-info-widget.php:49
 msgid "About XIO"
@@ -83,12 +80,12 @@ msgstr ""
 #: public/partials/appointix-public-display.php:70
 #: public/partials/single-appointix_apartment.php:907
 msgid "Adults"
-msgstr "Dorośli"
+msgstr "Odrasli"
 
 #: public/partials/single-appointix_apartment.php:766
 #: public/partials/single-appointix_apartment.php:781
 msgid "Air conditioning"
-msgstr "Klimatyzacja"
+msgstr "Klimatizacija"
 
 #: admin/class-appointix-admin.php:495
 msgid "Airbnb iCal URL"
@@ -161,16 +158,20 @@ msgid "Apartment Gallery"
 msgstr ""
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:117
+#, fuzzy
+#| msgid "Apartment Not Found"
 msgid "Apartment Label"
-msgstr ""
+msgstr "Apartman nije pronađen"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:128
+#, fuzzy
+#| msgid "Apartment Not Found"
 msgid "Apartment Name"
-msgstr ""
+msgstr "Apartman nije pronađen"
 
 #: public/partials/single-appointix_apartment.php:49
 msgid "Apartment Not Found"
-msgstr ""
+msgstr "Apartman nije pronađen"
 
 #: admin/class-appointix-admin.php:285
 msgid "Apartment Type"
@@ -190,7 +191,7 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:49
 msgid "Back to Home"
-msgstr ""
+msgstr "Povratak na početnu"
 
 #: includes/elementor/widgets/class-appointix-hero-widget.php:58
 msgid "Background Image"
@@ -199,23 +200,23 @@ msgstr ""
 #: public/partials/single-appointix_apartment.php:764
 #: public/partials/single-appointix_apartment.php:779
 msgid "Balcony & terrace"
-msgstr "Balkon i taras"
+msgstr "Balkon i terasa"
 
 #: admin/class-appointix-admin.php:320
 #: public/partials/appointix-apartments-list.php:661
 #: public/partials/single-appointix_apartment.php:699
 msgid "Bathrooms"
-msgstr "łazienka"
+msgstr "kupatilo"
 
 #: public/partials/appointix-public-display.php:155
 msgid "Bathrooms:"
-msgstr "łazienka"
+msgstr "kupatilo"
 
 #: public/partials/appointix-apartments-list.php:509
 #: public/partials/appointix-public-display.php:255
 #: public/partials/appointix-public-display.php:301
 msgid "Baths"
-msgstr ""
+msgstr "kupatilo"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:72
 msgid "Beach?"
@@ -230,37 +231,39 @@ msgstr ""
 #: public/partials/appointix-apartments-list.php:657
 #: public/partials/single-appointix_apartment.php:684
 msgid "Bedrooms"
-msgstr "sypialnie"
+msgstr "spavaće sobe"
 
 #: public/partials/appointix-public-display.php:154
 msgid "Bedrooms:"
-msgstr "sypialnie "
+msgstr "Spavaće sobe"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:76
+#, fuzzy
+#| msgid "Bedrooms"
 msgid "Bedrooms?"
-msgstr ""
+msgstr "Spavaće sobe"
 
 #: public/partials/appointix-apartments-list.php:498
 #: public/partials/appointix-public-display.php:254
 #: public/partials/appointix-public-display.php:300
 msgid "Beds"
-msgstr ""
+msgstr "kreveta"
 
 #: includes/elementor/widgets/class-appointix-info-widget.php:84
 #: public/partials/appointix-apartments-list.php:528
 #: public/partials/appointix-apartments-list.php:563
 #: public/partials/appointix-public-display.php:144
 msgid "Book Now"
-msgstr ""
+msgstr "rezerviši odmah"
 
 #: public/partials/apartment-details-query.php:83
 msgid "Book This Apartment"
-msgstr ""
+msgstr "Rezerviši ovaj apartman"
 
 #: includes/elementor/widgets/class-appointix-hero-widget.php:71
 #: public/partials/appointix-public-display.php:39
 msgid "Book Your Stay"
-msgstr "Zarezerwuj swój pobyt"
+msgstr "Rezerviši boravak"
 
 #: includes/class-appointix-emails.php:72
 #, php-format
@@ -280,8 +283,10 @@ msgid "Booking deleted successfully!"
 msgstr ""
 
 #: includes/emails/admin-new-booking.php:122
+#, fuzzy
+#| msgid "View Details"
 msgid "Booking Details"
-msgstr ""
+msgstr "Vidi detalje"
 
 #: includes/emails/admin-new-booking.php:125
 #: includes/emails/customer-booking-confirmation.php:130
@@ -334,7 +339,7 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-booking-widget.php:107
 #: public/partials/appointix-public-display.php:92
 msgid "Check Availability"
-msgstr "Sprawdź stawki i dostępność"
+msgstr "Provjerite dostupnost"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:57
 #: includes/emails/admin-new-booking.php:135
@@ -346,7 +351,7 @@ msgstr ""
 #: public/partials/appointix-apartments-list.php:573
 #: public/partials/single-appointix_apartment.php:872
 msgid "Check-in / Check-out"
-msgstr "Zameldowanie / Wymeldowanie"
+msgstr "Prijava / Odjava"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:60
 msgid "Check-in is from 15:00 to 19:00, and check-out is until 10:00."
@@ -359,8 +364,10 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-booking-widget.php:67
 #: includes/emails/admin-new-booking.php:140
 #: includes/emails/customer-booking-confirmation.php:145
+#, fuzzy
+#| msgid "Arrival / Departure"
 msgid "Check-out"
-msgstr ""
+msgstr "Prijava / Odjava"
 
 #: admin/partials/appointix-admin-bookings-list.php:57
 msgid "Check-out:"
@@ -371,11 +378,11 @@ msgstr ""
 #: public/partials/appointix-public-display.php:81
 #: public/partials/single-appointix_apartment.php:915
 msgid "Children"
-msgstr "Dzieci"
+msgstr "Djeca"
 
 #: public/partials/appointix-public-display.php:49
 msgid "Choose your apartment..."
-msgstr "Wybierz apartament..."
+msgstr " Izaberi apartman…"
 
 #: admin/class-appointix-admin.php:246
 #: admin/partials/appointix-admin-bookings-list.php:36
@@ -383,11 +390,11 @@ msgstr "Wybierz apartament..."
 #: public/partials/appointix-public-display.php:16
 #: public/partials/single-appointix_apartment.php:60
 msgid "City View"
-msgstr ""
+msgstr "Pogled na grad"
 
 #: public/partials/appointix-public-display.php:172
 msgid "Complete Your Booking"
-msgstr "Dokończ rezerwację"
+msgstr "Dovršite svoju rezervaciju"
 
 #: admin/partials/appointix-admin-bookings-display.php:334
 #: admin/partials/appointix-admin-bookings-list.php:90
@@ -400,7 +407,7 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:207
 msgid "Confirm"
-msgstr "Potwierdzać"
+msgstr "potvrditi"
 
 #: public/partials/appointix-apartments-list.php:630
 #: public/partials/appointix-apartments-list.php:985
@@ -456,7 +463,7 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:120
 msgid "Date is Available"
-msgstr ""
+msgstr "Datum je dostupan"
 
 #: admin/partials/appointix-admin-bookings-display.php:349
 msgid "Dates"
@@ -485,8 +492,10 @@ msgid "Description Color"
 msgstr ""
 
 #: public/partials/appointix-public-display.php:105
+#, fuzzy
+#| msgid "Select dates"
 msgid "Different Dates"
-msgstr ""
+msgstr "Odaberite datume"
 
 #: admin/class-appointix-admin.php:298 admin/class-appointix-admin.php:355
 msgid "Dynamic Calendar Pricing"
@@ -520,7 +529,7 @@ msgstr "E-mail"
 
 #: public/partials/appointix-public-display.php:203
 msgid "Email Address"
-msgstr "Adres e-mail"
+msgstr "e-mail adresa"
 
 #: admin/partials/appointix-admin-settings-display.php:30
 msgid "Email address to receive new booking notifications."
@@ -617,11 +626,11 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:76
 #: public/partials/single-appointix_apartment.php:770
 msgid "Family-friendly"
-msgstr "Przyjazne rodzinom"
+msgstr "Pogodno za obitelj"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:75
 msgid "Family-friendly?"
-msgstr "Przyjazne rodzinom"
+msgstr ""
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:28
 msgid "FAQ Items"
@@ -638,7 +647,7 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:40
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:68
 msgid "Free private parking"
-msgstr "Bezpłatny parking prywatny"
+msgstr ""
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:74
 msgid "Free private parking is available on-site."
@@ -648,7 +657,7 @@ msgstr ""
 #: public/partials/single-appointix_apartment.php:767
 #: public/partials/single-appointix_apartment.php:782
 msgid "Free WiFi"
-msgstr "Bezpłatne WiFi"
+msgstr "Besplatan WiFi"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:38
 msgid "Frequently Asked Questions"
@@ -660,16 +669,16 @@ msgstr ""
 
 #: public/partials/appointix-apartments-list.php:589
 msgid "Full Name"
-msgstr "Pełne imię i nazwisko"
+msgstr ""
 
 #: public/partials/single-appointix_apartment.php:890
 msgid "Full name"
-msgstr "Pełne imię i nazwisko"
+msgstr "Puno ime"
 
 #: public/partials/single-appointix_apartment.php:765
 #: public/partials/single-appointix_apartment.php:780
 msgid "Fully equipped kitchen"
-msgstr "W pełni wyposażona kuchnia"
+msgstr "Potpuno opremljena kuhinja"
 
 #: admin/class-appointix-admin.php:247
 #: admin/partials/appointix-admin-bookings-list.php:37
@@ -677,7 +686,7 @@ msgstr "W pełni wyposażona kuchnia"
 #: public/partials/appointix-public-display.php:17
 #: public/partials/single-appointix_apartment.php:61
 msgid "Garden View"
-msgstr ""
+msgstr "Pogled na vrt"
 
 #: admin/partials/appointix-admin-settings-display.php:14
 msgid "General Settings"
@@ -694,7 +703,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:256
 #: public/partials/appointix-public-display.php:302
 msgid "Guests"
-msgstr "gości"
+msgstr "gostiju"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:37
 msgid "Heading"
@@ -744,7 +753,7 @@ msgstr ""
 #: public/partials/appointix-apartments-list.php:585
 #: public/partials/single-appointix_apartment.php:884
 msgid "Includes all taxes and fees"
-msgstr "Zawiera wszystkie podatki i opłaty"
+msgstr "Uključuje sve poreze i pristojbe"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:72
 msgid "It is a 2-minute walk away."
@@ -752,7 +761,7 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:748
 msgid "Key Features"
-msgstr "Najważniejsze udogodnienia"
+msgstr "Glavne pogodnosti"
 
 #: admin/class-appointix-admin.php:342
 msgid "Key Features (one per line)"
@@ -764,7 +773,7 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:188
 msgid "Length of Stay"
-msgstr ""
+msgstr "Duljina boravka"
 
 #: admin/class-appointix-admin.php:347
 msgid "Load Defaults"
@@ -803,15 +812,15 @@ msgstr ""
 #: admin/class-appointix-admin.php:325
 #: public/partials/single-appointix_apartment.php:712
 msgid "Max Guests"
-msgstr "Maks. gości"
+msgstr "Maksimalno gostiju"
 
 #: public/partials/appointix-public-display.php:156
 msgid "Max Guests:"
-msgstr "Maks. gości"
+msgstr ""
 
 #: public/partials/single-appointix_apartment.php:778
 msgid "Mountain & partial sea views"
-msgstr ""
+msgstr "pogled na planinu/more"
 
 #: admin/class-appointix-admin.php:245
 #: admin/partials/appointix-admin-bookings-list.php:35
@@ -819,7 +828,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:15
 #: public/partials/single-appointix_apartment.php:59
 msgid "Mountain View"
-msgstr "Widok na góry"
+msgstr "planinu"
 
 #: admin/partials/appointix-admin-display.php:56
 #: includes/emails/admin-new-booking.php:109
@@ -844,21 +853,25 @@ msgid "New Booking Received: #%d"
 msgstr ""
 
 #: includes/emails/customer-booking-confirmation.php:155
+#, fuzzy
+#| msgid "night"
 msgid "Night"
-msgstr ""
+msgstr "noć"
 
 #: admin/partials/appointix-admin-bookings-list.php:62
 msgid "night"
-msgstr ""
+msgstr "noć"
 
 #: includes/emails/customer-booking-confirmation.php:155
 #: public/partials/appointix-public-display.php:189
+#, fuzzy
+#| msgid "night"
 msgid "Nights"
-msgstr "noc"
+msgstr "noć"
 
 #: admin/partials/appointix-admin-bookings-list.php:62
 msgid "nights"
-msgstr "noc"
+msgstr ""
 
 #: public/partials/appointix-public-display.php:314
 msgid "No apartments available."
@@ -890,7 +903,7 @@ msgstr ""
 #: public/partials/single-appointix_apartment.php:769
 #: public/partials/single-appointix_apartment.php:784
 msgid "Non-smoking"
-msgstr "Dla niepalących"
+msgstr "Zabranjeno pušenje"
 
 #: admin/partials/appointix-admin-settings-display.php:26
 msgid "Notification Email"
@@ -940,7 +953,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:18
 #: public/partials/single-appointix_apartment.php:62
 msgid "Pool View"
-msgstr ""
+msgstr "Pogled na bazen"
 
 #: includes/elementor/widgets/class-appointix-apartments-grid-widget.php:36
 msgid "Posts Per Page"
@@ -964,7 +977,7 @@ msgstr ""
 
 #: public/partials/appointix-apartments-list.php:960
 msgid "Processing..."
-msgstr "Przetwarzanie..."
+msgstr "Obrada..."
 
 #: includes/emails/admin-new-booking.php:129
 #: includes/emails/customer-booking-confirmation.php:134
@@ -1000,16 +1013,19 @@ msgid "Recommended for You:"
 msgstr ""
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:73
+#, fuzzy
+#| msgid "Reserve Now"
 msgid "Reservation?"
-msgstr ""
+msgstr "Rezerviraj sada"
 
 #: admin/partials/appointix-admin-settings-display.php:35
 msgid "Save Settings"
 msgstr ""
 
 #: public/partials/single-appointix_apartment.php:763
+#| msgid "Mountain View"
 msgid "Sea & mountain views"
-msgstr "Widoki na morze i góry"
+msgstr "pogled na more/planinu"
 
 #: admin/class-appointix-admin.php:244
 #: admin/partials/appointix-admin-bookings-list.php:34
@@ -1017,7 +1033,7 @@ msgstr "Widoki na morze i góry"
 #: public/partials/appointix-public-display.php:14
 #: public/partials/single-appointix_apartment.php:58
 msgid "Sea View"
-msgstr "Widok na morze"
+msgstr "Pogled na more"
 
 #: admin/class-appointix-admin.php:162
 msgid "Search Apartments"
@@ -1041,27 +1057,33 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:173
 msgid "Secure your stay at"
-msgstr "Zabezpiecz swój pobyt w"
+msgstr "Osigurajte svoj boravak u"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:121
 #: includes/elementor/widgets/class-appointix-booking-widget.php:246
 #: public/partials/appointix-public-display.php:46
+#, fuzzy
+#| msgid "Select dates"
 msgid "Select Apartment"
-msgstr "Wybierz apartament"
+msgstr "Odaberite datume"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:77
+#, fuzzy
+#| msgid "Select dates"
 msgid "Select Dates"
-msgstr "Wybierz Daty"
+msgstr "Odaberite datume"
 
 #: public/partials/appointix-apartments-list.php:574
 #: public/partials/appointix-public-display.php:64
 #: public/partials/single-appointix_apartment.php:874
 msgid "Select dates"
-msgstr "Wybierz daty"
+msgstr "Odaberite datume"
 
 #: public/partials/single-appointix_apartment.php:858
+#, fuzzy
+#| msgid "Select dates"
 msgid "Select dates for best price"
-msgstr "Wybierz daty, aby uzyskać najlepszą cenę"
+msgstr "Odaberite datume"
 
 #: admin/class-appointix-admin.php:428
 msgid "Select Gallery Images"
@@ -1069,13 +1091,11 @@ msgstr ""
 
 #: public/partials/appointix-public-display.php:40
 msgid "Select your dates to check availability."
-msgstr ""
-"Wybierz daty, aby sprawdzić \n"
-"dostępność i cenę."
+msgstr "Odaberite datume kako biste provjerili dostupnost."
 
 #: public/partials/single-appointix_apartment.php:938
 msgid "Send Booking Request"
-msgstr "Wyślij prośbę o rezerwację"
+msgstr "Pošaljite zahtjev za rezervaciju"
 
 #: admin/class-appointix-admin.php:356
 msgid ""
@@ -1104,7 +1124,8 @@ msgstr ""
 msgid ""
 "Sorry, this slot is no longer available. Please choose another date or time."
 msgstr ""
-"Przepraszamy, ten termin jest już niedostępny. Wybierz inną datę lub godzinę."
+"Žao nam je, ovaj termin više nije dostupan. Molimo odaberite drugi datum ili "
+"vrijeme."
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:138
 msgid "Specific Apartment (optional)"
@@ -1116,11 +1137,13 @@ msgstr ""
 #: public/partials/appointix-public-display.php:19
 #: public/partials/single-appointix_apartment.php:63
 msgid "Standard"
-msgstr ""
+msgstr "Standardno"
 
 #: admin/class-appointix-admin.php:362
+#, fuzzy
+#| msgid "Select dates"
 msgid "Start Date"
-msgstr ""
+msgstr "Odaberite datume"
 
 #: admin/class-appointix-admin.php:297
 msgid "Static Price (Per Night)"
@@ -1135,8 +1158,10 @@ msgid "Status updated successfully!"
 msgstr ""
 
 #: public/partials/appointix-public-display.php:178
+#, fuzzy
+#| msgid "Select dates"
 msgid "Stay Dates"
-msgstr ""
+msgstr "Odaberite datume"
 
 #: includes/elementor/widgets/class-appointix-booking-widget.php:149
 #: includes/elementor/widgets/class-appointix-hero-widget.php:92
@@ -1161,7 +1186,7 @@ msgstr ""
 
 #: public/class-appointix-public.php:332
 msgid "Thank you! Your booking has been received."
-msgstr "Dziękujemy! Twoja rezerwacja została odebrana."
+msgstr "Hvala! Vaša rezervacija je primljena."
 
 #: public/partials/single-appointix_apartment.php:49
 msgid "The apartment you are looking for does not exist."
@@ -1206,7 +1231,7 @@ msgstr ""
 
 #: admin/partials/appointix-admin-bookings-display.php:350
 msgid "Total"
-msgstr ""
+msgstr "Ukupno"
 
 #: includes/emails/admin-new-booking.php:160
 #: includes/emails/customer-booking-confirmation.php:174
@@ -1214,7 +1239,7 @@ msgstr ""
 #: public/partials/appointix-public-display.php:192
 #: public/partials/single-appointix_apartment.php:881
 msgid "Total Amount"
-msgstr "Całkowita kwota"
+msgstr "Ukupni iznos"
 
 #: admin/partials/appointix-admin-bookings-display.php:322
 #: admin/partials/appointix-admin-display.php:24
@@ -1226,13 +1251,17 @@ msgid "Try changing your dates."
 msgstr ""
 
 #: public/partials/single-appointix_apartment.php:777
+#, fuzzy
+#| msgid "Bathrooms"
 msgid "Two bathrooms"
-msgstr "Dwie łazienki"
+msgstr "Kupaonice"
 
 #: public/partials/single-appointix_apartment.php:762
 #: public/partials/single-appointix_apartment.php:776
+#, fuzzy
+#| msgid "Bedrooms"
 msgid "Two bedrooms"
-msgstr "Dwie sypialnie"
+msgstr "Spavaće sobe"
 
 #: admin/partials/appointix-admin-bookings-list.php:30
 #: includes/models/class-appointix-bookings-model.php:76
@@ -1252,7 +1281,7 @@ msgstr ""
 #: includes/elementor/widgets/class-appointix-amenities-widget.php:64
 #: public/partials/single-appointix_apartment.php:864
 msgid "Verified by Booking.com"
-msgstr "Zweryfikowane przez Booking.com"
+msgstr "Provjereno na Booking.com"
 
 #: admin/partials/appointix-admin-display.php:84
 msgid "Video Tutorials"
@@ -1265,18 +1294,18 @@ msgstr ""
 #: admin/class-appointix-admin.php:160
 #: includes/elementor/widgets/class-appointix-apartments-grid-widget.php:76
 msgid "View Apartment"
-msgstr "Zobacz szczegóły"
+msgstr "Pogledaj apartman"
 
 #: public/partials/appointix-apartments-list.php:525
 #: public/partials/appointix-public-display.php:138
 #: public/partials/appointix-public-display.php:259
 #: public/partials/appointix-public-display.php:305
 msgid "View Details"
-msgstr ""
+msgstr "Vidi detalje"
 
 #: public/partials/single-appointix_apartment.php:725
 msgid "View Type"
-msgstr "Typ widoku"
+msgstr "Vrsta pogleda"
 
 #: includes/emails/customer-booking-confirmation.php:184
 msgid "Visit Website"
@@ -1285,11 +1314,11 @@ msgstr ""
 #: public/partials/single-appointix_apartment.php:768
 #: public/partials/single-appointix_apartment.php:783
 msgid "Washing machine"
-msgstr "Pralka"
+msgstr "Perilica za rublje"
 
 #: public/partials/single-appointix_apartment.php:829
 msgid "What This Place Offers"
-msgstr "Co to miejsce oferuje"
+msgstr "Što ovo mjesto nudi"
 
 #: includes/elementor/widgets/class-appointix-faq-widget.php:50
 msgid "What time is check-in and check-out?"
@@ -1341,24 +1370,26 @@ msgstr ""
 
 #: public/partials/single-appointix_apartment.php:951
 msgid "You won't be charged yet"
-msgstr "Jeszcze nie zostaniesz obciążony opłatą"
+msgstr "Još vam neće biti naplaćeno"
 
 #: public/partials/appointix-apartments-list.php:598
 msgid "you@email.com"
 msgstr ""
 
 #: public/partials/appointix-public-display.php:200
+#, fuzzy
+#| msgid "Full name"
 msgid "Your Full Name"
-msgstr "Twoje pełne imię i nazwisko"
+msgstr "Puno ime"
 
 #: public/partials/single-appointix_apartment.php:888
 msgid "Your Name"
-msgstr "Twoje imię"
+msgstr "Vaše ime"
 
 #: public/partials/appointix-apartments-list.php:591
 msgid "Your name"
-msgstr "Twoje imię"
+msgstr "Vaše ime"
 
 #: public/partials/single-appointix_apartment.php:896
 msgid "your@email.com"
-msgstr "twój@email.com"
+msgstr "tvoja@e-pošta.com"

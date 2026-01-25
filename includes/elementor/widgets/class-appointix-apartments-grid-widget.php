@@ -70,6 +70,7 @@ class Appointix_Apartments_Grid_Widget extends \Elementor\Widget_Base {
 						<p class="xio-apt-desc"><?php echo esc_html( $apartment->property_summary ); ?></p>
 						<div class="xio-apt-meta">
 							<span><i class="fas fa-bed"></i> <?php echo esc_html( $apartment->bedrooms ); ?> <?php echo esc_html__( 'Bedrooms', 'appointix' ); ?></span>
+							<span><i class="fas fa-bath"></i> <?php echo esc_html( $apartment->bathrooms ); ?> <?php echo esc_html__( 'Bathrooms', 'appointix' ); ?></span>
 							<span><i class="fas fa-users"></i> <?php echo esc_html( $apartment->max_guests ); ?> <?php echo esc_html__( 'Guests', 'appointix' ); ?></span>
 						</div>
 						<a href="<?php echo esc_url( $apartment->permalink ); ?>" class="xio-apt-link">
@@ -107,6 +108,7 @@ class Appointix_Apartments_Grid_Widget extends \Elementor\Widget_Base {
 			}
 			.xio-apt-info {
 				padding: 25px;
+				text-align: center;
 			}
 			.xio-apt-info h3 {
 				margin: 0 0 10px; font-size: 1.4rem;
@@ -116,7 +118,7 @@ class Appointix_Apartments_Grid_Widget extends \Elementor\Widget_Base {
 				display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 			}
 			.xio-apt-meta {
-				display: flex; gap: 20px; margin-bottom: 25px; font-size: 0.9rem; color: #444;
+				display: flex; gap: 20px; margin-bottom: 25px; font-size: 0.9rem; color: #444; justify-content: center;
 			}
 			.xio-apt-meta i { color: #b8a36c; margin-right: 5px; }
 			.xio-apt-link {

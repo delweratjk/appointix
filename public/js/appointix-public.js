@@ -353,7 +353,7 @@
         }
 
         function submitBooking() {
-            $nextBtn.prop('disabled', true).text('Processing...');
+            $nextBtn.prop('disabled', true).text(appointix_public.msg_processing);
             $prevBtn.hide();
 
             $.ajax({
@@ -371,23 +371,24 @@
                     phone: bookingData.phone,
                     adults: bookingData.adults,
                     children: bookingData.children,
-                    total_price: bookingData.total_price
+                    total_price: bookingData.total_price,
+                    lang: appointix_public.lang
                 },
                 success: function (response) {
                     if (response.success) {
                         $('#booking-summary').hide();
                         $('#booking-success').show();
                         $nextBtn.hide();
-                        $('.appointix-footer').html('<a href="' + window.location.href.split('?')[0] + '" class="appointix-btn-next" style="text-decoration: none;">Make Another Booking</a>');
+                        $('.appointix-footer').html('<a href="' + window.location.href.split('?')[0] + '" class="appointix-btn-next" style="text-decoration: none;">' + appointix_public.msg_another + '</a>');
                     } else {
-                        showAlert(response.data.message || 'An error occurred. Please try again.');
-                        $nextBtn.prop('disabled', false).text('Confirm Booking');
+                        showAlert(response.data.message || appointix_public.msg_error);
+                        $nextBtn.prop('disabled', false).text(appointix_public.msg_confirm);
                         $prevBtn.show();
                     }
                 },
                 error: function () {
-                    showAlert('An error occurred. Please try again.');
-                    $nextBtn.prop('disabled', false).text('Confirm Booking');
+                    showAlert(appointix_public.msg_error);
+                    $nextBtn.prop('disabled', false).text(appointix_public.msg_confirm);
                     $prevBtn.show();
                 }
             });

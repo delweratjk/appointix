@@ -1110,10 +1110,11 @@ if ( ! empty( $apartment->gallery ) ) {
                 formData.append('end_date', checkOutInput.value);
                 formData.append('time', '14:00');
                 formData.append('post_id', formData.get('apartment_id'));
+                formData.append('lang', appointix_public.lang);
 
                 submitBtn.disabled = true;
                 var originalBtnText = submitBtn.innerHTML;
-                submitBtn.innerHTML = 'Processing...';
+                submitBtn.innerHTML = appointix_public.msg_processing;
 
                 fetch(appointix_public.ajax_url, {
                     method: 'POST',
@@ -1138,7 +1139,7 @@ if ( ! empty( $apartment->gallery ) ) {
                     .catch(function () {
                         messageDiv.style.display = 'flex';
                         messageDiv.className = 'apt-booking-message error';
-                        messageDiv.textContent = 'An error occurred. Please try again.';
+                        messageDiv.textContent = appointix_public.msg_error;
                         submitBtn.disabled = false;
                         submitBtn.innerHTML = originalBtnText;
                     });
@@ -1412,13 +1413,14 @@ if ( ! empty( $apartment->gallery ) ) {
             }
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
+            submitBtn.textContent = appointix_public.msg_processing;
 
             var formData = new FormData();
             formData.append('action', 'appointix_submit_rating');
             formData.append('nonce', appointix_public.nonce);
             formData.append('post_id', '<?php echo get_the_ID(); ?>');
             formData.append('rating', selectedRating);
+            formData.append('lang', appointix_public.lang);
 
             fetch(appointix_public.ajax_url, {
                 method: 'POST',

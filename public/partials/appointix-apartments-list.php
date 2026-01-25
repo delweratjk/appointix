@@ -966,6 +966,7 @@ $current_filter = isset($_GET['apt_type']) ? sanitize_text_field($_GET['apt_type
                 formData.append('date', document.getElementById('aptx-modal-check-in').value);
                 formData.append('end_date', document.getElementById('aptx-modal-check-out').value);
                 formData.append('time', '14:00');
+                formData.append('lang', appointix_public.lang);
 
                 fetch(ajaxUrl, {
                     method: 'POST',

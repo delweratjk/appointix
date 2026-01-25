@@ -879,6 +879,13 @@
     box-sizing: border-box;
 }
 
+.appointix-availability-form select,
+.appointix-availability-form .appointix-input,
+.appointix-search-box input,
+.appointix-select-wrapper .nice-select span, .appointix-select-wrapper .nice-select ul li {
+    text-align: center !important
+}
+
 .appointix-input:focus {
     outline: none;
     border-color: #4f46e5;
@@ -891,6 +898,7 @@
     font-weight: 600;
     margin-bottom: 8px;
     color: #374151;
+    text-align: center;
 }
 
 .appointix-form-row {
