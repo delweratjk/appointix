@@ -16,15 +16,35 @@ class Appointix_Bookings_Model
      *
      * @since    1.0.0
      */
-    public static function get_bookings()
+    /**
+     * Get all bookings from the database.
+     *
+     * @param array $args Filter arguments.
+     * @since    1.0.0
+     */
+    public static function get_bookings($args = array())
     {
         global $wpdb;
         $table_bookings = $wpdb->prefix . 'appointix_bookings';
+
+        // Default query: exclude trash unless specifically requested
+        $where = "WHERE status != 'trash'";
+        
+        if ( isset( $args['status'] ) ) {
+            if ( $args['status'] === 'trash' ) {
+                $where = "WHERE status = 'trash'";
+            } elseif ( $args['status'] === 'all' ) {
+                $where = "WHERE status != 'trash'";
+            } else {
+                $where = $wpdb->prepare( "WHERE status = %s", $args['status'] );
+            }
+        }
 
         // Get bookings
         $bookings = $wpdb->get_results("
             SELECT b.* 
             FROM $table_bookings b
+            $where
             ORDER BY b.created_at DESC
         ");
 
@@ -51,9 +71,6 @@ class Appointix_Bookings_Model
 
     /**
      * Get a single booking by ID.
-     *
-     * @param int $id The booking ID
-     * @return object|null
      */
     public static function get_booking($id)
     {
@@ -67,7 +84,6 @@ class Appointix_Bookings_Model
         ", $id));
 
         if ($booking) {
-            // Check if it's an apartment CPT
             $post = get_post($booking->post_id);
             if ($post && $post->post_type === 'appointix_apartment') {
                 $booking->service_name = $post->post_title;
@@ -83,8 +99,6 @@ class Appointix_Bookings_Model
 
     /**
      * Update booking status.
-     *
-     * @since    1.0.0
      */
     public static function update_status($id, $status)
     {
@@ -99,31 +113,67 @@ class Appointix_Bookings_Model
     }
 
     /**
-     * Get count of bookings.
+     * Get count of active bookings (not trash).
      */
     public static function count_bookings()
     {
         global $wpdb;
         $table_name = $wpdb->prefix . 'appointix_bookings';
-        return $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
+        return $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status != 'trash'");
     }
 
     /**
-     * Get pending bookings count.
+     * Get booking stats by status.
      */
-    public static function count_pending_bookings()
+    public static function get_stats() 
+    {
+        $total     = self::count_bookings();
+        $pending   = self::count_bookings_by_status('pending');
+        $confirmed = self::count_bookings_by_status('approved') + self::count_bookings_by_status('confirmed');
+        $completed = self::count_bookings_by_status('completed');
+        $cancelled = self::count_bookings_by_status('cancelled');
+        $trash     = self::count_bookings_by_status('trash');
+        
+        return array(
+            'total'     => $total,
+            'pending'   => $pending,
+            'confirmed' => $confirmed,
+            'completed' => $completed,
+            'cancelled' => $cancelled,
+            'trash'     => $trash
+        );
+    }
+
+    /**
+     * Count bookings by status.
+     */
+    public static function count_bookings_by_status($status) 
     {
         global $wpdb;
         $table_name = $wpdb->prefix . 'appointix_bookings';
-        return $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE status = 'pending'");
+        return $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM $table_name WHERE status = %s", $status));
     }
 
     /**
-     * Delete a booking.
-     *
-     * @since    1.0.0
+     * Soft delete a booking (Move to Trash).
      */
     public static function delete_booking($id)
+    {
+        return self::update_status($id, 'trash');
+    }
+
+    /**
+     * Restore a booking from Trash.
+     */
+    public static function restore_booking($id)
+    {
+        return self::update_status($id, 'pending');
+    }
+
+    /**
+     * Permanently delete a booking.
+     */
+    public static function permanent_delete_booking($id)
     {
         global $wpdb;
         $table_name = $wpdb->prefix . 'appointix_bookings';

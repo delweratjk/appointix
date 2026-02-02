@@ -109,14 +109,7 @@ class Appointix_Admin
             array($this, 'display_bookings_page')
         );
 
-        add_submenu_page(
-            $this->plugin_name,
-            __('Settings', 'appointix'),
-            __('Settings', 'appointix'),
-            'manage_options',
-            $this->plugin_name . '-settings',
-            array($this, 'display_settings_page')
-        );
+        /* Old Settings Removed - Merged to Theme Options */
 
         // Submenu for CPT items
         add_submenu_page(
@@ -227,16 +220,16 @@ class Appointix_Admin
     {
         wp_nonce_field('appointix_apartment_meta', 'appointix_apartment_nonce');
 
-        $apartment_type = get_post_meta($post->ID, '_appointix_apartment_type', true);
-        $apartment_type = get_post_meta($post->ID, '_appointix_apartment_type', true);
-        $pricing_mode = get_post_meta($post->ID, '_appointix_pricing_mode', true) ? get_post_meta($post->ID, '_appointix_pricing_mode', true) : 'static';
-        $price_per_night = get_post_meta($post->ID, '_appointix_price_per_night', true);
-        $bedrooms = get_post_meta($post->ID, '_appointix_bedrooms', true);
-        $bedrooms = get_post_meta($post->ID, '_appointix_bedrooms', true);
-        $bathrooms = get_post_meta($post->ID, '_appointix_bathrooms', true);
-        $max_guests = get_post_meta($post->ID, '_appointix_max_guests', true);
+        $master_id = Appointix_Seasonal_Pricing_Model::get_master_post_id($post->ID);
+
+        $apartment_type = get_post_meta($master_id, '_appointix_apartment_type', true);
+        $pricing_mode = get_post_meta($master_id, '_appointix_pricing_mode', true) ? get_post_meta($master_id, '_appointix_pricing_mode', true) : 'static';
+        $price_per_night = get_post_meta($master_id, '_appointix_price_per_night', true);
+        $bedrooms = get_post_meta($master_id, '_appointix_bedrooms', true);
+        $bathrooms = get_post_meta($master_id, '_appointix_bathrooms', true);
+        $max_guests = get_post_meta($master_id, '_appointix_max_guests', true);
         $amenities = get_post_meta($post->ID, '_appointix_amenities', true);
-        $location = get_post_meta($post->ID, '_appointix_location', true);
+        $location = get_post_meta($master_id, '_appointix_location', true);
         $property_summary = get_post_meta($post->ID, '_appointix_property_summary', true);
         $key_features = get_post_meta($post->ID, '_appointix_key_features', true);
 
@@ -561,6 +554,47 @@ class Appointix_Admin
                     $value = sanitize_text_field( $_POST[$post_key] );
                 }
                 update_post_meta($post_id, $meta_key, $value);
+
+                // Sync base price and pricing mode across translations and manual groups
+                if (in_array($meta_key, array('_appointix_price_per_night', '_appointix_pricing_mode'))) {
+                    // 1. Sync via Polylang
+                    if (function_exists('pll_get_post_translations')) {
+                        $translations = pll_get_post_translations($post_id);
+                        foreach ($translations as $lang => $translated_id) {
+                            if ($translated_id != $post_id) {
+                                update_post_meta($translated_id, $meta_key, $value);
+                            }
+                        }
+                    }
+
+                    // 2. Sync via Manual Pricing Groups
+                    $options = get_option('appointix_theme_options', array());
+                    $groups = isset($options['pricing_groups']) ? $options['pricing_groups'] : array();
+                    if (!empty($groups)) {
+                        foreach ($groups as $group) {
+                            $primary_id = intval($group['primary_id']);
+                            $linked_ids = isset($group['linked_ids']) ? $group['linked_ids'] : array();
+                            
+                            if (is_string($linked_ids)) {
+                                $linked_ids = array_map('trim', explode(',', $linked_ids));
+                            }
+                            
+                            if ($post_id == $primary_id || in_array((string)$post_id, $linked_ids) || in_array((int)$post_id, $linked_ids)) {
+                                // Sync to primary
+                                if ($primary_id != $post_id) {
+                                    update_post_meta($primary_id, $meta_key, $value);
+                                }
+                                // Sync to all linked
+                                foreach ($linked_ids as $lid) {
+                                    $lid = intval($lid);
+                                    if ($lid > 0 && $lid != $post_id) {
+                                        update_post_meta($lid, $meta_key, $value);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -596,7 +630,16 @@ class Appointix_Admin
         $result = Appointix_Bookings_Model::update_status($id, $status);
 
         if ($result !== false) {
-            wp_send_json_success(array('message' => __('Status updated successfully!', 'appointix')));
+            // Trigger Email
+            Appointix_Emails::send_status_update_email($id, $status);
+
+            // Get updated stats
+            $stats = Appointix_Bookings_Model::get_stats();
+
+            wp_send_json_success(array(
+                'message' => __('Status updated successfully!', 'appointix'),
+                'stats'   => $stats
+            ));
         } else {
             wp_send_json_error(array('message' => __('Failed to update status', 'appointix')));
         }
@@ -638,7 +681,13 @@ class Appointix_Admin
         $result = Appointix_Bookings_Model::delete_booking($id);
 
         if ($result) {
-            wp_send_json_success(array('message' => __('Booking deleted successfully!', 'appointix')));
+            // Get updated stats
+            $stats = Appointix_Bookings_Model::get_stats();
+
+            wp_send_json_success(array(
+                'message' => __('Booking deleted successfully!', 'appointix'),
+                'stats'   => $stats
+            ));
         } else {
             wp_send_json_error(array('message' => __('Failed to delete booking', 'appointix')));
         }
@@ -651,12 +700,74 @@ class Appointix_Admin
     {
         check_ajax_referer('appointix_admin_nonce', 'nonce');
 
-        $bookings = Appointix_Bookings_Model::get_bookings();
+        $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : 'active';
+        $filter_args = array();
+        if ($status !== 'active' && $status !== 'all') {
+            $filter_args['status'] = $status;
+        } elseif ($status === 'all') {
+            $filter_args['status'] = 'all'; // Pass 'all' to model explicitly
+        }
+
+        $bookings = Appointix_Bookings_Model::get_bookings($filter_args);
+        
+        // Pass filtered status to the view
+        $current_tab = $status; 
+        
         ob_start();
         include(plugin_dir_path(__FILE__) . 'partials/appointix-admin-bookings-list.php');
         $html = ob_get_clean();
 
         wp_send_json_success(array('html' => $html));
+    }
+
+    /**
+     * AJAX handler to restore a booking from trash.
+     */
+    public function ajax_restore_booking()
+    {
+        check_ajax_referer('appointix_admin_nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'appointix')));
+        }
+
+        $id = intval($_POST['id']);
+        $result = Appointix_Bookings_Model::restore_booking($id);
+
+        if ($result !== false) {
+            $stats = Appointix_Bookings_Model::get_stats();
+            wp_send_json_success(array(
+                'message' => __('Booking restored!', 'appointix'),
+                'stats'   => $stats
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to restore booking', 'appointix')));
+        }
+    }
+
+    /**
+     * AJAX handler to permanently delete a booking.
+     */
+    public function ajax_permanent_delete_booking()
+    {
+        check_ajax_referer('appointix_admin_nonce', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(array('message' => __('Permission denied', 'appointix')));
+        }
+
+        $id = intval($_POST['id']);
+        $result = Appointix_Bookings_Model::permanent_delete_booking($id);
+
+        if ($result !== false) {
+            $stats = Appointix_Bookings_Model::get_stats();
+            wp_send_json_success(array(
+                'message' => __('Booking permanently deleted', 'appointix'),
+                'stats'   => $stats
+            ));
+        } else {
+            wp_send_json_error(array('message' => __('Failed to delete booking', 'appointix')));
+        }
     }
 
     public function ajax_delete_seasonal_price()
@@ -705,6 +816,7 @@ class Appointix_Admin
     {
         wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/appointix-admin.css', array(), $this->version, 'all');
         wp_enqueue_style('jquery-ui-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css');
+        wp_enqueue_style('nice-select-css', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css', array(), '1.1.0');
     }
 
     /**
@@ -714,7 +826,8 @@ class Appointix_Admin
      */
     public function enqueue_scripts()
     {
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/appointix-admin.js', array('jquery', 'jquery-ui-datepicker'), $this->version, false);
+        wp_enqueue_script('nice-select-js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js', array('jquery'), '1.1.0', true);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/appointix-admin.js', array('jquery', 'jquery-ui-datepicker', 'nice-select-js'), $this->version, false);
 
         wp_localize_script($this->plugin_name, 'appointix_admin', array(
             'ajax_url' => admin_url('admin-ajax.php'),
@@ -732,9 +845,11 @@ class Appointix_Admin
 
         global $wpdb;
         $table_seasonal = $wpdb->prefix . 'appointix_seasonal_pricing';
+        $post_id = intval($_POST['post_id']);
+        $post_id = Appointix_Seasonal_Pricing_Model::get_master_post_id($post_id);
 
         $wpdb->insert($table_seasonal, array(
-            'post_id' => intval($_POST['post_id']),
+            'post_id' => $post_id,
             'start_date' => sanitize_text_field($_POST['start']),
             'end_date' => sanitize_text_field($_POST['end']),
             'price' => floatval($_POST['price'])
@@ -749,6 +864,7 @@ class Appointix_Admin
         global $wpdb;
         $table_seasonal = $wpdb->prefix . 'appointix_seasonal_pricing';
         $post_id = intval($_POST['post_id']);
+        $post_id = Appointix_Seasonal_Pricing_Model::get_master_post_id($post_id);
 
         $prices = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table_seasonal WHERE post_id = %d ORDER BY start_date ASC", $post_id));
         wp_send_json_success($prices);

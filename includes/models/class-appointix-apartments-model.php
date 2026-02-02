@@ -73,15 +73,18 @@ class Appointix_Apartments_Model
         $data->thumbnail_medium = get_the_post_thumbnail_url($post->ID, 'medium');
         $data->gallery = get_post_meta($post->ID, '_appointix_gallery', true);
 
+        // Resolve master post ID for shared data (pricing, capacity, location)
+        $master_id = Appointix_Seasonal_Pricing_Model::get_master_post_id($post->ID);
+
         // Custom meta fields
-        $data->apartment_type = get_post_meta($post->ID, '_appointix_apartment_type', true);
-        $data->price_per_night = floatval(get_post_meta($post->ID, '_appointix_price_per_night', true));
-        $data->bedrooms = intval(get_post_meta($post->ID, '_appointix_bedrooms', true));
-        $data->bathrooms = intval(get_post_meta($post->ID, '_appointix_bathrooms', true));
-        $data->max_guests = intval(get_post_meta($post->ID, '_appointix_max_guests', true));
+        $data->apartment_type = get_post_meta($master_id, '_appointix_apartment_type', true);
+        $data->price_per_night = floatval(get_post_meta($master_id, '_appointix_price_per_night', true));
+        $data->bedrooms = intval(get_post_meta($master_id, '_appointix_bedrooms', true));
+        $data->bathrooms = intval(get_post_meta($master_id, '_appointix_bathrooms', true));
+        $data->max_guests = intval(get_post_meta($master_id, '_appointix_max_guests', true));
         $data->property_summary = get_post_meta($post->ID, '_appointix_property_summary', true);
         $data->amenities = get_post_meta($post->ID, '_appointix_amenities', true);
-        $data->location = get_post_meta($post->ID, '_appointix_location', true);
+        $data->location = get_post_meta($master_id, '_appointix_location', true);
 
         // iCal fields
         $data->ical_import_airbnb = get_post_meta($post->ID, '_appointix_ical_airbnb', true);
@@ -150,6 +153,7 @@ class Appointix_Apartments_Model
      */
     public static function calculate_price($apartment_id, $check_in, $check_out)
     {
+        $apartment_id = Appointix_Seasonal_Pricing_Model::get_master_post_id($apartment_id);
         $apartment = self::get_apartment($apartment_id);
 
         if (!$apartment || empty($check_in) || empty($check_out)) {
@@ -196,6 +200,7 @@ class Appointix_Apartments_Model
      */
     private static function get_seasonal_price($apartment_id, $check_in, $check_out)
     {
+        $apartment_id = Appointix_Seasonal_Pricing_Model::get_master_post_id($apartment_id);
         global $wpdb;
         $table_seasonal = $wpdb->prefix . 'appointix_seasonal_pricing';
 

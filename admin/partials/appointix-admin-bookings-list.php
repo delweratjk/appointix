@@ -79,22 +79,37 @@ if ($bookings): ?>
                 <?php endif; ?>
             </td>
             <td>
-                <select class="aptx-status-select appointix-booking-status" data-id="<?php echo esc_attr($booking->id); ?>">
-                    <option value="pending" <?php selected($booking->status, 'pending'); ?>><?php _e('Pending', 'appointix'); ?>
-                    </option>
-                    <option value="confirmed" <?php selected($booking->status, 'confirmed'); ?>>
-                        <?php _e('Confirmed', 'appointix'); ?></option>
-                    <option value="cancelled" <?php selected($booking->status, 'cancelled'); ?>>
-                        <?php _e('Cancelled', 'appointix'); ?></option>
-                    <option value="completed" <?php selected($booking->status, 'completed'); ?>>
-                        <?php _e('Completed', 'appointix'); ?></option>
-                </select>
+                <?php if (isset($current_tab) && $current_tab === 'trash'): ?>
+                    <span class="aptx-status-badge aptx-status-trash"><?php _e('Trash', 'appointix'); ?></span>
+                <?php else: ?>
+                    <select class="aptx-status-select appointix-booking-status" data-id="<?php echo esc_attr($booking->id); ?>">
+                        <option value="pending" <?php selected($booking->status, 'pending'); ?>><?php _e('Pending', 'appointix'); ?>
+                        </option>
+                        <option value="confirmed" <?php selected($booking->status, 'confirmed'); ?>>
+                            <?php _e('Confirmed', 'appointix'); ?></option>
+                        <option value="cancelled" <?php selected($booking->status, 'cancelled'); ?>>
+                            <?php _e('Cancelled', 'appointix'); ?></option>
+                        <option value="completed" <?php selected($booking->status, 'completed'); ?>>
+                            <?php _e('Completed', 'appointix'); ?></option>
+                    </select>
+                <?php endif; ?>
             </td>
             <td>
-                <button class="aptx-action-btn aptx-btn-delete appointix-delete-booking"
-                    data-id="<?php echo esc_attr($booking->id); ?>">
-                    <?php _e('Delete', 'appointix'); ?>
-                </button>
+                <?php if (isset($current_tab) && $current_tab === 'trash'): ?>
+                    <button class="aptx-action-btn aptx-btn-view appointix-restore-booking"
+                        data-id="<?php echo esc_attr($booking->id); ?>" title="<?php _e('Restore', 'appointix'); ?>">
+                        <span class="dashicons dashicons-undo"></span>
+                    </button>
+                    <button class="aptx-action-btn aptx-btn-delete appointix-permanent-delete-booking"
+                        data-id="<?php echo esc_attr($booking->id); ?>" title="<?php _e('Delete Permanently', 'appointix'); ?>">
+                        <span class="dashicons dashicons-trash"></span>
+                    </button>
+                <?php else: ?>
+                    <button class="aptx-action-btn aptx-btn-delete appointix-delete-booking"
+                        data-id="<?php echo esc_attr($booking->id); ?>">
+                        <?php _e('Delete', 'appointix'); ?>
+                    </button>
+                <?php endif; ?>
             </td>
         </tr>
     <?php endforeach; ?>

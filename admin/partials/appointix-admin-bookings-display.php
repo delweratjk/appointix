@@ -2,29 +2,68 @@
 /**
  * Admin area view for the bookings page - Premium Design
  */
-$bookings = Appointix_Bookings_Model::get_bookings();
+$current_tab = isset($current_tab) ? $current_tab : 'active';
 $currency = get_option('appointix_currency', '$');
 
-// Count stats
-$total = count($bookings);
-$pending = 0;
-$confirmed = 0;
-$completed = 0;
+// Get stats
+$stats = Appointix_Bookings_Model::get_stats();
+$total = $stats['total'];
+$pending = $stats['pending'];
+$confirmed = $stats['confirmed'];
+$completed = $stats['completed'];
+$cancelled = $stats['cancelled'];
+$trash = $stats['trash'];
 
-foreach ($bookings as $b) {
-    if ($b->status === 'pending')
-        $pending++;
-    elseif ($b->status === 'confirmed')
-        $confirmed++;
-    elseif ($b->status === 'completed')
-        $completed++;
-}
+// Fetch initial bookings (default: active/all non-trash)
+$bookings = Appointix_Bookings_Model::get_bookings();
 ?>
 
 <style>
     .aptx-bookings-wrap {
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         margin: 20px 20px 20px 0;
+    }
+
+    .aptx-status-tabs {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .aptx-tab-item {
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #64748b;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        transition: all 0.2s;
+        cursor: pointer;
+    }
+
+    .aptx-tab-item:hover {
+        color: #1e293b;
+        background: #f8fafc;
+    }
+
+    .aptx-tab-item.active {
+        color: #6366f1;
+        border-bottom-color: #6366f1;
+    }
+
+    .aptx-tab-item .count {
+        background: #e2e8f0;
+        color: #475569;
+        font-size: 11px;
+        padding: 2px 6px;
+        border-radius: 10px;
+        margin-left: 5px;
+    }
+
+    .aptx-tab-item.active .count {
+        background: #e0e7ff;
+        color: #4338ca;
     }
 
     .aptx-bookings-header {
@@ -42,10 +81,11 @@ foreach ($bookings as $b) {
     }
 
     /* Stats Cards */
+    /* Stats Cards */
     .aptx-stats-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 15px;
         margin-bottom: 30px;
     }
 
@@ -71,6 +111,14 @@ foreach ($bookings as $b) {
 
     .aptx-stat-card.completed {
         border-left-color: #0ea5e9;
+    }
+
+    .aptx-stat-card.cancelled {
+        border-left-color: #ef4444;
+    }
+
+    .aptx-stat-card.trash {
+        border-left-color: #64748b;
     }
 
     .aptx-stat-value {
@@ -305,8 +353,41 @@ foreach ($bookings as $b) {
 
     @media (max-width: 1200px) {
         .aptx-stats-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    @media (max-width: 800px) {
+        .aptx-stats-grid {
             grid-template-columns: repeat(2, 1fr);
         }
+    }
+
+    /* Fix Dropdown Cutoff */
+    .aptx-bookings-card {
+        overflow: visible !important;
+    }
+
+    /* Nice Select Styling Overrides */
+    .nice-select.aptx-status-select {
+        float: none;
+        height: 36px;
+        line-height: 34px;
+        padding-left: 12px;
+        padding-right: 30px;
+        min-width: 130px;
+        padding-top: 0;
+    }
+    
+    .nice-select.aptx-status-select:after {
+        right: 12px;
+    }
+
+    .nice-select .list {
+        margin-top: 4px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border-radius: 8px;
+        z-index: 9999;
+        min-width: 100%;
     }
 </style>
 
@@ -333,6 +414,36 @@ foreach ($bookings as $b) {
             <div class="aptx-stat-value"><?php echo esc_html($completed); ?></div>
             <div class="aptx-stat-label"><?php _e('Completed', 'appointix'); ?></div>
         </div>
+        <div class="aptx-stat-card cancelled">
+            <div class="aptx-stat-value"><?php echo esc_html($cancelled); ?></div>
+            <div class="aptx-stat-label"><?php _e('Cancelled', 'appointix'); ?></div>
+        </div>
+        <div class="aptx-stat-card trash">
+            <div class="aptx-stat-value"><?php echo esc_html($trash); ?></div>
+            <div class="aptx-stat-label"><?php _e('Trash', 'appointix'); ?></div>
+        </div>
+    </div>
+
+    <!-- Status Tabs -->
+    <div class="aptx-status-tabs">
+        <a class="aptx-tab-item <?php echo $current_tab === 'active' ? 'active' : ''; ?>" data-status="active">
+            <?php _e('All Active', 'appointix'); ?> <span class="count"><?php echo $total; ?></span>
+        </a>
+        <a class="aptx-tab-item <?php echo $current_tab === 'pending' ? 'active' : ''; ?>" data-status="pending">
+            <?php _e('Pending', 'appointix'); ?> <span class="count"><?php echo $pending; ?></span>
+        </a>
+        <a class="aptx-tab-item <?php echo $current_tab === 'confirmed' ? 'active' : ''; ?>" data-status="confirmed">
+            <?php _e('Confirmed', 'appointix'); ?> <span class="count"><?php echo $confirmed; ?></span>
+        </a>
+        <a class="aptx-tab-item <?php echo $current_tab === 'completed' ? 'active' : ''; ?>" data-status="completed">
+            <?php _e('Completed', 'appointix'); ?> <span class="count"><?php echo $completed; ?></span>
+        </a>
+        <a class="aptx-tab-item <?php echo $current_tab === 'cancelled' ? 'active' : ''; ?>" data-status="cancelled">
+            <?php _e('Cancelled', 'appointix'); ?> <span class="count"><?php echo $cancelled; ?></span>
+        </a>
+        <a class="aptx-tab-item <?php echo $current_tab === 'trash' ? 'active' : ''; ?>" data-status="trash">
+            <?php _e('Trash', 'appointix'); ?> <span class="count"><?php echo $trash; ?></span>
+        </a>
     </div>
 
     <!-- Bookings Table -->

@@ -29,17 +29,49 @@ class Appointix_Availability_Model
         $check_start = $date;
         $check_end = $end_date ? $end_date : $date;
 
+        // Get all translated IDs to check availability across all languages
+        $post_ids = array($post_id);
+
+        // 1. Get IDs via Manual Pricing Groups (Theme Options)
+        $options = get_option('appointix_theme_options', array());
+        $groups = isset($options['pricing_groups']) ? $options['pricing_groups'] : array();
+        if (!empty($groups)) {
+            foreach ($groups as $group) {
+                $primary_id = intval($group['primary_id']);
+                $linked_ids = isset($group['linked_ids']) ? $group['linked_ids'] : array();
+                
+                if (is_string($linked_ids)) {
+                    $linked_ids = array_map('intval', explode(',', $linked_ids));
+                }
+                
+                if ($post_id == $primary_id || in_array($post_id, $linked_ids)) {
+                    $post_ids[] = $primary_id;
+                    $post_ids = array_merge($post_ids, $linked_ids);
+                    break; 
+                }
+            }
+        }
+
+        // 2. Get IDs via Polylang
+        if (function_exists('pll_get_post_translations')) {
+            $translations = pll_get_post_translations($post_id);
+            if (!empty($translations)) {
+                $post_ids = array_merge($post_ids, array_values($translations));
+            }
+        }
+
+        $post_ids = array_unique(array_filter($post_ids));
+        $placeholders = implode(',', array_fill(0, count($post_ids), '%d'));
+
         // Check for overlapping bookings
         // Overlap occurs when: existing_start < new_end AND existing_end > new_start
         $count = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) FROM $table_bookings 
-             WHERE post_id = %d 
+             WHERE post_id IN ($placeholders) 
              AND status NOT IN ('cancelled', 'rejected')
              AND booking_date < %s 
              AND (COALESCE(end_date, booking_date) > %s)",
-            $post_id,
-            $check_end,
-            $check_start
+            array_merge($post_ids, array($check_end, $check_start))
         ));
 
         if (intval($count) > 0) {

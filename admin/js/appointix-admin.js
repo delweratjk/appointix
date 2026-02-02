@@ -9,6 +9,70 @@
         const $form = $('#appointix-add-service-form');
         const $list = $('#appointix-services-list');
 
+        // Initialize Nice Select
+        if ($.fn.niceSelect) {
+            $('select.appointix-booking-status').niceSelect();
+        }
+
+        // Toast Notification
+        function showToast(message) {
+            // Create toast if not exists
+            if ($('#appointix-toast').length === 0) {
+                $('body').append('<div id="appointix-toast"></div>');
+                $('#appointix-toast').css({
+                    'position': 'fixed',
+                    'bottom': '20px',
+                    'right': '20px',
+                    'background': '#32373c',
+                    'color': '#fff',
+                    'padding': '12px 24px',
+                    'border-radius': '4px',
+                    'z-index': '99999',
+                    'display': 'none',
+                    'box-shadow': '0 4px 12px rgba(0,0,0,0.15)',
+                    'font-size': '14px',
+                    'display': 'flex',
+                    'align-items': 'center',
+                    'gap': '10px'
+                });
+            }
+
+            const $toast = $('#appointix-toast');
+            $toast.html('<span class="dashicons dashicons-yes" style="color:#4ade80;"></span> ' + message);
+            $toast.fadeIn(300).delay(2000).fadeOut(300);
+        }
+
+        // Tab Switching in Bookings Page
+        $(document).on('click', '.aptx-tab-item', function (e) {
+            e.preventDefault();
+            const status = $(this).data('status');
+
+            // UI Update
+            $('.aptx-tab-item').removeClass('active');
+            $(this).addClass('active');
+
+            // Fetch Bookings
+            $('#appointix-bookings-list').css('opacity', '0.5');
+            $.ajax({
+                url: appointix_admin.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'appointix_get_bookings',
+                    status: status,
+                    nonce: appointix_admin.nonce
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#appointix-bookings-list').html(response.data.html).css('opacity', '1');
+                        // Re-init nice select
+                        if ($.fn.niceSelect) {
+                            $('select.appointix-booking-status').niceSelect();
+                        }
+                    }
+                }
+            });
+        });
+
         // Update Booking Status via AJAX
         $(document).on('change', '.appointix-booking-status', function () {
             const id = $(this).data('id');
@@ -25,7 +89,8 @@
                 },
                 success: function (response) {
                     if (response.success) {
-                        // Optional: Show toast notification
+                        showToast(response.data.message);
+                        updateStats(response.data.stats);
                     } else {
                         alert(response.data.message);
                     }
@@ -33,33 +98,124 @@
             });
         });
 
-        // Delete Booking via AJAX
-        $(document).on('click', '.appointix-delete-booking', function () {
-            if (!confirm(appointix_admin.confirm_delete)) return;
+        // Helper to update stats
+        function updateStats(stats) {
+            if (!stats) return;
+            // Bookings Page
+            $('.aptx-stat-card.total .aptx-stat-value').text(stats.total);
+            $('.aptx-stat-card.pending .aptx-stat-value').text(stats.pending);
+            $('.aptx-stat-card.confirmed .aptx-stat-value').text(stats.confirmed);
+            $('.aptx-stat-card.completed .aptx-stat-value').text(stats.completed);
+            $('.aptx-stat-card.cancelled .aptx-stat-value').text(stats.cancelled);
+            $('.aptx-stat-card.trash .aptx-stat-value').text(stats.trash);
 
-            const id = $(this).data('id');
-            const $row = $(this).closest('tr');
+            // Dashboard Page
+            if ($('.appointix-stat-card').length) {
+                $('.appointix-stat-card .stat-value').eq(1).text(stats.total);
+                $('.appointix-stat-card .stat-value').eq(2).text(stats.pending);
+            }
+
+            // Update Tab Counts
+            $('.aptx-tab-item[data-status="active"] .count').text(stats.total);
+            $('.aptx-tab-item[data-status="pending"] .count').text(stats.pending);
+            $('.aptx-tab-item[data-status="confirmed"] .count').text(stats.confirmed);
+            $('.aptx-tab-item[data-status="completed"] .count').text(stats.completed);
+            $('.aptx-tab-item[data-status="cancelled"] .count').text(stats.cancelled);
+            $('.aptx-tab-item[data-status="trash"] .count').text(stats.trash);
+        }
+
+        // Delete Popover Logic
+        $(document).on('click', '.appointix-delete-booking, .appointix-permanent-delete-booking', function (e) {
+            e.preventDefault();
+            const $btn = $(this);
+            const id = $btn.data('id');
+            const isPermanent = $btn.hasClass('appointix-permanent-delete-booking');
+
+            // Remove any existing popovers
+            $('.appointix-popover-confirm').remove();
+
+            // Create Popover
+            const $popover = $(`
+                <div class="appointix-popover-confirm" style="position: absolute; background: #fff; padding: 10px; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; z-index: 100; display: flex; gap: 8px; align-items: center; min-width: 180px;">
+                    <span style="font-size: 13px; color: #1e293b; font-weight: 500;">Are you sure?</span>
+                    <button class="button button-small appointix-popover-cancel">No</button>
+                    <button class="button button-small button-link-delete appointix-popover-yes" style="color: #dc2626;">Yes</button>
+                </div>
+            `);
+
+            $('body').append($popover);
+
+            // Position Popover
+            const offset = $btn.offset();
+            $popover.css({
+                top: offset.top - $popover.outerHeight() - 10,
+                left: offset.left
+            });
+
+            // Handle Interactions
+            $popover.find('.appointix-popover-cancel').on('click', function () {
+                $popover.remove();
+            });
+
+            $popover.find('.appointix-popover-yes').on('click', function () {
+                const action = isPermanent ? 'appointix_permanent_delete_booking' : 'appointix_delete_booking';
+
+                $.ajax({
+                    url: appointix_admin.ajax_url,
+                    type: 'POST',
+                    data: {
+                        action: action,
+                        id: id,
+                        nonce: appointix_admin.nonce
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            showToast(response.data.message);
+                            $btn.closest('tr').fadeOut(300, function () { $(this).remove(); });
+                            updateStats(response.data.stats);
+                        } else {
+                            alert(response.data.message);
+                        }
+                        $popover.remove();
+                    }
+                });
+            });
+
+            // Close on click outside
+            $(document).on('click.appointixPopover', function (e) {
+                if (!$(e.target).closest('.appointix-popover-confirm').length && !$(e.target).closest('.appointix-delete-booking').length && !$(e.target).closest('.appointix-permanent-delete-booking').length) {
+                    $('.appointix-popover-confirm').remove();
+                    $(document).off('click.appointixPopover');
+                }
+            });
+        });
+
+
+        // Restore Booking
+        $(document).on('click', '.appointix-restore-booking', function (e) {
+            e.preventDefault();
+            const $btn = $(this);
+            const id = $btn.data('id');
 
             $.ajax({
                 url: appointix_admin.ajax_url,
                 type: 'POST',
                 data: {
-                    action: 'appointix_delete_booking',
+                    action: 'appointix_restore_booking',
                     id: id,
                     nonce: appointix_admin.nonce
                 },
                 success: function (response) {
                     if (response.success) {
-                        $row.fadeOut(300, function () {
-                            $(this).remove();
-                        });
+                        showToast(response.data.message);
+                        $btn.closest('tr').fadeOut(300, function () { $(this).remove(); });
+                        updateStats(response.data.stats);
                     } else {
                         alert(response.data.message);
                     }
                 }
             });
         });
-
 
         // Save Settings via AJAX
         $('#appointix-settings-form').on('submit', function (e) {

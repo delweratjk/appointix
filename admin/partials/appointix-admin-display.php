@@ -2,9 +2,10 @@
 /**
  * Provide a admin area view for the plugin
  */
+$stats = Appointix_Bookings_Model::get_stats();
 $total_apartments = Appointix_Apartments_Model::count_apartments();
-$total_bookings = Appointix_Bookings_Model::count_bookings();
-$pending_bookings = Appointix_Bookings_Model::count_pending_bookings();
+$total_bookings = $stats['total'];
+$pending_bookings = $stats['pending'];
 ?>
 
 <div class="wrap appointix-admin-wrap">
