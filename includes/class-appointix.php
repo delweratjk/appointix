@@ -180,6 +180,8 @@ class Appointix {
 		// Booking AJAX
 		$this->loader->add_action( 'wp_ajax_appointix_update_booking_status', $plugin_admin, 'ajax_update_booking_status' );
 		$this->loader->add_action( 'wp_ajax_appointix_delete_booking', $plugin_admin, 'ajax_delete_booking' );
+		$this->loader->add_action( 'wp_ajax_appointix_restore_booking', $plugin_admin, 'ajax_restore_booking' ); // Added
+		$this->loader->add_action( 'wp_ajax_appointix_permanent_delete_booking', $plugin_admin, 'ajax_permanent_delete_booking' ); // Added
 		$this->loader->add_action( 'wp_ajax_appointix_get_bookings', $plugin_admin, 'ajax_get_bookings' );
 		$this->loader->add_action( 'wp_ajax_appointix_save_settings', $plugin_admin, 'ajax_save_settings' );
 		$this->loader->add_action( 'wp_ajax_appointix_manual_ical_sync', $plugin_admin, 'ajax_manual_ical_sync' );

@@ -47,6 +47,9 @@
             e.preventDefault();
             const status = $(this).data('status');
 
+            // Save to localStorage for persistence
+            localStorage.setItem('appointix_bookings_tab', status);
+
             // UI Update
             $('.aptx-tab-item').removeClass('active');
             $(this).addClass('active');
@@ -72,6 +75,18 @@
                 }
             });
         });
+
+        // Restore saved tab on page load (if on bookings page)
+        if ($('.aptx-status-tabs').length > 0) {
+            const savedTab = localStorage.getItem('appointix_bookings_tab');
+            if (savedTab && !window.location.href.includes('tab=')) {
+                // Only trigger if no URL param and a saved tab exists
+                const $savedTabEl = $('.aptx-tab-item[data-status="' + savedTab + '"]');
+                if ($savedTabEl.length > 0 && !$savedTabEl.hasClass('active')) {
+                    $savedTabEl.trigger('click');
+                }
+            }
+        }
 
         // Update Booking Status via AJAX
         $(document).on('change', '.appointix-booking-status', function () {
@@ -135,8 +150,9 @@
             $('.appointix-popover-confirm').remove();
 
             // Create Popover
+            // Fixed: Added z-index: 999999 and white-space: nowrap to prevent overlapping/wrapping
             const $popover = $(`
-                <div class="appointix-popover-confirm" style="position: absolute; background: #fff; padding: 10px; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; z-index: 100; display: flex; gap: 8px; align-items: center; min-width: 180px;">
+                <div class="appointix-popover-confirm" style="position: absolute; background: #fff; padding: 10px; border-radius: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; z-index: 999999; display: flex; gap: 8px; align-items: center; min-width: 180px; white-space: nowrap;">
                     <span style="font-size: 13px; color: #1e293b; font-weight: 500;">Are you sure?</span>
                     <button class="button button-small appointix-popover-cancel">No</button>
                     <button class="button button-small button-link-delete appointix-popover-yes" style="color: #dc2626;">Yes</button>
@@ -145,11 +161,21 @@
 
             $('body').append($popover);
 
-            // Position Popover
+            // Position Popover Smartly
             const offset = $btn.offset();
+            const popoverWidth = 200; // Approx width
+            const windowWidth = $(window).width();
+
+            let leftPos = offset.left;
+
+            // If popover goes off-screen to the right, align it to the left of the button
+            if (leftPos + popoverWidth > windowWidth - 20) {
+                leftPos = offset.left - popoverWidth + $btn.outerWidth();
+            }
+
             $popover.css({
                 top: offset.top - $popover.outerHeight() - 10,
-                left: offset.left
+                left: leftPos
             });
 
             // Handle Interactions
@@ -159,6 +185,7 @@
 
             $popover.find('.appointix-popover-yes').on('click', function () {
                 const action = isPermanent ? 'appointix_permanent_delete_booking' : 'appointix_delete_booking';
+                console.log('Triggering Delete/PermDelete:', action, id); // Debug
 
                 $.ajax({
                     url: appointix_admin.ajax_url,
@@ -176,6 +203,11 @@
                         } else {
                             alert(response.data.message);
                         }
+                        $popover.remove();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Delete Action Failed:', xhr);
+                        alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
                         $popover.remove();
                     }
                 });
@@ -196,6 +228,7 @@
             e.preventDefault();
             const $btn = $(this);
             const id = $btn.data('id');
+            console.log('Triggering Restore:', id); // Debug
 
             $.ajax({
                 url: appointix_admin.ajax_url,
@@ -206,6 +239,7 @@
                     nonce: appointix_admin.nonce
                 },
                 success: function (response) {
+                    console.log('Restore Response:', response); // Debug
                     if (response.success) {
                         showToast(response.data.message);
                         $btn.closest('tr').fadeOut(300, function () { $(this).remove(); });
@@ -213,6 +247,10 @@
                     } else {
                         alert(response.data.message);
                     }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Restore Action Failed:', xhr);
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
                 }
             });
         });

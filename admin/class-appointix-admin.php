@@ -135,6 +135,7 @@ class Appointix_Admin
      */
     public function display_bookings_page()
     {
+        $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'active';
         include_once(plugin_dir_path(__FILE__) . 'partials/appointix-admin-bookings-display.php');
     }
 
@@ -732,16 +733,38 @@ class Appointix_Admin
         }
 
         $id = intval($_POST['id']);
-        $result = Appointix_Bookings_Model::restore_booking($id);
+        if (!$id) {
+             wp_send_json_error(array('message' => __('Invalid ID', 'appointix')));
+        }
 
-        if ($result !== false) {
-            $stats = Appointix_Bookings_Model::get_stats();
-            wp_send_json_success(array(
-                'message' => __('Booking restored!', 'appointix'),
-                'stats'   => $stats
-            ));
-        } else {
-            wp_send_json_error(array('message' => __('Failed to restore booking', 'appointix')));
+        // Ensure model is loaded (Fix for potential missing dependency in AJAX)
+        if (!class_exists('Appointix_Bookings_Model')) {
+            $model_path = plugin_dir_path(dirname(__FILE__)) . 'includes/models/class-appointix-bookings-model.php';
+            if (file_exists($model_path)) {
+                require_once $model_path;
+            } else {
+                 wp_send_json_error(array('message' => 'Server Error: Model file not found.'));
+            }
+        }
+
+        try {
+            $result = Appointix_Bookings_Model::restore_booking($id);
+
+            if (ob_get_length()) ob_clean();
+
+            if ($result !== false) {
+                $stats = Appointix_Bookings_Model::get_stats();
+                wp_send_json_success(array(
+                    'message' => __('Booking restored!', 'appointix'),
+                    'stats'   => $stats
+                ));
+            } else {
+                wp_send_json_error(array('message' => __('Failed to restore booking (DB Error)', 'appointix')));
+            }
+        } catch (\Throwable $e) {
+            error_log('Appointix Restore Error: ' . $e->getMessage());
+            if (ob_get_length()) ob_clean();
+            wp_send_json_error(array('message' => 'Server Error: ' . $e->getMessage()));
         }
     }
 
@@ -757,16 +780,38 @@ class Appointix_Admin
         }
 
         $id = intval($_POST['id']);
-        $result = Appointix_Bookings_Model::permanent_delete_booking($id);
+        if (!$id) {
+             wp_send_json_error(array('message' => __('Invalid ID', 'appointix')));
+        }
 
-        if ($result !== false) {
-            $stats = Appointix_Bookings_Model::get_stats();
-            wp_send_json_success(array(
-                'message' => __('Booking permanently deleted', 'appointix'),
-                'stats'   => $stats
-            ));
-        } else {
-            wp_send_json_error(array('message' => __('Failed to delete booking', 'appointix')));
+        // Ensure model is loaded
+        if (!class_exists('Appointix_Bookings_Model')) {
+             $model_path = plugin_dir_path(dirname(__FILE__)) . 'includes/models/class-appointix-bookings-model.php';
+             if (file_exists($model_path)) {
+                 require_once $model_path;
+             } else {
+                  wp_send_json_error(array('message' => 'Server Error: Model file not found.'));
+             }
+         }
+
+        try {
+            $result = Appointix_Bookings_Model::permanent_delete_booking($id);
+
+            if (ob_get_length()) ob_clean();
+
+            if ($result !== false) {
+                $stats = Appointix_Bookings_Model::get_stats();
+                wp_send_json_success(array(
+                    'message' => __('Booking permanently deleted', 'appointix'),
+                    'stats'   => $stats
+                ));
+            } else {
+                wp_send_json_error(array('message' => __('Failed to delete booking', 'appointix')));
+            }
+        } catch (\Throwable $e) {
+            error_log('Appointix Delete Error: ' . $e->getMessage());
+            if (ob_get_length()) ob_clean();
+            wp_send_json_error(array('message' => 'Server Error: ' . $e->getMessage()));
         }
     }
 

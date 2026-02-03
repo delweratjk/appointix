@@ -14,8 +14,14 @@ $completed = $stats['completed'];
 $cancelled = $stats['cancelled'];
 $trash = $stats['trash'];
 
-// Fetch initial bookings (default: active/all non-trash)
-$bookings = Appointix_Bookings_Model::get_bookings();
+// Fetch initial bookings based on current tab
+$filter_args = array();
+if ($current_tab !== 'active' && $current_tab !== 'all') {
+    $filter_args['status'] = $current_tab;
+} elseif ($current_tab === 'all') {
+    $filter_args['status'] = 'all';
+}
+$bookings = Appointix_Bookings_Model::get_bookings($filter_args);
 ?>
 
 <style>

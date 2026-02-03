@@ -38,27 +38,21 @@ class Appointix_Seasonal_Pricing_Model
     /**
      * Get the base price for an apartment on a specific date.
      */
+    /**
+     * Get the base price for an apartment on a specific date.
+     */
     public static function get_price_for_date($post_id, $date)
     {
-        $post_id = self::get_master_post_id($post_id);
-        global $wpdb;
-        $table_seasonal = $wpdb->prefix . 'appointix_seasonal_pricing';
+        // Check for seasonal price using robust lookup (Original + Master ID)
+        $seasonal_price = self::get_seasonal_price_only($post_id, $date);
 
-        // 1. Check if there's a seasonal price overriding this date
-        $seasonal_price = $wpdb->get_var($wpdb->prepare(
-            "SELECT price FROM $table_seasonal 
-             WHERE post_id = %d AND %s BETWEEN start_date AND end_date 
-             ORDER BY price DESC LIMIT 1",
-            $post_id,
-            $date
-        ));
-
-        if ($seasonal_price !== null) {
-            return floatval($seasonal_price);
+        if ($seasonal_price !== false) {
+            return $seasonal_price;
         }
 
-        // 2. Fallback to base price from apartment meta
-        $base_price = get_post_meta($post_id, '_appointix_price_per_night', true);
+        // Fallback to base price from apartment meta (using Master ID)
+        $master_id = self::get_master_post_id($post_id);
+        $base_price = get_post_meta($master_id, '_appointix_price_per_night', true);
 
         return floatval($base_price);
     }
@@ -68,11 +62,11 @@ class Appointix_Seasonal_Pricing_Model
      */
     public static function calculate_total($post_id, $start_date, $end_date)
     {
-        $post_id = self::get_master_post_id($post_id);
-        $mode = get_post_meta($post_id, '_appointix_pricing_mode', true) ? get_post_meta($post_id, '_appointix_pricing_mode', true) : 'static';
+        $master_id = self::get_master_post_id($post_id);
+        $mode = get_post_meta($master_id, '_appointix_pricing_mode', true) ? get_post_meta($master_id, '_appointix_pricing_mode', true) : 'static';
 
         if ( $mode === 'static' ) {
-            $base_price = floatval( get_post_meta($post_id, '_appointix_price_per_night', true) );
+            $base_price = floatval( get_post_meta($master_id, '_appointix_price_per_night', true) );
             
              // Calculate nights
              if (!$end_date || $end_date === $start_date) {
@@ -113,15 +107,19 @@ class Appointix_Seasonal_Pricing_Model
      * Get STRICT seasonal price. Returns false if no rule exists.
      */
     private static function get_seasonal_price_only($post_id, $date) {
-        $post_id = self::get_master_post_id($post_id);
+        $original_id = $post_id;
+        $master_id = self::get_master_post_id($post_id);
         global $wpdb;
         $table_seasonal = $wpdb->prefix . 'appointix_seasonal_pricing';
-
+        
+        // Check BOTH master ID and original ID to ensure we find rules regardless of where they were saved
         $seasonal_price = $wpdb->get_var($wpdb->prepare(
             "SELECT price FROM $table_seasonal 
-             WHERE post_id = %d AND %s BETWEEN start_date AND end_date 
+             WHERE (post_id = %d OR post_id = %d) 
+             AND %s BETWEEN start_date AND end_date 
              ORDER BY price DESC LIMIT 1",
-            $post_id,
+            $master_id,
+            $original_id,
             $date
         ));
 
