@@ -659,13 +659,15 @@ if ( ! empty( $apartment->gallery ) ) {
     }
 </style>
 
-
 <div class="apt-single">
 
     <!-- Hero Slider Gallery -->
     <div class="apt-slider-container <?php echo empty($gallery_images) ? 'apt-no-gallery' : ''; ?>">
         <div class="apt-slider-wrapper">
-            <?php if (!empty($gallery_images)): ?>
+            <?php 
+           
+            
+            if (!empty($gallery_images)): ?>
                 <?php foreach ( $gallery_images as $index => $image ) : ?>
                     <div class="apt-slide <?php echo $index === 0 ? 'active' : ''; ?>" 
                          data-width="<?php echo esc_attr( $image['width'] ); ?>" 
