@@ -195,6 +195,7 @@ $has_search = ! empty( $search_check_in ) && ! empty( $search_check_out );
                                 </div>
 
                                 <form class="apt-booking-final-form">
+                                    <input type="hidden" name="total_price" value="<?php echo esc_attr($total_price); ?>">
                                     <div class="form-row">
                                         <div class="form-group">
                                             <input type="text" name="guest_name" placeholder="<?php _e( 'Your Full Name', 'appointix' ); ?>" required>
@@ -1053,8 +1054,16 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         const $form = $(this);
         const $btn = $form.find('.apt-btn-confirm');
+        
+        // Frontend Double-Submission Check
+        if ($form.data('submitting') === true) {
+            return;
+        }
+        $form.data('submitting', true);
+
         const $modal = $form.closest('.apt-modal');
         const aptId = $modal.attr('id').replace('booking-modal-', '');
+        const originalText = $btn.text();
 
         // Gather data from modal and search params
         const urlParams = new URLSearchParams(window.location.search);
@@ -1065,6 +1074,7 @@ jQuery(document).ready(function($) {
 
         const guestName = $form.find('input[name="guest_name"]').val();
         const guestEmail = $form.find('input[name="guest_email"]').val();
+        const totalPrice = $form.find('input[name="total_price"]').val();
 
         $btn.prop('disabled', true).text('Processing...');
 
@@ -1081,6 +1091,7 @@ jQuery(document).ready(function($) {
                 email: guestEmail,
                 adults: adults,
                 children: children,
+                total_price: parseFloat(totalPrice),
                 time: '14:00', // Default check-in time
                 lang: appointix_public.lang
             },
@@ -1090,12 +1101,14 @@ jQuery(document).ready(function($) {
                     window.location.href = '<?php echo esc_js( function_exists('pll_home_url') ? pll_home_url() : home_url('/') ); ?>?booking_success=1';
                 } else {
                     alert(response.data.message || 'An error occurred.');
-                    $btn.prop('disabled', false).text('Confirm');
+                    $btn.prop('disabled', false).text(originalText);
+                    $form.data('submitting', false);
                 }
             },
             error: function() {
                 alert('An error occurred. Please try again.');
-                $btn.prop('disabled', false).text('Confirm');
+                $btn.prop('disabled', false).text(originalText);
+                $form.data('submitting', false);
             }
         });
     });

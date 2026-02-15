@@ -80,10 +80,11 @@ class Appointix_Seasonal_Pricing_Model
              return $base_price * $nights;
         }
 
-        // Dynamic Mode: Must match rules strictly
+        // Dynamic Mode: Must match rules strictly but allow fallback to base price if configured
         if (!$end_date || $end_date === $start_date) {
-            $price = self::get_seasonal_price_only($post_id, $start_date);
-            return $price !== false ? $price : 0; // 0 effectively means unavailable
+            // FIX: Use get_price_for_date instead of get_seasonal_price_only to allow fallback
+            $price = self::get_price_for_date($post_id, $start_date);
+            return $price > 0 ? $price : 0; 
         }
 
         $total = 0;
@@ -93,9 +94,10 @@ class Appointix_Seasonal_Pricing_Model
         $period = new DatePeriod($start, $interval, $end);
 
         foreach ($period as $date) {
-            $daily_price = self::get_seasonal_price_only($post_id, $date->format('Y-m-d'));
-            if ($daily_price === false) {
-                return 0; // Invalid range, gap in rules
+            // FIX: Use get_price_for_date to allow fallback
+            $daily_price = self::get_price_for_date($post_id, $date->format('Y-m-d'));
+            if ($daily_price <= 0) {
+                return 0; // Truly unavailable if even base price is missing
             }
             $total += $daily_price;
         }

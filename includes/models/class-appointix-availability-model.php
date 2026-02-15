@@ -78,10 +78,11 @@ class Appointix_Availability_Model {
         $placeholders = implode( ',', array_fill( 0, count( $post_ids ), '%d' ) );
 
         // Check for overlapping bookings
+        // FIX: Exclude 'trash' status to prevent deleted bookings from blocking dates
         $count = $wpdb->get_var( $wpdb->prepare(
             "SELECT COUNT(*) FROM $table_bookings 
              WHERE post_id IN ($placeholders) 
-             AND status NOT IN ('cancelled', 'rejected')
+             AND status NOT IN ('cancelled', 'rejected', 'trash')
              AND booking_date < %s 
              AND (COALESCE(end_date, booking_date) > %s)",
             array_merge( $post_ids, array( $check_end, $check_start ) )
@@ -94,6 +95,7 @@ class Appointix_Availability_Model {
         // Check Dynamic Pricing Rules Coverage
         $pricing_mode = get_post_meta( $post_id, '_appointix_pricing_mode', true );
         if ( $pricing_mode === 'dynamic' ) {
+            // FIX: calculate_total now falls back to base price instead of returning 0
             $price_check = Appointix_Seasonal_Pricing_Model::calculate_total( $post_id, $date, $end_date );
             if ( $price_check <= 0 ) {
                 return false;
@@ -120,7 +122,7 @@ class Appointix_Availability_Model {
         $results = $wpdb->get_results( $wpdb->prepare(
             "SELECT booking_date, end_date FROM $table_bookings 
              WHERE post_id IN ($placeholders) 
-             AND status NOT IN ('cancelled', 'rejected')",
+             AND status NOT IN ('cancelled', 'rejected', 'trash')",
             $post_ids
         ) );
 

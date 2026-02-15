@@ -303,6 +303,19 @@ class Appointix_Public {
 			'status'         => 'pending',
 		);
 
+		// Prevent Double Booking (Server-Side) - Transient Lock Strategy (Mutex)
+		// This is faster and handles race conditions better than a DB SELECT query
+		$lock_key = 'apt_lock_' . md5( $data['post_id'] . $data['customer_email'] . $data['booking_date'] );
+		
+		if ( get_transient( $lock_key ) ) {
+			// Lock exists, this is a duplicate request
+			wp_send_json_success( array( 'message' => __( 'Booking already received.', 'appointix' ) ) );
+			return;
+		}
+		
+		// Set lock for 30 seconds
+		set_transient( $lock_key, true, 30 );
+
 		// Add hotel meta if provided
 		$hotel_meta = array();
 		if ( isset( $_POST['adults'] ) ) {
@@ -321,6 +334,8 @@ class Appointix_Public {
 
 		// Check availability
 		if ( ! Appointix_Availability_Model::is_available( $data['post_id'], $data['booking_date'], $data['booking_time'], $data['end_date'] ) ) {
+			// Release lock if validation fails
+			delete_transient( $lock_key );
 			wp_send_json_error( array( 'message' => __( 'Sorry, this slot is no longer available. Please choose another date or time.', 'appointix' ) ) );
 		}
 
@@ -335,6 +350,8 @@ class Appointix_Public {
 
 			wp_send_json_success( array( 'message' => __( 'Thank you! Your booking has been received.', 'appointix' ) ) );
 		} else {
+			// Release lock on failure
+			delete_transient( $lock_key );
 			wp_send_json_error( array( 'message' => __( 'Failed to process booking. Please try again.', 'appointix' ) ) );
 		}
 	}
